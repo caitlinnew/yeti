@@ -185,3 +185,47 @@ components:
         - lastName
         - email
         - emailVerified
+    UserTypeOutputV2:
+      title: UserTypeOutput
+      x-examples:
+        example-1: string
+      anyOf:
+        - type: string
+          title: Type of user yet to be defined
+          description: The type of user (future types to be defined)
+        - type: string
+          title: Existing known type of user
+          description: The type of the user - (type-1, type-2, type-3)
+          enum:
+          - type-1
+          - type-2
+          - type-3
+    WorkingDocOneOfV9:
+      title: WorkingDocOneOf
+      type: object
+      x-internal: true
+      properties:
+        owner:
+          anyOf:
+            - properties:
+                type:
+                  type: string
+                  title: Type of user yet to be defined
+                  description: The type of user (future types to be defined)
+              title: Type of user yet to be defined
+              required:
+                - type
+            - properties:
+                type:
+                  type: string
+                  title: Existing known type of user
+                  description: 'The type of the user - (type-1, type-2, type-3)'
+                  enum:
+                    - type-1
+                    - type-2
+                    - type-3
+              title: Existing known type of user
+              required:
+                - type
+      required:
+        - owner
