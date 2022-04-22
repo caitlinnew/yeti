@@ -22,7 +22,20 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                type: object
+                properties:
+                  date:
+                    type: string
+                  count:
+                    type: string
+                  count2:
+                    type: string
+                  validator:
+                    anyOf:
+                      - type: string
+                        properties: {}
+                      - type: 'null'
+                        properties: {}
               examples:
                 Get User Alice Smith:
                   value:
