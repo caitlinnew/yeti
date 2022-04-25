@@ -11,5 +11,13 @@ blah blah blah
 {
   "ref"
 }
-
+```
+```html
+// Accepting Valid Telephone Input
+<salla-tel-input onclick="telInput.isValid()" country-code"sa" country-key="+966" mobile="5555555">
+  // Getting Inputted validateRequest
+  <salla-button fill="outline" color="primary" onclick="getValues()">
+    GetValues
+  </salla-button>
+  ```
 idk.yaml/components/schemas/User
