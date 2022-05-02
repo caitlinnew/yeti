@@ -5,14 +5,8 @@ info:
 servers:
   - url: 'http://localhost:3000'
 paths:
-  '/users/{userId}':
-    parameters:
-      - schema:
-          type: integer
-        name: userId
-        in: path
-        required: true
-        description: Id of an existing user.
+  /users:
+    parameters: []
     get:
       summary: Get User Info by User ID
       tags: []
@@ -24,16 +18,24 @@ paths:
               schema:
                 type: object
                 properties:
-                  date:
-                    type: string
                   count:
                     type: string
-                  count2:
+                  next:
                     type: string
-                  validator:
-                    anyOf:
-                      - $ref: '#/components/schemas/User'
-                      - type: 'null'
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                        count:
+                          type: string
+                        Validator:
+                          anyOf:
+                            - $ref: '#/components/schemas/Validator'
+                            - type: 'null'
+                              properties: {}
               examples:
                 Get User Alice Smith:
                   value:
@@ -160,6 +162,80 @@ paths:
                   dateOfBirth: '1996-08-24'
         description: Post the necessary fields for the API to create a new user.
       description: Create a new user.
+  /bm/catalog/product-validations/history:
+    get:
+      summary: List statistics of validation operations per operator and day in the given market.
+      description: List statistics of validation operations per operator and day in the given market.
+      x-tier: 3
+      tags:
+        - Products Validation
+      operationId: get-bm-catalog-product-validations-history
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    example: 'https://www.backmarket.fr/bm/catalog/products-validation/history?marketCode=FR&page=2'
+                    nullable: true
+                  previous:
+                    type: string
+                    example: null
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          $ref: '#/components/schemas/FullDate'
+                        countValidatedInMarket:
+                          type: number
+                          example: 3
+                        countRematched:
+                          type: number
+                          example: 10
+                        validator:
+                          anyOf:
+                            - $ref: '#/components/schemas/Validator'
+                            - nullable: true
+                              type: 'null'
+                      required:
+                        - date
+                        - countValidatedInMarket
+                        - countRematched
+                        - validator
+                required:
+                  - count
+                  - next
+                  - previous
+                  - results
+        '401':
+          description: Unauthenticated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+        '422':
+          description: Unprocessable entity. Filters or pages are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
 components:
   schemas:
     User:
@@ -206,14 +282,14 @@ components:
         - type: string
           properties: {}
     Validator:
-          type: object
-          required:
-            - username
-            - id
-          properties:
-            username:
-              type: string
-              example: john.doe.ext
-            id:
-              type: number
-              example: 6634224 
+      type: object
+      required:
+        - username
+        - id
+      properties:
+        username:
+          type: string
+          example: john.doe.ext
+        id:
+          type: number
+          example: 6634224
