@@ -205,3 +205,15 @@ components:
             - emailVerified
         - type: string
           properties: {}
+    Validator:
+          type: object
+          required:
+            - username
+            - id
+          properties:
+            username:
+              type: string
+              example: john.doe.ext
+            id:
+              type: number
+              example: 6634224 
