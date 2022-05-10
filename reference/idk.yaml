@@ -236,6 +236,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponseV2'
+  /dogs:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  id:
+                    type: string
+      operationId: get-dogs
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: name
 components:
   schemas:
     User:
