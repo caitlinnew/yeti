@@ -20,4 +20,4 @@ blah blah blah
     GetValues
   </salla-button>
   ```
-idk.yaml/components/schemas/User
+idk.yaml/components/schemas/User  
