@@ -13,7 +13,7 @@ blah blah blah blah
 }
 ```
 ```html
-// Accepting Valid Telephone Input
+// Accepting Valid Telephone Input test
 <salla-tel-input onclick="telInput.isValid()" country-code"sa" country-key="+966" mobile="5555555">
   // Getting Inputted validateRequest
   <salla-button fill="outline" color="primary" onclick="getValues()">
