@@ -1,5 +1,5 @@
 blah blah blah blah blah
- ![also a dog1](assets/images/51835552929_396b75ac7d_o.jpg)
+ ![also a cute dog1](assets/images/51835552929_396b75ac7d_o.jpg)
 
 
 ```json stupid
