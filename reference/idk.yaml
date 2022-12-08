@@ -54,6 +54,14 @@ paths:
 
         ![picture](51341367373_69acb49457_c.jpg)
         ![pic](../docs/assets/images/51835552929_396b75ac7d_o.jpg)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - enum:
+                    - stuff
+              type: string
     patch:
       summary: Update User Information
       operationId: patch-users-userId
