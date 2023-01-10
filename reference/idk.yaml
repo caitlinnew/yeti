@@ -272,6 +272,12 @@ paths:
             type: string
           in: query
           name: name
+  /path:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-path
 components:
   schemas:
     User:
