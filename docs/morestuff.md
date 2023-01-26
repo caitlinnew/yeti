@@ -5,7 +5,6 @@ blah blah blah blah blahv
 
 ![api-lifecycle-alt.svg](../assets/images/api-lifecycle-alt.svg)
 
-
 ```json stupid
 {
 "ref": "reference/idk.yaml#/components/schemas/User"
