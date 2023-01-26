@@ -6,3 +6,4 @@ blah blah blah
 
 ![api-lifecycle-alt.svg](../assets/images/api-lifecycle-alt.svg)
 
+![api-lifecycle.svg](../assets/images/api-lifecycle.svg)
