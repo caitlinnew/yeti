@@ -1,6 +1,10 @@
 blah blah blah blah blahv
  ![also a dog1](assets/images/51835552929_396b75ac7d_o.jpg)
 
+![adidas-runtastic_logo_horizontal_cmyk_black.svg](../assets/images/adidas-runtastic_logo_horizontal_cmyk_black.svg)
+
+![api-lifecycle-alt.svg](../assets/images/api-lifecycle-alt.svg)
+
 
 ```json stupid
 {
