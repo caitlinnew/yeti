@@ -1,3 +1,4 @@
 $ref: 'https://stoplight.io/api/v1/projects/caitlin/amadeusdl/nodes/models/SharedCommonDataModels/Vehicle/Vehicle.v1.yaml?deref=bundle&mid=12476'
 x-stoplight:
   id: gfl1z7y27bd2m
+x-internal: true

@@ -4,7 +4,7 @@
   "spectralExtends": [],
   "extends": [
     "cHJqOjEyMzU4Ng",
-    "cHJqOjEzODYxOQ"
+    "cHJqOjE3NzcyNw"
   ],
   "formats": [
     "oas2",
@@ -31,17 +31,18 @@
       }
     },
     {
-      "id": "cHJqOjEzODYxOQ",
-      "name": "AWS API Gateway",
-      "slug": "aws-api-gateway",
+      "id": "cHJqOjE3NzcyNw",
+      "name": "public SG?",
+      "slug": "public-sg",
       "workspace": {
-        "slug": "apistylebook",
-        "name": "API Stylebook"
+        "domain": "caitlin-custom-test.stoplight-dev.com",
+        "slug": "caitlin",
+        "name": "caitlin"
       },
-      "icon": "globe-americas",
-      "color": "#FC427B",
+      "icon": "alicorn",
+      "color": "#F97F51",
       "latestRelease": {
-        "release": 5
+        "release": 3
       }
     }
   ],
