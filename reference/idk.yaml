@@ -126,7 +126,7 @@ paths:
           description: OK
   /user:
     post:
-      summary: Create New User
+      summary: Create New Userssssss
       operationId: post-user
       responses:
         '200':
