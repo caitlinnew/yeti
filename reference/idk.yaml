@@ -282,6 +282,42 @@ paths:
       tags: []
       responses: {}
       operationId: get-path
+  /formdataTest:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-formdataTest
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                adsf:
+                  type: string
+                  x-stoplight:
+                    id: 580tjz88bxv00
+                fdas:
+                  type: string
+                  x-stoplight:
+                    id: x6sas9n703x94
+                lkjl:
+                  type: string
+                  x-stoplight:
+                    id: so5e2uuncfbdq
+            examples:
+              Example 1:
+                value:
+                  adsf: string
+                  fdas: string
+                  lkjl: string
+              Example 2:
+                value:
+                  adsf: string
+                  fdas: string
+                  lkjl: string
+        description: stuff
 components:
   schemas:
     User:
