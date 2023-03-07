@@ -320,7 +320,7 @@ paths:
         description: stuff
   /jsonbodytest:
     get:
-      summary: Your GET endpoint
+      summary: JSON Body Test
       tags: []
       responses: {}
       operationId: get-jsonbodytest
