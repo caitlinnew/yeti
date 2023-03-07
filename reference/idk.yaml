@@ -318,6 +318,30 @@ paths:
                   fdas: string
                   lkjl: string
         description: stuff
+  /jsonbodytest:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-jsonbodytest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                asdf:
+                  type: string
+                  x-stoplight:
+                    id: dpco3iux65dt0
+            examples:
+              Example 1:
+                value:
+                  asdf: string
+                  '': string
+              Example 2:
+                value:
+                  asdf: string
 components:
   schemas:
     User:
