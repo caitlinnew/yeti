@@ -1,5 +1,9 @@
+---
+internal: true
+---
+
 blah blah blah blah blahvlkjl
- ![also a dog1](assets/images/51835552929_396b75ac7d_o.jpg)
+![also a dog1](assets/images/51835552929\_396b75ac7d_o.jpg)
 
 ![adidas-runtastic_logo_horizontal_cmyk_black.svg](../assets/images/adidas-runtastic_logo_horizontal_cmyk_black.svg)
 
@@ -10,11 +14,13 @@ blah blah blah blah blahvlkjl
 "ref": "reference/idk.yaml#/components/schemas/User"
 }
 ```
+
 ```json jsonSchema
 {
   "ref"
 }
 ```
+
 ```html
 // Accepting Valid Telephone Input test
 <salla-tel-input onclick="telInput.isValid()" country-code"sa" country-key="+966" mobile="5555555">
@@ -22,5 +28,6 @@ blah blah blah blah blahvlkjl
   <salla-button fill="outline" color="primary" onclick="getValues()">
     GetValues
   </salla-button>
-  ```
-idk.yaml/components/schemas/User  
+```
+
+idk.yaml/components/schemas/User
