@@ -1,7 +1,3 @@
----
-internal: true
----
-
 blah blah blah blah blahvlkjl
 ![also a dog1](assets/images/51835552929\_396b75ac7d_o.jpg)
 
