@@ -322,7 +322,33 @@ paths:
     get:
       summary: JSON Body Test
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  asdf:
+                    type: string
+                    x-stoplight:
+                      id: ntdkb83vb2wsy
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  asdfasdf:
+                    type: string
+                    x-stoplight:
+                      id: wg73te6id2l6o
+                  asdf:
+                    type: string
+                    x-stoplight:
+                      id: 9z5sbpqjiabsn
       operationId: get-jsonbodytest
       requestBody:
         content:
