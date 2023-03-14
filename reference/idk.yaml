@@ -164,6 +164,11 @@ paths:
                 dateOfBirth:
                   type: string
                   format: date
+                test:
+                  type: string
+                  x-stoplight:
+                    id: j9mu6s3j7zuq4
+                  description: 'this is the description the snippy person told me to '
               required:
                 - firstName
                 - lastName
