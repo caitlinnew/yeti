@@ -168,7 +168,7 @@ paths:
                   type: string
                   x-stoplight:
                     id: j9mu6s3j7zuq4
-                  description: 'this is the description the snippy person told me to '
+                  description: this is the description the snippy person t
               required:
                 - firstName
                 - lastName
@@ -373,6 +373,28 @@ paths:
               Example 2:
                 value:
                   asdf: string
+  /sevenOneThreeEight:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-sevenOneThreeEight
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                number:
+                  type: string
+                  x-stoplight:
+                    id: tkg3uph076b8t
+                  default: 12321312
+                anotherNumber:
+                  type: string
+                  x-stoplight:
+                    id: tgwwbyctcfl2m
+                  default: adsfdasf
 components:
   schemas:
     User:
