@@ -164,6 +164,11 @@ paths:
                 dateOfBirth:
                   type: string
                   format: date
+                test:
+                  type: string
+                  x-stoplight:
+                    id: j9mu6s3j7zuq4
+                  description: this is the description the snippy person t
               required:
                 - firstName
                 - lastName
@@ -322,7 +327,33 @@ paths:
     get:
       summary: JSON Body Test
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  asdf:
+                    type: string
+                    x-stoplight:
+                      id: ntdkb83vb2wsy
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  asdfasdf:
+                    type: string
+                    x-stoplight:
+                      id: wg73te6id2l6o
+                  asdf:
+                    type: string
+                    x-stoplight:
+                      id: 9z5sbpqjiabsn
       operationId: get-jsonbodytest
       requestBody:
         content:
@@ -342,6 +373,28 @@ paths:
               Example 2:
                 value:
                   asdf: string
+  /sevenOneThreeEight:
+    get:
+      summary: '7138'
+      tags: []
+      responses: {}
+      operationId: get-sevenOneThreeEight
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                number:
+                  type: string
+                  x-stoplight:
+                    id: tkg3uph076b8t
+                  default: 12321312
+                anotherNumber:
+                  type: string
+                  x-stoplight:
+                    id: tgwwbyctcfl2m
+                  default: adsfdasf
 components:
   schemas:
     User:
