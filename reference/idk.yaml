@@ -395,6 +395,17 @@ paths:
                   x-stoplight:
                     id: tgwwbyctcfl2m
                   default: adsfdasf
+  /stuff:
+    get:
+      summary: Component Library
+      tags: []
+      responses: {}
+      operationId: get-stuff
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'stoplight://resources/overrides/C686ts2iuG8'
 components:
   schemas:
     User:
