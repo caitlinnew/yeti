@@ -405,7 +405,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: 'stoplight://resources/overrides/C686ts2iuG8'
+              $ref: 'stoplight://resources/overrides/Clgoq4pjaMo'
 components:
   schemas:
     User:
