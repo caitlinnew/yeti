@@ -1,4 +1,6 @@
 openapi: 3.1.0
+x-stoplight:
+  id: a6bc09236fd46
 info:
   title: idk
   version: '1.0'
