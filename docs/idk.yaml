@@ -465,3 +465,13 @@ components:
         id:
           type: number
           example: 6634224
+  examples:
+    Example:
+      value:
+        description: Example shared example
+        type: object
+        properties:
+          id:
+            type: string
+        required:
+          - id
