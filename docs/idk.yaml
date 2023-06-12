@@ -407,7 +407,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: 'stoplight://resources/overrides/Clgoq4pjaMo'
+              $ref: 'https://imabrokenref.com/test.yaml'
 components:
   schemas:
     User:

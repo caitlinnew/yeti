@@ -35,6 +35,19 @@ paths:
                     dateOfBirth: '1997-10-31'
                     emailVerified: true
                     signUpDate: '2019-08-24'
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  test:
+                    type: string
+                    x-stoplight:
+                      id: 3j0qknbr9vnru
+                  test1:
+                    type: string
+                    x-stoplight:
+                      id: d8pqn77fuyf20
+                    format: binary
         '404':
           description: User Not Found
       operationId: get-users-userId
