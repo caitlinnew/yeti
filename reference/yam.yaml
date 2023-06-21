@@ -151,7 +151,6 @@ components:
     User:
       title: User
       type: object
-      description: ''
       examples:
         - id: 142
           firstName: Alice
@@ -179,8 +178,7 @@ components:
           type: boolean
           description: Set to true if the user's email has been verified.
         createDate:
-          type: string
-          format: date
+          $ref: 'https://stoplight.io/api/v1/projects/caitlin/amadeusdl/nodes/models/SharedCommonDataModels/Tier/Tier.v1.yaml?mid=21660'
           description: The date that the user was created.
       required:
         - id
