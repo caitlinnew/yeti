@@ -186,3 +186,33 @@ components:
         - lastName
         - email
         - emailVerified
+    req:
+      title: req
+      x-stoplight:
+        id: yjftltfmphnoz
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 7cp2hidgbra7a
+        a:
+          type: string
+          x-stoplight:
+            id: o8bzrjez6gtsz
+        b:
+          type: string
+          x-stoplight:
+            id: tatnyhfstqwpm
+        c:
+          type: string
+          x-stoplight:
+            id: 5tmqiv3xs0vr3
+        d:
+          type: string
+          x-stoplight:
+            id: 57mzwb1x13hlu
+        e:
+          type: string
+          x-stoplight:
+            id: zmoz12cb9wiph
