@@ -216,3 +216,7 @@ components:
           type: string
           x-stoplight:
             id: zmoz12cb9wiph
+      required:
+        - id
+        - a
+        - b
