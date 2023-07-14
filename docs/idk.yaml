@@ -14,7 +14,7 @@ paths:
   /users:
     parameters: []
     get:
-      summary: Get User Info by User ID
+      summary: Get User Info by User IDs!
       tags: []
       responses:
         '200':
