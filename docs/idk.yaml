@@ -272,7 +272,7 @@ paths:
                 type: object
                 properties:
                   name:
-                    $ref: 'https://stoplight.io/api/v1/projects/caitlin/7628-1/nodes/models/relatedParties.yaml?mid=20539'
+                    $ref: 'https://stoplight.io/api/v1/projects/caitlin/7628-1/nodes/models/RelatedParties.yaml?mid=18591'
                   color:
                     $ref: 'https://stoplight.io/api/v1/projects/caitlin/7628-1/nodes/models/RelatedParties.yaml?mid=18591'
                   id:
