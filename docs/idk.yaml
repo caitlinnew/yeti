@@ -272,9 +272,9 @@ paths:
                 type: object
                 properties:
                   name:
-                    type: string
+                    $ref: 'https://stoplight.io/api/v1/projects/caitlin/7628-1/nodes/models/relatedParties.yaml?mid=20539'
                   color:
-                    type: string
+                    $ref: 'https://stoplight.io/api/v1/projects/caitlin/7628-1/nodes/models/RelatedParties.yaml?mid=18591'
                   id:
                     type: string
       operationId: get-dogs
