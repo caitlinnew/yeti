@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     env: 
       # Get the CI token from project settings on your Stoplight workspace
-      PROJECT_TOKEN: {132992e9-da73-4080-a19e-9b043ffe582e}
+      PROJECT_TOKEN: '{132992e9-da73-4080-a19e-9b043ffe582e}'
       # Get the Project URL from your Stoplight workspace. Don't add a trailing slash.
       PROJECT_URL: '{https://caitlin.stoplight.io/docs/cliproject}'
     steps:
