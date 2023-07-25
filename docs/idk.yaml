@@ -260,30 +260,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponseV2'
-  /dogs:
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  name:
-                    $ref: 'https://stoplight.io/api/v1/projects/caitlin/7628-1/nodes/models/RelatedParties.yaml?mid=18591'
-                  color:
-                    $ref: 'https://stoplight.io/api/v1/projects/caitlin/7628-1/nodes/models/relatedParties.yaml?mid=20539'
-                  id:
-                    type: string
-      operationId: get-dogs
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: name
   /path:
     get:
       summary: Your GET endpoint
