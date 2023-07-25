@@ -1,0 +1,277 @@
+openapi: 3.0.1
+info:
+  title: Sales Contract Capability
+  description: An end-point from which you can retrieve contract details for a given
+    contract_id or asset_id.
+  version: "1.0"
+servers:
+- url: http://localhost:8080
+  description: localhost
+- url: http://sales-contracts-api.contracts-dev
+  description: in-cluster-non-prod-dev
+- url: http://sales-contracts-api.contracts-qa
+  description: in-cluster-non-prod-qa
+- url: http://sales-contracts-api.contracts-prod
+  description: in-cluster-prod-prod
+paths:
+  /v1/contracts:
+    get:
+      tags:
+      - get-contract
+      summary: Get contract by Id - v1.4
+      description: Retrieve the contract information for a given contract_id or asset_id.
+      operationId: get-contract-v1.4
+      parameters:
+      - name: contract_id
+        in: query
+        description: The contract_id to retrieve.
+        required: false
+        schema:
+          type: string
+      - name: asset_id
+        in: query
+        description: An asset_id associated with a contract to retrieve.
+        required: false
+        schema:
+          type: string
+      responses:
+        "401":
+          description: Not Authorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                title: Not Authorized
+                status: 401
+                detail: The request is not authorized.
+        "404":
+          description: Not Found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                title: Not Found
+                status: 404
+                detail: No contract with given contract id exists in any of the source
+                  systems
+        "500":
+          description: Internal Server Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                title: Internal Server Error
+                status: 500
+                detail: There was an error processing the request.
+        "200":
+          description: Contract Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractResponse'
+        "400":
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                title: Bad Request
+                status: 400
+                detail: "A value is required for one of these parameters: contract_id\
+                  \ or asset_id."
+components:
+  schemas:
+    Problem:
+      type: object
+      properties:
+        instance:
+          type: string
+          format: uri
+        type:
+          type: string
+          format: uri
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        status:
+          $ref: '#/components/schemas/StatusType'
+        title:
+          type: string
+        detail:
+          type: string
+    StatusType:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          format: int32
+        reasonPhrase:
+          type: string
+    ContractResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        source_system:
+          type: string
+        status:
+          type: string
+          enum:
+          - Preliminary
+          - Active
+          - Inactive
+        currency:
+          type: string
+          description: "The currency of this contract (in [ISO4217](https://en.wikipedia.org/wiki/ISO_4217)\
+            \ format)"
+          example: USD
+        seller_organization_id:
+          type: string
+        seller_id:
+          type: string
+        seller_space_id:
+          type: string
+        seller_email:
+          type: string
+        asset_owner:
+          type: string
+          enum:
+          - IP
+          - RB
+          - THIRD_PARTY
+        type:
+          type: string
+        terms:
+          $ref: '#/components/schemas/Terms'
+        surcharges:
+          $ref: '#/components/schemas/Surcharges'
+        seller_process_payment:
+          type: boolean
+        manual_settlement_required:
+          type: boolean
+        buyer_payment_required:
+          type: boolean
+        lien_search_fees_applied:
+          type: boolean
+        title_fees_applied:
+          type: boolean
+        title_fee_amount:
+          $ref: '#/components/schemas/Money'
+        sales_rep:
+          $ref: '#/components/schemas/SalesRep'
+        payment_days:
+          type: integer
+          description: Days to complete seller settlement after an event has completed.
+          format: int32
+          example: 5
+        manual_commission_rate_estimations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManualCommissionRateEstimation'
+        sf_rate_table_status:
+          type: string
+          enum:
+          - EMPTY_RATE_TABLE
+          - UNKNOWN_TYPE
+          - CONTRACT_LEVEL
+          - LOT_LEVEL
+          - DATA_ISSUE
+      description: Contract details.
+    ManualCommissionRateEstimation:
+      type: object
+      properties:
+        table_type:
+          type: string
+          enum:
+          - IP
+          - RB
+        estimated_commission_rate:
+          type: number
+          example: 25.0
+    Money:
+      type: object
+      properties:
+        currency:
+          type: string
+          description: Currency follows ISO4217 standard (three letters)
+          example: USD
+        amount:
+          type: integer
+          description: Amount value is in the smallest unit for currency
+          format: int64
+          example: 10000
+      description: Money field
+    RateTableEntry:
+      type: object
+      properties:
+        table_type:
+          type: string
+        from_amount:
+          $ref: '#/components/schemas/Money'
+        to_amount:
+          $ref: '#/components/schemas/Money'
+        rate:
+          type: number
+          format: double
+          example: 10
+        flat_amount:
+          $ref: '#/components/schemas/Money'
+        entry_type:
+          type: string
+    SalesRep:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/SalesRepName'
+        contact:
+          $ref: '#/components/schemas/SalesRepContact'
+    SalesRepContact:
+      type: object
+      properties:
+        email:
+          type: string
+          example: testemail@yahoo.com
+        phone:
+          type: string
+          example: 1-426-453-7549
+        mobile:
+          type: string
+          example: 1-543-123-7689
+    SalesRepName:
+      type: object
+      properties:
+        first_name:
+          type: string
+          example: first
+        last_name:
+          type: string
+          example: last
+        title:
+          type: string
+          example: Mr
+        middle_name:
+          type: string
+          example: middle
+    Surcharges:
+      type: object
+      properties:
+        repair_and_restore_surcharge_percent:
+          type: number
+          format: double
+          example: 8
+        hauling_surcharge_percent:
+          type: number
+          format: double
+          example: 5
+    Terms:
+      type: object
+      properties:
+        rate_table_entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/RateTableEntry'

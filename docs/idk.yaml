@@ -68,6 +68,7 @@ paths:
                 - enum:
                     - stuff
               type: string
+        description: ''
     patch:
       summary: Update User Information
       operationId: patch-users-userId
@@ -401,13 +402,7 @@ paths:
     get:
       summary: Component Library
       tags: []
-      responses: {}
       operationId: get-stuff
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: 'stoplight://resources/overrides/Clgoq4pjaMo'
 components:
   schemas:
     User:
@@ -475,3 +470,15 @@ components:
             type: string
         required:
           - id
+  requestBodies:
+    testRequest:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              'j,hjkl':
+                type: string
+                x-stoplight:
+                  id: h93vpm2vs0k1j
+      description: ''
