@@ -7,7 +7,7 @@ blah blah blah blah blah stupid github workflow
 
 ![api-lifecycle-alt.svg](../assets/images/api-lifecycle-alt.svg)
 
-```json stupid
+```json stupid thing
 {
 "ref": "reference/idk.yaml#/components/schemas/User"
 }
