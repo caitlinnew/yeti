@@ -10,7 +10,7 @@ info:
 
     Specifically, the API can be used to carry out the following actions:
     * Create, delete and modify `Freight Offers`
-    * Create, delete and modify `Vehicle Space Offers` and stuff
+    * Create, delete and modify `Vehicle Space Offers` and stuff or whatever
     * Retrieve offer detail information from foreign offers
     * Allows to negotiate conditions of received freight quotes
   termsOfService: 'https://www.timocom.co.uk/gtc'
