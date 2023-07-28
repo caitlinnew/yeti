@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: Sales Contract Capability Conundrum
+  title: Sales Contract Capability Conundrum Catastrophe
   description: An end-point from which you can retrieve contract details for a given
     contract_id or asset_id.
   version: "1.0"
