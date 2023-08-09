@@ -6,7 +6,7 @@ info:
   version: '1.0'
 servers:
   - url: 'http://localhost:3000'
-    description: server one
+    description: server one one
   - description: server two
   - url: ''
     description: server three
