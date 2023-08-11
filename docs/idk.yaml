@@ -127,6 +127,8 @@ paths:
       responses:
         '200':
           description: OK
+      tags:
+        - one
   /user:
     post:
       summary: Create New Userssssss
@@ -186,13 +188,13 @@ paths:
                   dateOfBirth: '1996-08-24'
         description: Post the necessary fields for the API to create a new user.
       description: Create a new user.
+      tags:
+        - one
   /bm/catalog/product-validations/history:
     get:
       summary: List statistics of validation operations per operator and day in the given market.
       description: List statistics of validation operations per operator and day in the given market.
       x-tier: 3
-      tags:
-        - Products Validation
       operationId: get-bm-catalog-product-validations-history
       parameters: []
       responses:
@@ -260,16 +262,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponseV2'
+      tags:
+        - two
   /path:
     get:
       summary: Your GET endpoint
-      tags: []
+      tags:
+        - two
       responses: {}
       operationId: get-path
   /formdataTest:
     get:
       summary: Form Data Test
-      tags: []
+      tags:
+        - three
       responses: {}
       operationId: get-formdataTest
       requestBody:
@@ -305,7 +311,8 @@ paths:
   /jsonbodytest:
     get:
       summary: JSON Body Test
-      tags: []
+      tags:
+        - three
       responses:
         '200':
           description: OK
@@ -458,3 +465,7 @@ components:
                 x-stoplight:
                   id: h93vpm2vs0k1j
       description: ''
+tags:
+  - name: one
+  - name: three
+  - name: two
