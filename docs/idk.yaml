@@ -110,7 +110,7 @@ paths:
                 dateOfBirth:
                   type: string
             examples:
-              Update First Name:
+              Update First Name - make a long title - even more long - how about this  - is this long enough:
                 value:
                   firstName: Rebecca
               Update Email:
