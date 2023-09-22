@@ -42,7 +42,7 @@ paths:
       security:
         - authorization: []
       x-internal: false
-      description: Get a list of Freight Offers by a list of Ids.
+      description: Get a list of Freight Offers by a list of Ids. Do it!
     parameters: []
   '/freight-quotes/{freightQuoteId}':
     get:
