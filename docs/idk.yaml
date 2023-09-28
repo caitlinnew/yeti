@@ -15,7 +15,7 @@ paths:
   /users:
     parameters: []
     get:
-      summary: Get User Info by User IDs!
+      summary: Get User Info by User IDs! click meeeeeee
       tags: []
       responses:
         '200':
@@ -66,9 +66,10 @@ paths:
           application/json:
             schema:
               allOf:
-                - enum:
-                    - stuff
-              type: string
+                - maxItems: 1000
+                  minItems: 1
+                  items: {}
+              type: array
         description: ''
     patch:
       summary: Update User Information
