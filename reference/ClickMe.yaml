@@ -1,0 +1,15 @@
+openapi: 3.1.0
+x-stoplight:
+  id: kglk24k4d4vi9
+info:
+  title: ClickMe
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths: {}
+components:
+  schemas:
+    User:
+      $ref: 'stoplight://resources/overrides/AZ0Y5f8nqLc'
+      x-stoplight:
+        id: rj9yh2pq39urs
