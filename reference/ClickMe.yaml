@@ -6,7 +6,21 @@ info:
   version: '1.0'
 servers:
   - url: 'http://localhost:3000'
-paths: {}
+paths:
+  /wtf:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-wtf
+      x-stoplight:
+        id: 28amx3vy3eb4w
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'stoplight://resources/overrides/AZ0Y5f8nqLc'
+      description: ''
 components:
   schemas:
     User:
