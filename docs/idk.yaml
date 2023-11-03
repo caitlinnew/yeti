@@ -70,9 +70,9 @@ paths:
               type: string
             examples:
               Example 1:
-                value: one
-              Example 2:
                 value: dsfdssdfds
+              Example 2:
+                value: one
         description: ''
     patch:
       summary: Update User Information
