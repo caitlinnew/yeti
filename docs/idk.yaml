@@ -68,6 +68,11 @@ paths:
                 - enum:
                     - stuff
               type: string
+            examples:
+              Example 1:
+                value: one
+              Example 2:
+                value: dsfdssdfds
         description: ''
     patch:
       summary: Update User Information
