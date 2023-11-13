@@ -1,0 +1,10 @@
+{
+  "title": "testjson",
+  "x-stoplight": {
+    "id": "1zox5bdvy5ahj"
+  },
+  "enum": [
+    "sdf",
+    "fds"
+  ]
+}
