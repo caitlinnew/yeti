@@ -388,7 +388,6 @@ components:
   schemas:
     User:
       title: User
-      description: ''
       examples:
         - id: 142
           firstName: Alice
@@ -421,6 +420,10 @@ components:
               type: string
               format: date
               description: The date that the user was created.
+            dateTime:
+              type: string
+              x-stoplight:
+                id: ucjv1uwiu5swp
           required:
             - id
             - firstName
@@ -428,7 +431,6 @@ components:
             - email
             - emailVerified
         - type: string
-          properties: {}
     Validator:
       type: object
       required:

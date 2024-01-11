@@ -1,41 +1,56 @@
 openapi: 3.0.1
 info:
   title: Sales Contract Capability Conundrum
-  description: An end-point from which you can retrieve contract details for a given
-    contract_id or asset_id.
-  version: "1.0"
+  description: An end-point from which you can retrieve contract details for a given contract_id or asset_id.
+  version: '1.0'
 servers:
-- url: http://localhost:8080
-  description: localhost
-- url: http://sales-contracts-api.contracts-dev
-  description: in-cluster-non-prod-dev
-- url: http://sales-contracts-api.contracts-qa
-  description: in-cluster-non-prod-qa
-- url: http://sales-contracts-api.contracts-prod
-  description: in-cluster-prod-prod
+  - url: 'http://localhost:8080'
+    description: localhost
+  - url: 'http://sales-contracts-api.contracts-dev'
+    description: in-cluster-non-prod-dev
+  - url: 'http://sales-contracts-api.contracts-qa'
+    description: in-cluster-non-prod-qa
+  - url: 'http://sales-contracts-api.contracts-prod'
+    description: in-cluster-prod-prod
 paths:
   /v1/contracts:
     get:
       tags:
-      - get-contract
+        - get-contract
       summary: Get contract by Id - v1.4
       description: Retrieve the contract information for a given contract_id or asset_id.
       operationId: get-contract-v1.4
       parameters:
-      - name: contract_id
-        in: query
-        description: The contract_id to retrieve.
-        required: false
-        schema:
-          type: string
-      - name: asset_id
-        in: query
-        description: An asset_id associated with a contract to retrieve.
-        required: false
-        schema:
-          type: string
+        - name: contract_id
+          in: query
+          description: The contract_id to retrieve.
+          required: false
+          schema:
+            type: string
+        - name: asset_id
+          in: query
+          description: An asset_id associated with a contract to retrieve.
+          required: false
+          schema:
+            type: string
       responses:
-        "401":
+        '200':
+          description: Contract Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                title: Bad Request
+                status: 400
+                detail: 'A value is required for one of these parameters: contract_id or asset_id.'
+        '401':
           description: Not Authorized
           content:
             application/problem+json:
@@ -45,7 +60,7 @@ paths:
                 title: Not Authorized
                 status: 401
                 detail: The request is not authorized.
-        "404":
+        '404':
           description: Not Found
           content:
             application/problem+json:
@@ -54,9 +69,8 @@ paths:
               example:
                 title: Not Found
                 status: 404
-                detail: No contract with given contract id exists in any of the source
-                  systems
-        "500":
+                detail: No contract with given contract id exists in any of the source systems
+        '500':
           description: Internal Server Error
           content:
             application/problem+json:
@@ -66,23 +80,6 @@ paths:
                 title: Internal Server Error
                 status: 500
                 detail: There was an error processing the request.
-        "200":
-          description: Contract Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContractResponse'
-        "400":
-          description: Bad Request
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
-              example:
-                title: Bad Request
-                status: 400
-                detail: "A value is required for one of these parameters: contract_id\
-                  \ or asset_id."
 components:
   schemas:
     Problem:
@@ -104,6 +101,13 @@ components:
           type: string
         detail:
           type: string
+        localDateTime:
+          type: string
+          x-stoplight:
+            id: 1f1la61dlu9qt
+          description: |-
+            what location 
+            stuff
     StatusType:
       type: object
       properties:
@@ -122,13 +126,12 @@ components:
         status:
           type: string
           enum:
-          - Preliminary
-          - Active
-          - Inactive
+            - Preliminary
+            - Active
+            - Inactive
         currency:
           type: string
-          description: "The currency of this contract (in [ISO4217](https://en.wikipedia.org/wiki/ISO_4217)\
-            \ format)"
+          description: 'The currency of this contract (in [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) format)'
           example: USD
         seller_organization_id:
           type: string
@@ -141,9 +144,9 @@ components:
         asset_owner:
           type: string
           enum:
-          - IP
-          - RB
-          - THIRD_PARTY
+            - IP
+            - RB
+            - THIRD_PARTY
         type:
           type: string
         terms:
@@ -176,11 +179,11 @@ components:
         sf_rate_table_status:
           type: string
           enum:
-          - EMPTY_RATE_TABLE
-          - UNKNOWN_TYPE
-          - CONTRACT_LEVEL
-          - LOT_LEVEL
-          - DATA_ISSUE
+            - EMPTY_RATE_TABLE
+            - UNKNOWN_TYPE
+            - CONTRACT_LEVEL
+            - LOT_LEVEL
+            - DATA_ISSUE
       description: Contract details.
     ManualCommissionRateEstimation:
       type: object
@@ -188,11 +191,11 @@ components:
         table_type:
           type: string
           enum:
-          - IP
-          - RB
+            - IP
+            - RB
         estimated_commission_rate:
           type: number
-          example: 25.0
+          example: 25
     Money:
       type: object
       properties:
