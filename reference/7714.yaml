@@ -105,9 +105,7 @@ components:
           type: string
           x-stoplight:
             id: 1f1la61dlu9qt
-          description: |-
-            what location 
-            stuff
+          description: what Location stuff location these are words
     StatusType:
       type: object
       properties:
