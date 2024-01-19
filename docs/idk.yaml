@@ -74,6 +74,8 @@ paths:
               Example 2:
                 value: one
         description: ''
+      parameters:
+        - $ref: '#/components/parameters/header'
     patch:
       summary: Update User Information
       operationId: patch-users-userId
@@ -465,3 +467,12 @@ components:
                 x-stoplight:
                   id: h93vpm2vs0k1j
       description: ''
+  parameters:
+    header:
+      name: header
+      in: header
+      required: false
+      schema:
+        type: string
+        default: test
+      description: header description
