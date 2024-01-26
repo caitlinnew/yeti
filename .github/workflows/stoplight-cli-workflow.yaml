@@ -37,7 +37,7 @@ jobs:
         run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '18'
       - name: Push files to Stoplight
         run: |
           npx @stoplight/cli@5 push --ci-token 132992e9-da73-4080-a19e-9b043ffe582e --directory ${{ github.workspace }} --branch ${{ env.BRANCH_NAME }}
