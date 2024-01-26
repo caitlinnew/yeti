@@ -40,7 +40,7 @@ jobs:
           node-version: '18'
       - name: Push files to Stoplight
         run: |
-          npx @stoplight/cli@5 push --ci-token 132992e9-da73-4080-a19e-9b043ffe582e --directory ${{ github.workspace }} --branch ${{ env.BRANCH_NAME }}
+          npx @stoplight/cli@6 push --ci-token 132992e9-da73-4080-a19e-9b043ffe582e --directory ${{ github.workspace }} --branch ${{ env.BRANCH_NAME }}
         env: 
           PROJECT_TOKEN: 48d754ec-5f45-42f0-b71d-55bfc635ef70
       - name: Comment Preview
