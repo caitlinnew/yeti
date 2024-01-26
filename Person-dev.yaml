@@ -1,0 +1,533 @@
+components:
+  examples:
+    FoundingFathersExample:
+      value:
+        cursor: zpRz4pwzexThItIpkTChpGDGNy9D4R
+        persons:
+        - createdOn: "2022-10-18T21:03:47Z"
+          dateOfBirth: "1732-02-22"
+          firstName: George
+          lastName: Washington
+          maskedNationalId: '***-**-6789'
+          personId: 12345678-1234-5678-90ab-1234567890ab
+          primaryAddress:
+            addressLine1: 1600 Pennsylvania Avenue NW
+            administrativeArea: DC
+            country: USA
+            locality: Washington
+            postalCode: "20500"
+          primaryEmail:
+            address: george@example.com
+            verified: "2022-03-06T01:02:03Z"
+          primaryPhoneNumber:
+            number: "+12125551111"
+          updatedOn: "2022-11-19T22:04:48Z"
+          version: 0
+        - createdOn: "2022-10-18T21:03:47Z"
+          dateOfBirth: "1743-04-13"
+          firstName: Thomas
+          lastName: Jefferson
+          personId: 12345678-1234-5678-90ab-1234567890ac
+          primaryAddress:
+            addressLine1: 1050 Monticello Loop
+            administrativeArea: VA
+            country: USA
+            locality: Charlottesville
+            postalCode: "22902"
+          primaryEmail:
+            address: thomas@example.com
+            verified: "2022-03-06T02:04:06Z"
+          primaryPhoneNumber:
+            number: "+12125552222"
+          updatedOn: "2022-11-19T22:04:48Z"
+          version: 0
+    GeorgeWashingtonRequestExample:
+      value:
+        dateOfBirth: "1732-02-22"
+        firstName: George
+        lastName: Washington
+        nationalId: 123-45-6789
+        primaryAddress:
+          addressLine1: 1600 Pennsylvania Avenue NW
+          administrativeArea: DC
+          country: USA
+          locality: Washington
+          postalCode: "20500"
+        primaryEmail:
+          address: george@example.com
+          verified: "2022-03-06T01:02:03Z"
+        primaryPhoneNumber:
+          number: "+12125551111"
+    GeorgeWashingtonResponseExample:
+      value:
+        createdOn: "2022-10-18T21:03:47Z"
+        dateOfBirth: "1732-02-22"
+        firstName: George
+        lastName: Washington
+        maskedNationalId: '***-**-6789'
+        personId: 12345678-1234-5678-90ab-1234567890ab
+        primaryAddress:
+          addressLine1: 1600 Pennsylvania Avenue NW
+          administrativeArea: DC
+          country: USA
+          locality: Washington
+          postalCode: "20500"
+        primaryEmail:
+          address: george@example.com
+          verified: "2022-03-06T01:02:03Z"
+        primaryPhoneNumber:
+          number: "+12125551111"
+        updatedOn: "2022-11-19T22:04:48Z"
+        version: 0
+    ThomasJeffersonRequestExample:
+      value:
+        dateOfBirth: "1743-04-13"
+        firstName: Thomas
+        lastName: Jefferson
+        primaryAddress:
+          addressLine1: 1050 Monticello Loop
+          administrativeArea: VA
+          country: USA
+          locality: Charlottesville
+          postalCode: "22902"
+        primaryEmail:
+          address: thomas@example.com
+        primaryPhoneNumber:
+          number: "+12125552222"
+    ThomasJeffersonResponseExample:
+      value:
+        createdOn: "2022-10-18T21:03:47Z"
+        dateOfBirth: "1743-04-13"
+        firstName: Thomas
+        lastName: Jefferson
+        personId: 12345678-1234-5678-90ab-1234567890ac
+        primaryAddress:
+          addressLine1: 1050 Monticello Loop
+          administrativeArea: VA
+          country: USA
+          locality: Charlottesville
+          postalCode: "22902"
+        primaryEmail:
+          address: thomas@example.com
+        primaryPhoneNumber:
+          number: "+12125552222"
+        updatedOn: "2022-11-19T22:04:48Z"
+        version: 0
+  parameters:
+    personId:
+      description: Person ID.
+      example: 12345678-1234-5678-90ab-1234567890ab
+      in: path
+      name: personId
+      required: true
+      schema:
+        format: uuid
+        type: string
+    programName:
+      description: The name of the Credit Program.
+      example: sandbox
+      in: path
+      name: programName
+      required: true
+      schema:
+        type: string
+  requestBodies:
+    createPersonRequest:
+      content:
+        application/json:
+          examples:
+            George Washington:
+              $ref: '#/components/examples/GeorgeWashingtonRequestExample'
+            Thomas Jefferson:
+              $ref: '#/components/examples/ThomasJeffersonRequestExample'
+          schema:
+            properties:
+              dateOfBirth:
+                $ref: '#/components/schemas/dateOfBirth'
+              firstName:
+                $ref: '#/components/schemas/firstName'
+              lastName:
+                $ref: '#/components/schemas/lastName'
+              middleName:
+                $ref: '#/components/schemas/middleName'
+              nationalId:
+                $ref: '#/components/schemas/nationalId'
+              primaryAddress:
+                $ref: ../models/address.yaml
+              primaryEmail:
+                $ref: ../models/email.yaml
+              primaryPhoneNumber:
+                $ref: ../models/phoneNumber.yaml
+            type: object
+      description: The details of the Person.
+    updatePersonRequest:
+      content:
+        application/json:
+          examples:
+            George Washington:
+              $ref: '#/components/examples/GeorgeWashingtonRequestExample'
+            Thomas Jefferson:
+              $ref: '#/components/examples/ThomasJeffersonRequestExample'
+          schema:
+            properties:
+              dateOfBirth:
+                $ref: '#/components/schemas/dateOfBirth'
+              firstName:
+                $ref: '#/components/schemas/firstName'
+              flags:
+                $ref: '#/components/schemas/flags'
+              lastName:
+                $ref: '#/components/schemas/lastName'
+              middleName:
+                $ref: '#/components/schemas/middleName'
+              nationalId:
+                $ref: '#/components/schemas/nationalId'
+              primaryAddress:
+                $ref: ../models/address.yaml
+              primaryEmail:
+                $ref: ../models/email.yaml
+              primaryPhoneNumber:
+                $ref: ../models/phoneNumber.yaml
+            type: object
+      description: The details of the Person.
+  responses:
+    invalidResponse:
+      content:
+        application/problem+json:
+          schema:
+            $ref: ../models/error.yaml
+      description: |
+        The Person creation request was not valid. See the response body
+        for details about what was wrong with the creation request.
+      headers:
+        X-Request-Id:
+          $ref: ../common/response.yaml#/headers/X-Request-Id
+    notFoundResponse:
+      content:
+        application/problem+json:
+          schema:
+            $ref: ../models/error.yaml
+      description: The `programName` or `personId` was not found.
+      headers:
+        X-Request-Id:
+          $ref: ../common/response.yaml#/headers/X-Request-Id
+    personCollectionResponse:
+      content:
+        application/json:
+          examples:
+            Founding Fathers:
+              $ref: '#/components/examples/FoundingFathersExample'
+          schema:
+            properties:
+              cursor:
+                description: The cursor used to progress the list of results.
+                type: string
+              persons:
+                description: The collection of persons.
+                items:
+                  $ref: '#/components/schemas/person'
+                type: array
+            type: object
+      description: Returns a paginated list of Persons for this credit program.
+      headers:
+        X-Request-Id:
+          $ref: ../common/response.yaml#/headers/X-Request-Id
+    personResponse:
+      content:
+        application/json:
+          examples:
+            George Washington:
+              $ref: '#/components/examples/GeorgeWashingtonResponseExample'
+            Thomas Jefferson:
+              $ref: '#/components/examples/ThomasJeffersonResponseExample'
+          schema:
+            $ref: '#/components/schemas/person'
+      description: The Person was successfully created.
+      headers:
+        Idempotency-Key:
+          $ref: ../common/response.yaml#/headers/Idempotency-Key
+        Location:
+          $ref: ../common/response.yaml#/headers/Location
+        X-Request-Id:
+          $ref: ../common/response.yaml#/headers/X-Request-Id
+  schemas:
+    dateOfBirth:
+      description: The date of birth.
+      example: "1732-02-22"
+      format: date
+      type: string
+    firstName:
+      description: First name.
+      example: George
+      maxLength: 128
+      minLength: 2
+      type: string
+    flags:
+      description: |-
+        Flags on a Person. These flags will affect the status of all the accounts of a Person.
+        An `ofacMatchDetected` flag, added when an Office of Foreign Assets Control (OFAC) alert is received, will
+        result in the credit account transitioning to a `suspended` state.
+        An `ofacMatchConfirmed` flag will result in the credit account transitioning to a `closed` state.
+      properties:
+        isBankrupt:
+          default: false
+          type: boolean
+        isMLA:
+          default: false
+          type: boolean
+        isSCRA:
+          default: false
+          type: boolean
+        ofacMatchConfirmed:
+          default: false
+          type: boolean
+        ofacMatchDetected:
+          default: false
+          type: boolean
+      type: object
+    lastName:
+      description: The persons last name.
+      example: Washington
+      maxLength: 128
+      minLength: 2
+      type: string
+    maskedNationalId:
+      description: |-
+        A national ID is the unique number of an identity document issued by an official authority. Currently only SSN is accepted.
+        The masked national ID only contains the last four digits of the ID and the remaining digits are masked with asterisks (*).
+      example: '***-**-6789'
+      pattern: \*\*\*-\*\*-\d{4}
+      type: string
+    middleName:
+      description: Middle Name.
+      maxLength: 128
+      type: string
+    nationalId:
+      description: A national ID is the unique number of an identity document issued
+        by an official authority. Currently only SSN is accepted.
+      example: 123-45-6789
+      pattern: ^\d{3}-\d{2}-\d{4}$
+      type: string
+    person:
+      properties:
+        createdOn:
+          example: "2022-10-18T21:03:47.769Z"
+          format: date-time
+          type: string
+        dateOfBirth:
+          $ref: '#/components/schemas/dateOfBirth'
+        firstName:
+          $ref: '#/components/schemas/firstName'
+        flags:
+          $ref: '#/components/schemas/flags'
+        lastName:
+          $ref: '#/components/schemas/lastName'
+        maskedNationalId:
+          $ref: '#/components/schemas/maskedNationalId'
+        middleName:
+          $ref: '#/components/schemas/middleName'
+        personId:
+          description: The identifier for this person.
+          format: uuid
+          type: string
+        primaryAddress:
+          $ref: ../models/address.yaml
+        primaryEmail:
+          $ref: ../models/email.yaml
+        primaryPhoneNumber:
+          $ref: ../models/phoneNumber.yaml
+        updatedOn:
+          example: "2022-11-19T22:04:48.770Z"
+          format: date-time
+          type: string
+        version:
+          description: The version attribute is associated with changes made to a
+            person. Every time a change occurs to the person, the version counter
+            increments by one.
+          minimum: 0
+          type: integer
+      type: object
+  securitySchemes:
+    APIKey:
+      in: header
+      name: X-Api-Key
+      type: apiKey
+info:
+  contact:
+    email: support@tallied.io
+    name: Tallied Technologies API
+    url: https://tallied.io
+  description: |
+    The Person API allows a client to create, retrieve, and update information about a person. Person information includes details such as address and personal information.
+  license:
+    name: Tallied API License
+    url: https://tallied.io
+  termsOfService: https://tallied.io
+  title: Person API
+  version: "1.0"
+openapi: 3.0.0
+paths:
+  /programs/{programName}/persons:
+    get:
+      description: |-
+        Returns a paginated list of Persons for this credit `programName`.
+
+        The result set can be filtered by optionally adding any combination of these filters:
+
+        - First Name
+        - Middle Name
+        - Last Name
+        - Date of Birth
+        - Primary Email
+        - Primary Phone Number
+
+        The only operation valid for all these filters is equality.
+
+        Please check the Pagination and Filtering documentation of this API for more details.
+      operationId: get-persons
+      parameters:
+      - $ref: ../common/request.yaml#/parameters/X-Request-Id
+      - description: Represents the location in a paginated list.
+        in: query
+        name: cursor
+        schema:
+          type: string
+      - description: Filter persons by first name
+        in: query
+        name: firstName
+        schema:
+          type: string
+      - description: Filter persons by middle name
+        in: query
+        name: middleName
+        schema:
+          type: string
+      - description: Filter persons by last name
+        in: query
+        name: lastName
+        schema:
+          type: string
+      - description: Filter persons by date of birth
+        in: query
+        name: dateOfBirth
+        schema:
+          type: string
+      - description: Filter persons by email
+        in: query
+        name: primaryEmail.address
+        schema:
+          type: string
+      - description: |
+          Filter persons by phone number
+
+          Keep in mind that `+` is a reserved character in URLs. Therefore, it needs to be escaped to `%2B` to be properly processed.
+        in: query
+        name: primaryPhoneNumber.number
+        schema:
+          type: string
+      responses:
+        "200":
+          $ref: '#/components/responses/personCollectionResponse'
+        "400":
+          $ref: '#/components/responses/invalidResponse'
+        "500":
+          $ref: '#/components/responses/invalidResponse'
+      summary: Get Persons
+    parameters:
+    - $ref: '#/components/parameters/programName'
+    post:
+      description: |-
+        Create a Person. None of the fields in the request are required to use this endpoint, but when a person
+        is referenced in other contexts, such as person creation, the person will be checked for the
+        presence of all fields that are required in that context.
+      operationId: create-persons
+      parameters:
+      - $ref: ../common/request.yaml#/parameters/X-Request-Id
+      - $ref: ../common/request.yaml#/parameters/Idempotency-Key
+      requestBody:
+        $ref: '#/components/requestBodies/createPersonRequest'
+      responses:
+        "201":
+          $ref: '#/components/responses/personResponse'
+        "400":
+          $ref: '#/components/responses/invalidResponse'
+        "500":
+          $ref: '#/components/responses/invalidResponse'
+      summary: Create Person
+  /programs/{programName}/persons/{personId}:
+    get:
+      description: Retrieves an existing Person.
+      operationId: retrieve-person
+      parameters:
+      - $ref: ../common/request.yaml#/parameters/X-Request-Id
+      responses:
+        "200":
+          $ref: '#/components/responses/personResponse'
+        "404":
+          $ref: '#/components/responses/notFoundResponse'
+        "500":
+          $ref: '#/components/responses/invalidResponse'
+      summary: Get Person
+    parameters:
+    - $ref: '#/components/parameters/programName'
+    - $ref: '#/components/parameters/personId'
+    post:
+      description: |-
+        Update an existing Person.
+
+        This endpoint allows updating the following fields:
+
+        - `firstName`
+        - `middleName`
+        - `lastName`
+        - `primaryEmail`
+        - `primaryPhoneNumber`
+        - `primaryAddress`
+
+        This endpoint allows the creation of the following fields if they do not already exist on the Person:
+
+        - `nationalId`
+        - `dateOfBirth`
+
+        If any of these fields are not included in the request or are set to null, they will be ignored.
+      operationId: modify-person
+      parameters:
+      - $ref: ../common/request.yaml#/parameters/X-Request-Id
+      - $ref: ../common/request.yaml#/parameters/Idempotency-Key
+      requestBody:
+        $ref: '#/components/requestBodies/updatePersonRequest'
+      responses:
+        "200":
+          $ref: '#/components/responses/personResponse'
+        "400":
+          $ref: '#/components/responses/invalidResponse'
+        "404":
+          $ref: '#/components/responses/notFoundResponse'
+        "500":
+          $ref: '#/components/responses/invalidResponse'
+      summary: Update Person
+security:
+- APIKey: []
+servers:
+- description: bartlomi dev stack
+  url: https://bartlomi.dev.tallied.io
+- description: dominik dev stack
+  url: https://dominik.dev.tallied.io
+- description: greg dev stack
+  url: https://greg.dev.tallied.io
+- description: hannes dev stack
+  url: https://hannes.dev.tallied.io
+- description: juanmatu dev stack
+  url: https://juanmatu.dev.tallied.io
+- description: king dev stack
+  url: https://king.dev.tallied.io
+- description: martinkr dev stack
+  url: https://martinkr.dev.tallied.io
+- description: matt dev stack
+  url: https://matt.dev.tallied.io
+- description: rayhaneh dev stack
+  url: https://rayhaneh.dev.tallied.io
+- description: ryanheim dev stack
+  url: https://ryanheim.dev.tallied.io
+- description: zainlakh dev stack
+  url: https://zainlakh.dev.tallied.io
