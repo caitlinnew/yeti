@@ -40,7 +40,7 @@ jobs:
           node-version: '14'
       - name: Push files to Stoplight
         run: |
-          npx @stoplight/cli@5 push --ci-token ${{env.PROJECT_TOKEN}} --directory ${{ github.workspace }} --branch ${{ env.BRANCH_NAME }}
+          npx @stoplight/cli@5 push --ci-token 132992e9-da73-4080-a19e-9b043ffe582e --directory ${{ github.workspace }} --branch ${{ env.BRANCH_NAME }}
         env: 
           PROJECT_TOKEN: 48d754ec-5f45-42f0-b71d-55bfc635ef70
       - name: Comment Preview
@@ -51,4 +51,4 @@ jobs:
           identifier: "STOPLIGHT_PREVIEW"
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          PROJECT_URL: 'https://nauman-pro.stoplight.io/docs/test12'
+          PROJECT_URL: 'https://caitlin.stoplight.io/docs/cliproject'
