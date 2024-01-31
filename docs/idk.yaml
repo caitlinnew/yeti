@@ -57,6 +57,7 @@ paths:
       operationId: get-users-userId
       description: |-
         Retrieve the information of the user with the matching user ID.
+        [this is a link](stuff.md)
 
         ![picture](51341367373_69acb49457_c.jpg)
         ![pic](../docs/assets/images/51835552929_396b75ac7d_o.jpg)
