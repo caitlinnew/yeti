@@ -1,0 +1,5075 @@
+{
+  "openapi": "3.0.0",
+  "x-stoplight": {
+    "id": "lub92ucvbo2pn"
+  },
+  "info": {
+    "license": {
+      "name": "User API",
+      "url": "string"
+    },
+    "title": "8593",
+    "version": "1.0.0",
+    "description": "The User API represents all functionality that a user in Design Huddle may perform. Every API method is run in the context of a single user and requires a user-specific Access Token for authorization. The most common integration use cases consist of listing templates, creating design projects from those templates and exporting the finished designs. Read more about authentication here and embedding the Design Huddle editor here.\n\n**User Access Token**\nUser Access Tokens are obtained via the OAuth2 Resource Owner Password Credentials Grant Type (grant_type=password), supplying only the username field and not the password field (send in ‘password=1’ if you’re using a client SDK that forces its inclusion). API requests performed with these tokens are performed on behalf of a specific user.\n\n .| .\n---------|----------\n Security Scheme Type | HTTP\n HTTP Authorization Scheme | bearer",
+    "contact": {
+      "email": "support@designhuddle.com",
+      "url": "https://designhuddle.com",
+      "name": "Design Huddle Support"
+    },
+    "termsOfService": "https://www.designhuddle.com/terms"
+  },
+  "servers": [
+    {
+      "url": "https://domain.com",
+      "description": ""
+    }
+  ],
+  "tags": [
+    {
+      "name": "Accounts",
+      "description": "Accounts in Design Huddle represent one or more users. They can be mapped to individual clients in your database. If each client in your database only represents one user, then the account in Design Huddle will be 1 to 1 with its corresponding user."
+    },
+    {
+      "name": "Authentication",
+      "description": "Templates represent design projects that admins have published for user access."
+    },
+    {
+      "name": "Brands",
+      "description": "Brands in Design Huddle represent a collection of assets (photos, logos, colors, fonts) as well as brand-specific design templates. An account can be mapped to 1 or more brands, but in most simple cases they are 1 to 1."
+    },
+    {
+      "name": "Export",
+      "description": "Use these methods to export user-created projects or directly export templates using their _internal_project_id_. First create an export job, then poll its progress until it has completed. Or supply a _notification_url_ to receive a webhook event upon export completion. The job progress method will return file download information upon completion."
+    },
+    {
+      "name": "Libraries",
+      "description": "Design Huddle Libraries are a versatile way for organizing and accessing various media assets. They are categorized into brand-specific and shared resources, supporting a wide range of media types, including images, audio files, and video content."
+    },
+    {
+      "name": "Profile",
+      "description": "string"
+    },
+    {
+      "name": "Projects",
+      "description": "string"
+    },
+    {
+      "name": "Templates",
+      "description": "Templates represent design projects that admins have published for user access."
+    },
+    {
+      "name": "Users",
+      "description": "string"
+    }
+  ],
+  "paths": {
+    "/oauth/token": {
+      "parameters": [
+        {
+          "name": "Content-Type",
+          "in": "header",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "application/x-www-form-urlencoded"
+          },
+          "description": "Specify the format of the payload you are sending."
+        }
+      ],
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Retrieve User Access Token",
+        "operationId": "post-oauth-token",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/authentication-user-access"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request Successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string",
+                      "example": "69e8ac1a43e28a211f8269e98e277c0a0da3d361"
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "enum": [
+                        "Bearer"
+                      ]
+                    },
+                    "expires_in": {
+                      "type": "integer",
+                      "example": 86400,
+                      "description": "The number of seconds from right now when the access token will expire."
+                    },
+                    "refresh_token": {
+                      "type": "string",
+                      "description": "Expires 1 year from token generation.",
+                      "example": "8587b70f010622f700b66208d7fe6829b2f33b7d"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "invalid_grant"
+                    },
+                    "error_description": {
+                      "type": "string",
+                      "example": "Invalid grant: invalid user"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "jdk2radvq7ad3"
+        },
+        "security": [],
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-cf670147-cf98-400c-aee7-748ceb6f97eb)\n\n> For security purposes, direct requests for **User Access Tokens** via the User API must be made from a server-side application. Direct requests from a browser that include the `client_secret` pose a security risk and will be rejected.\n> "
+      }
+    },
+    "/oauth/token/guest": {
+      "parameters": [
+        {
+          "name": "Content-Type",
+          "in": "header",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "application/x-www-form-urlencoded"
+          },
+          "description": "Specify the format of the payload you are sending."
+        }
+      ],
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Retrieve Guest Access Token",
+        "operationId": "post-oauth-token-guest",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/authentication-guest-access"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request Successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string",
+                      "example": "69e8ac1a43e28a211f8269e98e277c0a0da3d361"
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "enum": [
+                        "Bearer"
+                      ]
+                    },
+                    "expires_in": {
+                      "type": "integer",
+                      "description": "The number of seconds from right now when the access token will expire.",
+                      "example": 86400
+                    },
+                    "refresh_token": {
+                      "type": "string",
+                      "description": "Expires 1 year from token generation.",
+                      "example": "8587b70f010622f700b66208d7fe6829b2f33b7d"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "invalid_grant"
+                    },
+                    "error_description": {
+                      "type": "string",
+                      "example": "Invalid grant: invalid_user"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "vu9wixzzzrz6b"
+        },
+        "security": [],
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-dcdbfdc8-fbc5-4c01-83dd-f53a89023516)\n\n> For security purposes, direct requests for **Guest Access Tokens** via the User API should originate from server-side (backend) application for enhanced security. Direct requests from a browser that include the `client_secret` pose a security risk and will be rejected. For frontend implementations, the SDK's `configure` method can implicitly set guest access, or use the `getGuestAccessToken` SDK method to retrieve a token directly.\n> "
+      }
+    },
+    "/api/projects": {
+      "description": "Projects represent user-created designs that can be optionally shared with other users. Projects are described by their title and/or dimensions and the GET methods will return a link to their latest thumbnail. Projects can be created from a Template or by supplying properties like the dimensions and background color/photo/shape. To export a project, see the Export section.",
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "List Projects",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/project_id"
+          },
+          {
+            "$ref": "#/components/parameters/project_ids"
+          },
+          {
+            "$ref": "#/components/parameters/brand_id"
+          },
+          {
+            "$ref": "#/components/parameters/brand_code"
+          },
+          {
+            "$ref": "#/components/parameters/media_type"
+          },
+          {
+            "$ref": "#/components/parameters/media_types"
+          },
+          {
+            "$ref": "#/components/parameters/project_status"
+          },
+          {
+            "$ref": "#/components/parameters/project_statuses"
+          },
+          {
+            "$ref": "#/components/parameters/tag"
+          },
+          {
+            "$ref": "#/components/parameters/tags"
+          },
+          {
+            "$ref": "#/components/parameters/project_ownership"
+          },
+          {
+            "$ref": "#/components/parameters/source_template_id"
+          },
+          {
+            "$ref": "#/components/parameters/source_template_ids"
+          },
+          {
+            "$ref": "#/components/parameters/source_template_code"
+          },
+          {
+            "$ref": "#/components/parameters/source_template_codes"
+          },
+          {
+            "$ref": "#/components/parameters/width"
+          },
+          {
+            "$ref": "#/components/parameters/height"
+          },
+          {
+            "$ref": "#/components/parameters/unit_type"
+          },
+          {
+            "$ref": "#/components/parameters/search"
+          },
+          {
+            "$ref": "#/components/parameters/sort"
+          },
+          {
+            "$ref": "#/components/parameters/order"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "project_id",
+                  "user",
+                  "media_type",
+                  "project_title",
+                  "project_status",
+                  "dimensions",
+                  "page_count",
+                  "scene_count",
+                  "duration",
+                  "thumbnail_url",
+                  "source_template",
+                  "brand",
+                  "project_approval_status",
+                  "tags",
+                  "metadata",
+                  "date_created",
+                  "date_updated",
+                  "last_edited",
+                  "last_opened",
+                  "presentation_count"
+                ]
+              }
+            },
+            "in": "query",
+            "name": "fields",
+            "description": "Specify the fields to the retrieve."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request Successful.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "limit": {
+                          "type": "integer",
+                          "example": 50
+                        },
+                        "total": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "project_title": {
+                                "type": "string",
+                                "example": "Project Alpha"
+                              },
+                              "page_count": {
+                                "type": "integer",
+                                "example": 1
+                              },
+                              "date_created": {
+                                "type": "string",
+                                "example": "2024-01-01T00:00:00.000Z"
+                              },
+                              "date_updated": {
+                                "type": "string",
+                                "example": "2024-01-01T00:00:02.000Z"
+                              },
+                              "last_edited": {
+                                "type": "string",
+                                "example": "2024-01-01T00:00:06.000Z"
+                              },
+                              "last_opened": {
+                                "type": "string",
+                                "example": "2024-01-01T00:00:04.000Z"
+                              },
+                              "presentation_count": {
+                                "type": "integer",
+                                "example": 0
+                              },
+                              "user": {
+                                "type": "object",
+                                "properties": {
+                                  "user_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                  },
+                                  "email_address": {
+                                    "type": "string",
+                                    "example": "john@designhuddle.com"
+                                  },
+                                  "first_name": {
+                                    "type": "string",
+                                    "example": "John"
+                                  },
+                                  "last_name": {
+                                    "type": "string",
+                                    "example": "Doe"
+                                  },
+                                  "current_user": {
+                                    "type": "boolean",
+                                    "default": true
+                                  }
+                                }
+                              },
+                              "source_template": {
+                                "type": "object",
+                                "properties": {
+                                  "source_template_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                  },
+                                  "source_template_code": {
+                                    "type": "string",
+                                    "example": "template_alpha"
+                                  },
+                                  "source_template_title": {
+                                    "type": "string",
+                                    "example": "Template Alpha"
+                                  },
+                                  "primary_template_category_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                  },
+                                  "primary_template_category_item_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                  },
+                                  "source_template_version_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                  }
+                                }
+                              },
+                              "project_id": {
+                                "type": "string",
+                                "example": "cpvxrk27fw400200y9a0"
+                              },
+                              "thumbnail_url": {
+                                "type": "string",
+                                "example": "https://domain.com/assets/project/assets/thumbnails/..."
+                              },
+                              "tags": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "example": [
+                                  "tag_alpha",
+                                  "tag_beta"
+                                ]
+                              },
+                              "media_type": {
+                                "type": "object",
+                                "properties": {
+                                  "media_type_id": {
+                                    "type": "string",
+                                    "enum": [
+                                      "digital",
+                                      "print",
+                                      "video",
+                                      "presentation"
+                                    ]
+                                  },
+                                  "media_type_name": {
+                                    "type": "string",
+                                    "enum": [
+                                      "Digital",
+                                      "Print",
+                                      "Video",
+                                      "Presentation"
+                                    ]
+                                  }
+                                }
+                              },
+                              "project_status": {
+                                "type": "object",
+                                "properties": {
+                                  "project_status_id": {
+                                    "type": "string",
+                                    "enum": [
+                                      "active",
+                                      "archived"
+                                    ]
+                                  },
+                                  "project_status_name": {
+                                    "type": "string",
+                                    "enum": [
+                                      "Active",
+                                      "Archived"
+                                    ]
+                                  }
+                                }
+                              },
+                              "dimensions": {
+                                "type": "object",
+                                "properties": {
+                                  "width": {
+                                    "type": "number",
+                                    "example": 8.5
+                                  },
+                                  "height": {
+                                    "type": "number",
+                                    "example": 11
+                                  },
+                                  "unit_type": {
+                                    "type": "object",
+                                    "properties": {
+                                      "unit_type_id": {
+                                        "type": "string",
+                                        "enum": [
+                                          "px",
+                                          "in",
+                                          "mm"
+                                        ]
+                                      },
+                                      "unit_type_name": {
+                                        "type": "string",
+                                        "enum": [
+                                          "Pixels",
+                                          "Inches",
+                                          "Millimeters"
+                                        ]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-b19993ef-ca48-4665-aa78-e7af90da0ae9)",
+        "x-stoplight": {
+          "id": "rnu055tuexwia"
+        },
+        "operationId": "get-api-projects",
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Create Project",
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-5ecda7d4-14df-40a7-89b4-d9f07d0b94f9)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/project-create-template"
+                  },
+                  {
+                    "$ref": "#/components/schemas/project-create-pdf"
+                  },
+                  {
+                    "$ref": "#/components/schemas/project-create-scratch"
+                  }
+                ]
+              },
+              "examples": {}
+            }
+          },
+          "description": ">Specify the request body using `JSON` format based on how projects will be created. See the examples below for the different request body structures when creating projects.\n>"
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Resource Created.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "project_id": {
+                          "type": "string",
+                          "example": "cpvxrk27fw400200y9a0"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "The specified template was not found."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "bashpjexw2omw"
+        },
+        "operationId": "post-api-projects",
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ]
+      }
+    },
+    "/api/projects/{project_id}": {
+      "parameters": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "required": true,
+          "description": "Design Huddle Project ID assigned to a previously created Project.",
+          "example": "cpvxrk27fw400200y9a0"
+        },
+        {
+          "schema": {
+            "type": "boolean",
+            "default": false
+          },
+          "in": "query",
+          "name": "generate_latest_thumbnail",
+          "description": "If a thumbnail has not already been generated incorporating the latest design changes, this will synchronously create a new thumbnail prior to returning the requested project data, including the new `thumbnail_url`."
+        },
+        {
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          },
+          "example": "application/json",
+          "in": "header",
+          "name": "Content-Type",
+          "required": true,
+          "description": "Specify the format of the payload you are sending."
+        }
+      ],
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Retrieve Project",
+        "responses": {
+          "200": {
+            "description": "Request Successful.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "project_id": {
+                          "type": "string",
+                          "example": "cpvxrk27fw400200y9a0"
+                        },
+                        "project_title": {
+                          "type": "string",
+                          "example": "Project Alpha"
+                        },
+                        "date_created": {
+                          "type": "string",
+                          "example": "2024-01-01T00:00:00.000Z"
+                        },
+                        "date_updated": {
+                          "type": "string",
+                          "example": "2024-01-01T00:00:02.000Z"
+                        },
+                        "last_edited": {
+                          "type": "string",
+                          "nullable": true,
+                          "example": "2024-01-01T00:00:06.000Z"
+                        },
+                        "last_opened": {
+                          "type": "string",
+                          "example": "2024-01-01T00:00:04.000Z"
+                        },
+                        "template_count": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "presentation_count": {
+                          "type": "integer",
+                          "example": 0
+                        },
+                        "account": {
+                          "type": "object",
+                          "properties": {
+                            "parent_account_id": {
+                              "type": "integer",
+                              "nullable": true,
+                              "example": 1
+                            }
+                          }
+                        },
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "user_id": {
+                              "type": "integer",
+                              "example": 1
+                            },
+                            "email_address": {
+                              "type": "string",
+                              "example": "john@designhuddle.com"
+                            },
+                            "first_name": {
+                              "type": "string",
+                              "example": "John"
+                            },
+                            "last_name": {
+                              "type": "string",
+                              "example": "Doe"
+                            }
+                          }
+                        },
+                        "tags": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "example": [
+                            "tag_alpha",
+                            "tag_beta"
+                          ]
+                        },
+                        "thumbnail_url": {
+                          "type": "string",
+                          "example": "https://domain.com/assets/project/assets/thumbnails/..."
+                        },
+                        "media_type": {
+                          "type": "object",
+                          "properties": {
+                            "media_type_id": {
+                              "type": "string",
+                              "enum": [
+                                "digital",
+                                "print",
+                                "video",
+                                "presentation"
+                              ]
+                            },
+                            "media_type_name": {
+                              "type": "string",
+                              "enum": [
+                                "Digital",
+                                "Print",
+                                "Video",
+                                "Presentation"
+                              ]
+                            }
+                          }
+                        },
+                        "project_status": {
+                          "type": "object",
+                          "properties": {
+                            "project_status_id": {
+                              "type": "string",
+                              "enum": [
+                                "active",
+                                "archived"
+                              ]
+                            },
+                            "project_status_name": {
+                              "type": "string",
+                              "enum": [
+                                "Active",
+                                "Archived"
+                              ]
+                            }
+                          }
+                        },
+                        "dimensions": {
+                          "type": "object",
+                          "properties": {
+                            "width": {
+                              "type": "number",
+                              "example": 8.5
+                            },
+                            "height": {
+                              "type": "number",
+                              "example": 11
+                            },
+                            "unit_type": {
+                              "type": "object",
+                              "properties": {
+                                "unit_type_id": {
+                                  "type": "string",
+                                  "enum": [
+                                    "px",
+                                    "in",
+                                    "mm"
+                                  ]
+                                },
+                                "unit_type_name": {
+                                  "type": "string",
+                                  "enum": [
+                                    "Pixels",
+                                    "Inches",
+                                    "Millimeters"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "pages": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "date_created": {
+                                "type": "integer",
+                                "example": 1704067200000
+                              },
+                              "page_order": {
+                                "type": "integer",
+                                "example": 1
+                              },
+                              "page_id": {
+                                "type": "string",
+                                "example": "cq74k2whpqr00207kwn0"
+                              },
+                              "page_number": {
+                                "type": "integer",
+                                "example": 1
+                              },
+                              "thumbnail_url": {
+                                "type": "string",
+                                "example": "https://domain.com/assets/project/assets/thumbnails/..."
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "The specified project was not found."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-35830dcd-d660-4141-a188-e8c4a98b4bb4)",
+        "x-stoplight": {
+          "id": "lvj88p7pllr3j"
+        },
+        "operationId": "get-api-projects-project_id",
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Update Project",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "project_title": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "kqfe4vl6lxd9v"
+                    },
+                    "maxLength": 50,
+                    "description": "Title of the project.",
+                    "example": "Project Alpha"
+                  },
+                  "brand_id": {
+                    "type": "integer",
+                    "x-stoplight": {
+                      "id": "59urhz4fiavvy"
+                    },
+                    "description": "Design Huddle Project ID assigned to a previously created brand.",
+                    "example": 1
+                  },
+                  "brand_code": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "6yzkq85omzc2k"
+                    },
+                    "description": "Custom supplied ID representing the brand.",
+                    "example": "brand_alpha"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "x-stoplight": {
+                      "id": "6dtql33qv5ec5"
+                    },
+                    "description": "Keywords or labels to help categorize and organize projects.",
+                    "items": {
+                      "x-stoplight": {
+                        "id": "eri1iicc5jk6t"
+                      },
+                      "type": "string"
+                    },
+                    "example": [
+                      "tag_alpha",
+                      "tag_beta"
+                    ]
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "x-stoplight": {
+                      "id": "8vjqe5lpxh3bo"
+                    },
+                    "description": "JSON object representing additional metadata assigned to this project.",
+                    "example": {
+                      "metadata": "value"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request Successful.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "default": "The specified project was not found."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-56ce0c2e-c566-4cfc-b498-48ee8ebe879d)",
+        "x-stoplight": {
+          "id": "m820h1bniyee8"
+        },
+        "operationId": "patch-api-projects-project_id",
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Archive Project",
+        "responses": {
+          "200": {
+            "description": "Request Successful.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "The specified project was not found."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-a14ed2e1-5f57-4de1-9d02-aa71173fe2f4)",
+        "x-stoplight": {
+          "id": "6kpykaqogj1i5"
+        },
+        "operationId": "delete-api-projects-project_id",
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Unarchive Project",
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Request Successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "The specified project was not found."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-8388955c-6f5b-49a6-b0e9-71de39f71361)",
+        "x-stoplight": {
+          "id": "pu14nm2g3mdy7"
+        },
+        "operationId": "post-api-projects-project_id",
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ]
+      }
+    },
+    "/api/projects/{project_id}/clone": {
+      "parameters": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "required": true,
+          "description": "Design Huddle Project ID assigned to a previously created Project.",
+          "example": "cpvxrk27fw400200y9a0"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Clone Project",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "dimensions"
+                ],
+                "properties": {
+                  "project_title": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "obwez1xg8ver1"
+                    },
+                    "description": "Title of the project being cloned. If not provided, the title will default to that of the original project being cloned.",
+                    "example": "Project Alpha Clone"
+                  },
+                  "media_type": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "8f62ulgnnd85t"
+                    },
+                    "description": "Media type for the new project being cloned.",
+                    "enum": [
+                      "digital",
+                      "print",
+                      "video",
+                      "presentation"
+                    ]
+                  },
+                  "dimensions": {
+                    "type": "object",
+                    "x-stoplight": {
+                      "id": "l37u7ekfhatg6"
+                    },
+                    "required": [
+                      "width",
+                      "height",
+                      "unit_type"
+                    ],
+                    "properties": {
+                      "width": {
+                        "type": "number",
+                        "x-stoplight": {
+                          "id": "45v34gbfs5zoa"
+                        },
+                        "description": "Width of the new cloned project in the specified `unit_type`.",
+                        "example": 400
+                      },
+                      "height": {
+                        "type": "number",
+                        "x-stoplight": {
+                          "id": "11lchizd1iel1"
+                        },
+                        "description": "Height of the new cloned project in the specified `unit_type`.",
+                        "example": 400
+                      },
+                      "unit_type": {
+                        "type": "string",
+                        "x-stoplight": {
+                          "id": "0ietergy8qwgr"
+                        },
+                        "description": "Measurement unit for the project's dimensions. Print projects use inches and millimeters, while digital, video, and presentation projects use pixels.",
+                        "enum": [
+                          "px",
+                          "in",
+                          "mm"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Resource Created.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "project_id": {
+                          "type": "string",
+                          "example": "cpvxrk27fw400200y9a0"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Access to this project is not authorized."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "The specified project was not found."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "fb1hylsinybci"
+        },
+        "operationId": "post-projects-project_id-clone",
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-2d8a64c3-0f01-4da3-905c-1a240a885e90)",
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ]
+      }
+    },
+    "/api/projects/{project_id}/share/{userKey}": {
+      "parameters": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "required": true,
+          "description": "Design Huddle Project ID assigned to a previously created Project.",
+          "example": "cpvxrk27fw400200y9a0"
+        },
+        {
+          "$ref": "#/components/parameters/userKey"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "post": {
+        "summary": "Share Project",
+        "operationId": "post-api-projects-project_id-share-userKey",
+        "responses": {
+          "200": {
+            "description": "Request Successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "enum": [
+                        "The user was not found.",
+                        "The specified project was not found."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "8wskwtpvc5frd"
+        },
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-00d3bb10-ec3d-4777-b869-f3ed1883e7a2)",
+        "tags": [
+          "Projects"
+        ],
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ]
+      }
+    },
+    "/api/projects/{project_id}/data": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Retreive Project's Design Metadata",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Design Huddle Project ID assigned to a previously created Project.",
+            "example": "cpvxrk27fw400200y9a0"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/element_types"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request Successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "./models/project-design-data-response-digital.yaml"
+                    },
+                    {
+                      "$ref": "./models/project-design-data-response-print.yaml"
+                    },
+                    {
+                      "$ref": "./models/project-design-data-response-video.yaml"
+                    },
+                    {
+                      "$ref": "./models/project-design-data-response-presentation.yaml"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "The specified project was not found."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "pde9gc2g56yld"
+        },
+        "operationId": "get-api-projects-project_id-data",
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-41bdf426-c684-4f1d-9bb7-fefd6f02bc9a)",
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "description": "Design Huddle Project ID assigned to a previously created Project."
+        }
+      ]
+    },
+    "/api/projects/{project_id}/assets/{asset_id}": {
+      "parameters": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "required": true,
+          "description": "Design Huddle Project ID assigned to a previously created project.",
+          "example": "cpvxrk27fw400200y9a0"
+        },
+        {
+          "name": "asset_id",
+          "in": "path",
+          "schema": {
+            "type": "integer"
+          },
+          "required": true,
+          "description": "Design Huddle Asset ID assigned to an asset inside of a project.",
+          "example": 7
+        }
+      ],
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Retrieve Project Asset",
+        "responses": {
+          "200": {
+            "description": "Request Successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "asset_id": {
+                          "type": "integer",
+                          "example": 7
+                        },
+                        "file_type": {
+                          "type": "string"
+                        },
+                        "thumbnail_url": {
+                          "type": "string",
+                          "example": "https://domain.com/assets/project/assets/thumbnails/..."
+                        },
+                        "download_url": {
+                          "type": "string",
+                          "description": "URL remains valid until the expiration of the access token used or for a period of two weeks, whichever is sooner.",
+                          "example": "https://domain.com/assets/project/assets/source/..."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "default": "Access to this project is not authorized."
+                    },
+                    "exit_project": {
+                      "type": "boolean",
+                      "default": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "The specified asset was not found."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "uipi4pwahhklx"
+        },
+        "operationId": "get-api-projects-project_id-assets-asset_id",
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-ed922a31-0005-4d0d-9716-d32e7f3eca79)",
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ]
+      }
+    },
+    "/api/gallery/templates": {
+      "get": {
+        "tags": [
+          "Templates"
+        ],
+        "summary": "List Templates",
+        "responses": {
+          "200": {
+            "description": "Request Successful.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "type": "integer",
+                          "default": 1
+                        },
+                        "limit": {
+                          "type": "integer",
+                          "example": 50
+                        },
+                        "total": {
+                          "type": "integer",
+                          "example": 3
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "template_id": {
+                                "type": "integer",
+                                "example": 1
+                              },
+                              "template_code": {
+                                "type": "string",
+                                "nullable": true,
+                                "example": "template_alpha"
+                              },
+                              "template_title": {
+                                "type": "string",
+                                "example": "Template Alpha"
+                              },
+                              "date_created": {
+                                "type": "string",
+                                "example": "2024-01-01T00:00:00.000Z"
+                              },
+                              "date_updated": {
+                                "type": "string",
+                                "example": "2024-01-01T00:00:02.000Z"
+                              },
+                              "primary_template_category_item": {
+                                "type": "object",
+                                "properties": {
+                                  "template_category_item_id": {
+                                    "type": "integer",
+                                    "example": 1
+                                  },
+                                  "item_name": {
+                                    "type": "string",
+                                    "example": "Template Cateogry Alpha"
+                                  }
+                                }
+                              },
+                              "internal_project_id": {
+                                "type": "string",
+                                "example": "cq8k9gya7s70028528ng"
+                              },
+                              "page_count": {
+                                "type": "integer",
+                                "example": 3
+                              },
+                              "preview_url": {
+                                "type": "string",
+                                "example": "https://domain.com/assets/project/assets/preview/..."
+                              },
+                              "thumbnail_url": {
+                                "type": "string",
+                                "example": "https://domain.com/assets/project/assets/thumbnails/..."
+                              },
+                              "media_type": {
+                                "type": "object",
+                                "properties": {
+                                  "media_type_id": {
+                                    "type": "string",
+                                    "example": "digital"
+                                  },
+                                  "media_type_name": {
+                                    "type": "string",
+                                    "example": "Digital"
+                                  }
+                                }
+                              },
+                              "dimensions": {
+                                "type": "object",
+                                "properties": {
+                                  "width": {
+                                    "type": "number",
+                                    "example": 1980
+                                  },
+                                  "height": {
+                                    "type": "number",
+                                    "example": 1080
+                                  },
+                                  "unit_type": {
+                                    "type": "object",
+                                    "properties": {
+                                      "unit_type_id": {
+                                        "type": "string",
+                                        "enum": [
+                                          "pixels"
+                                        ]
+                                      },
+                                      "unit_type_name": {
+                                        "type": "string",
+                                        "enum": [
+                                          "Pixels"
+                                        ]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-api-gallery-templates",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/template_id"
+          },
+          {
+            "$ref": "#/components/parameters/template_ids"
+          },
+          {
+            "$ref": "#/components/parameters/template_code"
+          },
+          {
+            "$ref": "#/components/parameters/template_codes"
+          },
+          {
+            "$ref": "#/components/parameters/brand_id"
+          },
+          {
+            "$ref": "#/components/parameters/brand_code"
+          },
+          {
+            "$ref": "#/components/parameters/media_type"
+          },
+          {
+            "$ref": "#/components/parameters/media_types"
+          },
+          {
+            "$ref": "#/components/parameters/primary_template_category_item_id"
+          },
+          {
+            "$ref": "#/components/parameters/primary_template_category_item_ids"
+          },
+          {
+            "$ref": "#/components/parameters/category_{id}[]"
+          },
+          {
+            "$ref": "#/components/parameters/width"
+          },
+          {
+            "$ref": "#/components/parameters/height"
+          },
+          {
+            "$ref": "#/components/parameters/unit_type"
+          },
+          {
+            "$ref": "#/components/parameters/search"
+          },
+          {
+            "$ref": "#/components/parameters/sort"
+          },
+          {
+            "$ref": "#/components/parameters/order"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "template_id",
+                  "template_code",
+                  "internal_project_id",
+                  "primary_template_category_item",
+                  "template_title",
+                  "dimensions",
+                  "preview_url",
+                  "thumbnail_url",
+                  "media_type",
+                  "date_created",
+                  "date_updated"
+                ]
+              }
+            },
+            "in": "query",
+            "name": "fields",
+            "description": "Specify the fields to the retrieve.",
+            "x-order": 20
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            },
+            "in": "header",
+            "example": "application/json",
+            "name": "Content-Type",
+            "required": true,
+            "description": "Specify the format of the payload you are sending."
+          }
+        ],
+        "x-stoplight": {
+          "id": "us8kw7r4tjnei"
+        },
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-09f01bea-d105-4401-8432-ce8e65093d31)",
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ]
+      }
+    },
+    "/api/template/categories": {
+      "get": {
+        "summary": "List Template Categories",
+        "tags": [
+          "Templates"
+        ],
+        "responses": {
+          "200": {
+            "description": "Request Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "template_category_id": {
+                                "type": "integer",
+                                "example": 1
+                              },
+                              "category_name": {
+                                "type": "string",
+                                "example": "Category Alpha"
+                              },
+                              "primary_template_category": {
+                                "type": "boolean",
+                                "example": true
+                              },
+                              "template_category_items": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "template_category_item_id": {
+                                      "example": 1,
+                                      "type": "integer"
+                                    },
+                                    "item_name": {
+                                      "type": "string",
+                                      "example": "Subcategory Alpha"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-api-template-categories",
+        "x-stoplight": {
+          "id": "rz2kjlqxn24rq"
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/search"
+          },
+          {
+            "$ref": "#/components/parameters/media_type"
+          },
+          {
+            "$ref": "#/components/parameters/primary_template_category_item_id"
+          },
+          {
+            "$ref": "#/components/parameters/sort"
+          },
+          {
+            "$ref": "#/components/parameters/order"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "template_category_id",
+                  "category_name",
+                  "primary_template_category",
+                  "template_category_items"
+                ]
+              }
+            },
+            "in": "query",
+            "name": "fields",
+            "description": "Specify the fields to retrieve."
+          }
+        ],
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-025654b9-322f-4473-9829-d24e29a550f1)",
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ]
+      }
+    },
+    "/api/template/customization-objects": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "post": {
+        "tags": [
+          "Templates"
+        ],
+        "summary": "Create Template Customization Object",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "object": {
+                    "classes": {
+                      "name": {
+                        "text": "Design Huddle"
+                      },
+                      "image": {
+                        "url": "https://example.com/images/sample-image.jpg"
+                      }
+                    },
+                    "replacements": {
+                      "color": null,
+                      "text": {
+                        "Old Text": "New Text"
+                      },
+                      "text_substring": {}
+                    }
+                  },
+                  "save_as_user_default": true
+                },
+                "required": [
+                  "object"
+                ],
+                "properties": {
+                  "object": {
+                    "type": "object",
+                    "x-stoplight": {
+                      "id": "c93gw2tzpsz0x"
+                    },
+                    "description": "[Template Customization Object](https://api.designhuddle.com/doc/Template_Customization_Objects.pdf) to be used on subsequent [Project creation](https://api.designhuddle.com/user-api#tag/Projects/paths/~1projects/post) and [Variable Template Preview](https://api.designhuddle.com/doc/Variable_Template_Previews.pdf) requests."
+                  },
+                  "save_as_user_default": {
+                    "type": "boolean",
+                    "default": false,
+                    "x-stoplight": {
+                      "id": "6xi60okk6253c"
+                    },
+                    "description": "Determines whether the specified TCO should become the default for the user."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Resource Created.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "object_hash": {
+                          "type": "string",
+                          "example": "b1a65c1e5d0b5f9e4ca2530ebc63d9b2905f4d32"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "enum": [
+                        "Invalid Object Properties: 0, 1, 2, 3, 4, 5",
+                        "Template Customization Object is required."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "j5c7wgy8nrjmz"
+        },
+        "operationId": "post-api-template-customization-objects",
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-7c9d5730-9a27-491f-b103-a1186696e37c)",
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ]
+      }
+    },
+    "/api/export/project/{project_id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        },
+        {
+          "name": "project_id",
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "required": true,
+          "description": "Design Huddle Project ID assigned to a previously created Project.",
+          "example": "cpvxrk27fw400200y9a0"
+        }
+      ],
+      "post": {
+        "tags": [
+          "Export"
+        ],
+        "summary": "Create Project Export Job",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/export-image"
+                  },
+                  {
+                    "$ref": "#/components/schemas/export-pdf"
+                  },
+                  {
+                    "$ref": "#/components/schemas/export-video"
+                  }
+                ]
+              }
+            }
+          },
+          "description": ">Specify the request body using `JSON` format based on how projects will be exported. See the examples below for the different request body structures when exporting projects.\n>"
+        },
+        "responses": {
+          "201": {
+            "description": "Resource Created.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "job_id": {
+                          "type": "string",
+                          "example": "cpzx8mtjrft0020sb0fg"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Format entered is not a valid option."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "The specified project was not found."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-api-export-projects-project_id",
+        "x-internal": false,
+        "x-stoplight": {
+          "id": "9d660rl9kqkbn"
+        },
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-7d4fd53f-3b4c-40bf-bf80-64910d698c22)",
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ]
+      }
+    },
+    "/api/export/template/{templateKey}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "enum": [
+              "{template_id}",
+              "code-{template_code}"
+            ]
+          },
+          "name": "templateKey",
+          "in": "path",
+          "description": "Either a `template_id`(integer), a Design Huddle Template ID assigned to a previously created template, or `template_code` (string), a custom supplied ID representing a template. When using the `template_code`, make sure to include the \"code-\" prefix.",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "Create Template Export Job",
+        "tags": [
+          "Export"
+        ],
+        "responses": {
+          "200": {
+            "description": "Request Successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "job_id": {
+                          "type": "string",
+                          "example": "cpzx8mtjrft0020sb0fg"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Format entered is not a valid option."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "The specified project was not found."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-api-export-template-templateKey",
+        "x-stoplight": {
+          "id": "tfn6msxvoqmcj"
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "required": true,
+            "description": "Specify the format of the payload you are sending."
+          }
+        ],
+        "requestBody": {
+          "description": ">Specify the request body using `JSON` format based on how projects will be exported. See the examples below for the different request body structures when exporting projects.\n>",
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/export-image"
+                  },
+                  {
+                    "$ref": "#/components/schemas/export-pdf"
+                  },
+                  {
+                    "$ref": "#/components/schemas/export-video"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-64f9e5b8-4d7f-4f68-aaa3-9eecea8dbc12)"
+      }
+    },
+    "/api/export/jobs/{job_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "description": "Design Huddle Job ID assigned to a previously created export job."
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Export"
+        ],
+        "summary": "Retrieve Export Job Progress",
+        "responses": {
+          "200": {
+            "description": "Request Successful.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "date_started": {
+                          "type": "string",
+                          "example": "2024-01-01T00:00:00.000Z"
+                        },
+                        "completed": {
+                          "type": "boolean",
+                          "default": true
+                        },
+                        "date_completed": {
+                          "type": "string",
+                          "example": "2024-01-01T00:00:02.000Z"
+                        },
+                        "download_url": {
+                          "type": "string",
+                          "description": "URL remains valid until the expiration of the access token used or for a period of two weeks, whichever is sooner.",
+                          "example": "https://domain.com/assets/project/assets/source/..."
+                        },
+                        "thumbnail_url": {
+                          "type": "string",
+                          "example": "https://domain.com/assets/project/assets/thumbnails/..."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "The requested Job ID is not valid."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "uudunsq4930fw"
+        },
+        "operationId": "get-api-export-jobs-job_id",
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-ca48e3c4-b0ea-43c8-91bd-48ec063f8e0d)",
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ]
+      }
+    },
+    "/api/brands": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "get": {
+        "summary": "List Brands",
+        "tags": [
+          "Brands"
+        ],
+        "responses": {
+          "200": {
+            "description": "Request Successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "type": "integer",
+                          "default": 1
+                        },
+                        "limit": {
+                          "type": "integer",
+                          "maximum": 1000,
+                          "example": 50
+                        },
+                        "total": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "brand_id": {
+                                "type": "integer",
+                                "example": 1
+                              },
+                              "brand_code": {
+                                "type": "string",
+                                "example": "brand_alpha"
+                              },
+                              "brand_name": {
+                                "type": "string",
+                                "example": "Brand Alpha"
+                              },
+                              "date_created": {
+                                "type": "string",
+                                "example": "2024-01-01T00:00:00.000Z"
+                              },
+                              "date_updated": {
+                                "type": "string",
+                                "example": "2024-01-01T00:00:02.000Z"
+                              },
+                              "brand_status": {
+                                "type": "object",
+                                "properties": {
+                                  "brand_status_id": {
+                                    "type": "string",
+                                    "enum": [
+                                      "active",
+                                      "inactive"
+                                    ]
+                                  },
+                                  "brand_status_name": {
+                                    "type": "string",
+                                    "enum": [
+                                      "Active",
+                                      "Inactive"
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-api-brands",
+        "x-stoplight": {
+          "id": "dx2pb0vi70of5"
+        },
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-537a8c85-0bc9-4364-8a0c-ef4fd8e348dd)",
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ]
+      }
+    },
+    "/api/libraries": {
+      "get": {
+        "summary": "List Libraries",
+        "tags": [
+          "Libraries"
+        ],
+        "responses": {
+          "200": {
+            "description": "Request Successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "x-examples": {
+                    "Example 1": {
+                      "success": true,
+                      "data": {
+                        "page": 1,
+                        "limit": 50,
+                        "total": 3,
+                        "items": [
+                          {
+                            "library_id": 1,
+                            "library_name": "Photos",
+                            "library_config": {
+                              "enable_tags": true,
+                              "init_photos": true,
+                              "default_sort": {
+                                "field": "date_created",
+                                "order": "DESC"
+                              },
+                              "enable_names": true,
+                              "allowed_asset_types": [
+                                "image"
+                              ]
+                            },
+                            "date_created": "2024-01-01T00:00:00.000Z",
+                            "date_updated": "2024-01-01T00:00:00.000Z",
+                            "asset_count": 10,
+                            "account_brand": null,
+                            "library_status": {
+                              "library_status_id": "active",
+                              "library_status_name": "Active"
+                            }
+                          },
+                          {
+                            "library_id": 2,
+                            "library_name": "Audio",
+                            "library_config": {
+                              "init_audio": true,
+                              "enable_tags": true,
+                              "default_sort": {
+                                "field": "date_created",
+                                "order": "DESC"
+                              },
+                              "enable_names": true,
+                              "allowed_asset_types": [
+                                "audio"
+                              ]
+                            },
+                            "date_created": "2024-01-01T00:00:00.000Z",
+                            "date_updated": "2024-01-01T00:00:00.000Z",
+                            "asset_count": 1,
+                            "account_brand": {
+                              "account_id": 1
+                            },
+                            "library_status": {
+                              "library_status_id": "active",
+                              "library_status_name": "Active"
+                            }
+                          },
+                          {
+                            "library_id": 3,
+                            "library_name": "Videos",
+                            "library_config": {
+                              "enable_tags": false,
+                              "default_sort": {
+                                "field": "date_created",
+                                "order": "DESC"
+                              },
+                              "enable_names": false,
+                              "allowed_asset_types": [
+                                "video"
+                              ]
+                            },
+                            "date_created": "2024-01-01T00:00:00.000Z",
+                            "date_updated": "2024-01-01T00:00:00.000Z",
+                            "asset_count": 1,
+                            "account_brand": {
+                              "account_id": 1
+                            },
+                            "library_status": {
+                              "library_status_id": "active",
+                              "library_status_name": "Active"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "type": "integer"
+                        },
+                        "limit": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "library_id": {
+                                "type": "integer"
+                              },
+                              "library_name": {
+                                "type": "string"
+                              },
+                              "library_config": {
+                                "type": "object",
+                                "properties": {
+                                  "enable_tags": {
+                                    "type": "boolean"
+                                  },
+                                  "init_photos": {
+                                    "type": "boolean"
+                                  },
+                                  "default_sort": {
+                                    "type": "object",
+                                    "properties": {
+                                      "field": {
+                                        "type": "string"
+                                      },
+                                      "order": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  "enable_names": {
+                                    "type": "boolean"
+                                  },
+                                  "allowed_asset_types": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "init_audio": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              },
+                              "date_created": {
+                                "type": "string"
+                              },
+                              "date_updated": {
+                                "type": "string"
+                              },
+                              "asset_count": {
+                                "type": "integer"
+                              },
+                              "account_brand": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "library_status": {
+                                "type": "object",
+                                "properties": {
+                                  "library_status_id": {
+                                    "type": "string"
+                                  },
+                                  "library_status_name": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "success": true,
+                      "data": {
+                        "page": 1,
+                        "limit": 50,
+                        "total": 3,
+                        "items": [
+                          {
+                            "library_id": 1,
+                            "library_name": "Photos",
+                            "library_config": {
+                              "enable_tags": true,
+                              "init_photos": true,
+                              "default_sort": {
+                                "field": "date_created",
+                                "order": "DESC"
+                              },
+                              "enable_names": true,
+                              "allowed_asset_types": [
+                                "image"
+                              ]
+                            },
+                            "date_created": "2024-01-01T00:00:00.000Z",
+                            "date_updated": "2024-01-01T00:00:00.000Z",
+                            "asset_count": 10,
+                            "account_brand": null,
+                            "library_status": {
+                              "library_status_id": "active",
+                              "library_status_name": "Active"
+                            }
+                          },
+                          {
+                            "library_id": 2,
+                            "library_name": "Audio",
+                            "library_config": {
+                              "init_audio": true,
+                              "enable_tags": true,
+                              "default_sort": {
+                                "field": "date_created",
+                                "order": "DESC"
+                              },
+                              "enable_names": true,
+                              "allowed_asset_types": [
+                                "audio"
+                              ]
+                            },
+                            "date_created": "2024-01-01T00:00:00.000Z",
+                            "date_updated": "2024-01-01T00:00:00.000Z",
+                            "asset_count": 1,
+                            "account_brand": null,
+                            "account_id": 1,
+                            "library_status": {
+                              "library_status_id": "active",
+                              "library_status_name": "Active"
+                            }
+                          },
+                          {
+                            "library_id": 3,
+                            "library_name": "Videos",
+                            "library_config": {
+                              "enable_tags": false,
+                              "default_sort": {
+                                "field": "date_created",
+                                "order": "DESC"
+                              },
+                              "enable_names": false,
+                              "allowed_asset_types": [
+                                "video"
+                              ]
+                            },
+                            "date_created": "2024-01-01T00:00:00.000Z",
+                            "date_updated": "2024-01-01T00:00:00.000Z",
+                            "asset_count": 1,
+                            "account_brand": null,
+                            "account_id": 1,
+                            "library_status": {
+                              "library_status_id": "active",
+                              "library_status_name": "Active"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-api-libraries",
+        "x-stoplight": {
+          "id": "70stxk26ms6gj"
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            },
+            "example": "application/json",
+            "in": "header",
+            "name": "Content-Type",
+            "required": true,
+            "description": "Specify the format of the payload you are sending."
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "brand_id",
+            "description": "Unique identifier assigned to a specific brand."
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "shared",
+            "description": "Filters for shared libraries. Set to `1` to retrieve all shared libraries. "
+          }
+        ],
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ],
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-d845d1f4-4e5c-42a5-8df0-dc5fb2f47c5a)"
+      },
+      "parameters": []
+    },
+    "/api/library/assets": {
+      "get": {
+        "summary": "List Library Assets",
+        "tags": [
+          "Libraries"
+        ],
+        "responses": {
+          "200": {
+            "description": "Request Successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "x-examples": {
+                    "Example 1": {
+                      "success": true,
+                      "data": {
+                        "page": 1,
+                        "limit": 50,
+                        "total": 3,
+                        "items": [
+                          {
+                            "asset_id": 1,
+                            "tags": null,
+                            "date_created": "2024-01-01T00:00:00.000Z",
+                            "date_updated": "2024-01-01T00:00:00.000Z",
+                            "lofi_asset": null,
+                            "asset_code": null,
+                            "asset_type": "image",
+                            "background_removed": false,
+                            "file_type": "png",
+                            "thumbnail_url": "https://domain.com/assets/account/lib-assets/thumbnail/dh1/image.png?...",
+                            "asset_status": {
+                              "asset_status_id": "active",
+                              "asset_status_name": "Active"
+                            }
+                          },
+                          {
+                            "asset_id": 2,
+                            "tags": null,
+                            "date_created": "2024-01-01T00:00:00.000Z",
+                            "date_updated": "2024-01-01T00:00:00.000Z",
+                            "asset_code": null,
+                            "asset_type": "video",
+                            "background_removed": false,
+                            "duration": 2.5,
+                            "no_audio": false,
+                            "file_type": "webm",
+                            "lofi_url": "https://domain.com/assets/account/lib-assets/lofi/dh1/video.webm?...",
+                            "thumbnail_url": "https://domain.com/assets/account/lib-assets/thumbnail/dh1/image.png?...",
+                            "asset_status": {
+                              "asset_status_id": "active",
+                              "asset_status_name": "Active"
+                            }
+                          },
+                          {
+                            "asset_id": 3,
+                            "tags": null,
+                            "date_created": "2024-01-01T00:00:00.000Z",
+                            "date_updated": "2024-01-01T00:00:00.000Z",
+                            "thumbnail_asset": null,
+                            "asset_code": null,
+                            "asset_type": "audio",
+                            "background_removed": false,
+                            "duration": 1.5,
+                            "file_type": "mp3",
+                            "lofi_url": "https://domain.com/assets/account/lib-assets/lofi/dh1/audio.m4a?...",
+                            "asset_status": {
+                              "asset_status_id": "active",
+                              "asset_status_name": "Active"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "type": "integer"
+                        },
+                        "limit": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "asset_id": {
+                                "type": "integer"
+                              },
+                              "tags": {
+                                "type": "array",
+                                "nullable": true,
+                                "items": {
+                                  "x-stoplight": {
+                                    "id": "spzed1lsqppnf"
+                                  },
+                                  "type": "string"
+                                }
+                              },
+                              "date_created": {
+                                "type": "string"
+                              },
+                              "date_updated": {
+                                "type": "string"
+                              },
+                              "lofi_asset": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "asset_code": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "asset_type": {
+                                "type": "string"
+                              },
+                              "background_removed": {
+                                "type": "boolean"
+                              },
+                              "file_type": {
+                                "type": "string"
+                              },
+                              "thumbnail_url": {
+                                "type": "string"
+                              },
+                              "asset_status": {
+                                "type": "object",
+                                "properties": {
+                                  "asset_status_id": {
+                                    "type": "string"
+                                  },
+                                  "asset_status_name": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "duration": {
+                                "type": "number"
+                              },
+                              "no_audio": {
+                                "type": "boolean"
+                              },
+                              "lofi_url": {
+                                "type": "string"
+                              },
+                              "thumbnail_asset": {
+                                "type": "string",
+                                "nullable": true
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "success": true,
+                      "data": {
+                        "page": 1,
+                        "limit": 50,
+                        "total": 3,
+                        "items": [
+                          {
+                            "asset_id": 1,
+                            "tags": null,
+                            "date_created": "2024-01-01T00:00:00.000Z",
+                            "date_updated": "2024-01-01T00:00:00.000Z",
+                            "lofi_asset": null,
+                            "asset_code": "asset_alpha",
+                            "asset_type": "image",
+                            "background_removed": false,
+                            "file_type": "png",
+                            "thumbnail_url": "https://domain.com/assets/account/lib-assets/thumbnail/...",
+                            "asset_status": {
+                              "asset_status_id": "active",
+                              "asset_status_name": "Active"
+                            }
+                          },
+                          {
+                            "asset_id": 2,
+                            "tags": null,
+                            "date_created": "2024-01-01T00:00:00.000Z",
+                            "date_updated": "2024-01-01T00:00:00.000Z",
+                            "asset_code": "asset_beta",
+                            "asset_type": "video",
+                            "background_removed": false,
+                            "duration": 2.5,
+                            "no_audio": false,
+                            "file_type": "webm",
+                            "lofi_url": "https://domain.com/assets/account/lib-assets/lofi/...",
+                            "thumbnail_url": "https://domain.com/assets/account/lib-assets/thumbnail/...",
+                            "asset_status": {
+                              "asset_status_id": "active",
+                              "asset_status_name": "Active"
+                            }
+                          },
+                          {
+                            "asset_id": 3,
+                            "tags": null,
+                            "date_created": "2024-01-01T00:00:00.000Z",
+                            "date_updated": "2024-01-01T00:00:00.000Z",
+                            "thumbnail_asset": null,
+                            "asset_code": "asset_charlie",
+                            "asset_type": "audio",
+                            "background_removed": false,
+                            "duration": 1.5,
+                            "file_type": "mp3",
+                            "lofi_url": "https://domain.com/assets/account/lib-assets/lofi/...",
+                            "asset_status": {
+                              "asset_status_id": "active",
+                              "asset_status_name": "Active"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-api-library-assets",
+        "x-stoplight": {
+          "id": "8dodainohiw9r"
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            },
+            "example": "application/json",
+            "in": "header",
+            "name": "Content-Type",
+            "required": true,
+            "description": "Specify the format of the payload you are sending."
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "library_id",
+            "description": "Unique identifier assigned to a specific library.",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ],
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-3bc7c3f3-7fb9-4d00-861b-a9f1eb80ce53)"
+      }
+    },
+    "/api/profile": {
+      "get": {
+        "summary": "Retrieve Profile",
+        "tags": [
+          "Profile"
+        ],
+        "responses": {
+          "200": {
+            "description": "Request Successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "last_name": {
+                          "type": "string"
+                        },
+                        "first_name": {
+                          "type": "string"
+                        },
+                        "email_address": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "x-examples": {
+                    "Example 1": {
+                      "data": {
+                        "last_name": "Doe",
+                        "first_name": "John",
+                        "email_address": "johndoe@email.com"
+                      },
+                      "success": true
+                    }
+                  }
+                },
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "success": true,
+                      "data": {
+                        "email_address": "johndoe@email.com",
+                        "first_name": "John",
+                        "last_name": "Doe"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-api-profile",
+        "x-stoplight": {
+          "id": "oes9ix9t1u046"
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            },
+            "example": "application/json",
+            "in": "header",
+            "name": "Content-Type",
+            "required": true,
+            "description": "Specify the format of the payload you are sending."
+          }
+        ],
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ],
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-e4cd4b75-bec7-47e7-8fb9-9ba8f9882d64)"
+      },
+      "patch": {
+        "summary": "Update Profile",
+        "tags": [
+          "Profile"
+        ],
+        "responses": {
+          "200": {
+            "description": "Request Successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "x-examples": {
+                    "Example 1": {
+                      "success": true
+                    }
+                  }
+                },
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "success": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-examples": {
+                    "Example 1": {
+                      "success": false,
+                      "message": "The specified Email Address is already in use."
+                    }
+                  }
+                },
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "success": false,
+                      "message": "The specified Email Address is already in use."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "patch-api-profile",
+        "x-stoplight": {
+          "id": "a2ffdg2ll3h3e"
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            },
+            "example": "application/json",
+            "in": "header",
+            "name": "Content-Type",
+            "required": true,
+            "description": "Specify the format of the payload you are sending."
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "first_name": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "vrtzi4rfgebnd"
+                    }
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "xab3ehg1ddyl0"
+                    }
+                  },
+                  "email": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "scv23nmfo9lhu"
+                    },
+                    "format": "email"
+                  }
+                }
+              },
+              "examples": {
+                "Example": {
+                  "value": {
+                    "first_name": "John",
+                    "last_name": "Doe",
+                    "email": "johndoe@example.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "User Access Token": []
+          },
+          {
+            "Guest Access Token": []
+          }
+        ],
+        "description": "[<img src=\"https://run.pstmn.io/button.svg\" alt=\"Run In Postman\" style=\"width: 128px; height: 32px;\">](https://www.postman.com/designhuddle/workspace/design-huddle-public-workspace/request/13545849-e27e5d51-d349-48a1-a673-69d75a69918f)"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "authentication-user-access": {
+        "type": "object",
+        "x-stoplight": {
+          "id": "5ixr00bpspmqv"
+        },
+        "title": "User Access Token",
+        "x-tags": [
+          "Authentication"
+        ],
+        "required": [
+          "client_id",
+          "client_secret",
+          "grant_type",
+          "username"
+        ],
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "description": "Unique string identifier assigned to your application when registered with [Design Huddle](https://www.designhuddle.com)."
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "Confidential key provided by Design Huddle, used with the `client_id` for authentication."
+          },
+          "grant_type": {
+            "type": "string",
+            "description": "OAuth 2.0 grant type being used. **User Access Tokens** are retrieved by using the Resource Owner Password Credentials Grant Type.",
+            "example": "password"
+          },
+          "username": {
+            "type": "string",
+            "description": "Username of the user attempting to authenticate or perform an action via the API.",
+            "example": "user_alpha"
+          },
+          "email_address": {
+            "type": "string",
+            "description": "User’s email address. If not supplied explicitly, this could be inferred from the `username` field.",
+            "example": "john@designhuddle.com"
+          },
+          "user_code": {
+            "type": "string",
+            "description": "Custom supplied ID representing the user. If not supplied explicitly, this could be inferred from the `username` field.",
+            "example": "user_alpha"
+          },
+          "user_id": {
+            "type": "integer",
+            "description": "Design Huddle User ID assigned to a previously created user.",
+            "example": 1
+          },
+          "user_status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "inactive",
+              "suspended"
+            ],
+            "description": "Status to set the user to. The only value that would make sense here is \"active\" which would allow auto-reactivation of a previously disabled user during login."
+          },
+          "first_name": {
+            "type": "string",
+            "description": "User's first name.",
+            "example": "John"
+          },
+          "last_name": {
+            "type": "string",
+            "description": "User's last name.",
+            "example": "Doe"
+          },
+          "user_properties": {
+            "type": "object",
+            "description": "JSON object representing any other custom properties assigned to this user.",
+            "example": {
+              "user_property_alpha": "value"
+            }
+          },
+          "role_id": {
+            "type": "integer",
+            "description": "Design Huddle Role ID representing the override permission level this user should be granted.",
+            "example": 2
+          },
+          "account_code": {
+            "type": "string",
+            "description": "Custom supplied ID representing the account.",
+            "example": "account_alpha"
+          },
+          "account_id": {
+            "type": "integer",
+            "description": "Design Huddle Account ID assigned to a previously created account.",
+            "example": 1
+          },
+          "account_status": {
+            "type": "string",
+            "description": "Status to set the account to. The only value that would make sense here is \"active\" which would allow auto-reactivation of a previously disabled account during login.",
+            "enum": [
+              "active",
+              "inactive",
+              "suspended"
+            ]
+          },
+          "account_name": {
+            "type": "string",
+            "description": "Custom supplied name to refer to the account.",
+            "example": "Account Alpha"
+          },
+          "account_properties": {
+            "type": "object",
+            "description": "JSON object representing any other custom properties assigned to this account.",
+            "example": {
+              "account_property_alpha": "value"
+            }
+          }
+        }
+      },
+      "authentication-guest-access": {
+        "type": "object",
+        "x-stoplight": {
+          "id": "13iuzqcteq5rb"
+        },
+        "title": "Guest Access Token",
+        "x-tags": [
+          "Authentication"
+        ],
+        "required": [
+          "client_id",
+          "client_secret",
+          "grant_type",
+          "username"
+        ],
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "description": "Unique string identifier assigned to your application when registered with [Design Huddle](https://www.designhuddle.com)."
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "Confidential key provided by Design Huddle, used with the `client_id` for authentication."
+          },
+          "grant_type": {
+            "type": "string",
+            "description": "OAuth 2.0 grant type being used. **Guest Access Tokens** are retrieved by using the Resource Owner Password Credentials Grant Type.",
+            "example": "password"
+          },
+          "username": {
+            "type": "string",
+            "description": "Username of the user attempting to authenticate or perform an action via the API.",
+            "example": "user_alpha"
+          },
+          "email_address": {
+            "type": "string",
+            "description": "User’s email address. If not supplied explicitly, this could be inferred from the `username` field.",
+            "example": "john@designhuddle.com"
+          },
+          "first_name": {
+            "type": "string",
+            "description": "User’s first name.",
+            "example": "John"
+          },
+          "last_name": {
+            "type": "string",
+            "description": "User’s last name.",
+            "example": "Doe"
+          },
+          "account_code": {
+            "type": "string",
+            "description": "Custom supplied ID representing the account.",
+            "example": "account_alpha"
+          },
+          "account_id": {
+            "type": "integer",
+            "description": "Design Huddle Account ID assigned to a previously created account.",
+            "example": 1
+          }
+        }
+      },
+      "export-image": {
+        "title": "Export Image",
+        "x-stoplight": {
+          "id": "ieyyiuwj6l1ir"
+        },
+        "type": "object",
+        "x-tags": [
+          "Export"
+        ],
+        "required": [
+          "format"
+        ],
+        "properties": {
+          "format": {
+            "x-stoplight": {
+              "id": "kpwczunqzoxao"
+            },
+            "enum": [
+              "jpg",
+              "png"
+            ],
+            "description": "Desired format of the export."
+          },
+          "filename": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "n1o9ld8tev2wz"
+            },
+            "description": "Name of the exported file.",
+            "example": "image_file"
+          },
+          "destination": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "9uy32kt4rdfqa"
+            },
+            "description": "Determines how the exported file is being sent.",
+            "default": "print",
+            "enum": [
+              "print",
+              "email_address"
+            ]
+          },
+          "customizations": {
+            "type": "object",
+            "x-stoplight": {
+              "id": "sj9ip620u7fpc"
+            },
+            "description": "[Template Customization Object](https://api.designhuddle.com/doc/Template_Customization_Objects.pdf) to be used on export."
+          },
+          "customizations_hash": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "u21gr6mh28bnw"
+            },
+            "description": "Returned `object_hash` of a previously created [Template Customization Object](https://api.designhuddle.com/doc/Template_Customization_Objects.pdf) to automatically customize/populate a Template. The `customizations` field will be ignored if this field is supplied.",
+            "example": "565593d142877a3642785d988d9ceef5b8c7cff9"
+          },
+          "page_id": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "8z9n7pbvb3z6n"
+            },
+            "description": "Unique identifier for a single page, indicating a specific page to export.",
+            "example": "cq74k2whpqr00207kwn0"
+          },
+          "notification_url": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "3wskeq3n2ig65"
+            },
+            "description": "URL to which a notification will be sent upon completion of the export process.",
+            "example": "https://domain.com/webhooks/export"
+          }
+        },
+        "description": ""
+      },
+      "export-pdf": {
+        "title": "Export PDF",
+        "x-stoplight": {
+          "id": "hw0b2gfyytwwa"
+        },
+        "type": "object",
+        "x-tags": [
+          "Export"
+        ],
+        "required": [
+          "format"
+        ],
+        "properties": {
+          "format": {
+            "x-stoplight": {
+              "id": "zstsclih2ivys"
+            },
+            "description": "Desired format of the export.",
+            "enum": [
+              "pdf"
+            ]
+          },
+          "filename": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "009253c3gjmf5"
+            },
+            "description": "Name of the exported file.",
+            "example": "pdf_file"
+          },
+          "destination": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "3e8zm4806iui1"
+            },
+            "description": "Determines how the exported file is being sent.",
+            "default": "print",
+            "enum": [
+              "print",
+              "email_address"
+            ]
+          },
+          "customizations": {
+            "type": "object",
+            "x-stoplight": {
+              "id": "wglph1dukmpvj"
+            },
+            "description": "Template Customization Object to be used on export."
+          },
+          "customizations_hash": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "e2zodr7pzmwn2"
+            },
+            "description": "Returned `object_hash` of a previously created [Template Customization Object](https://api.designhuddle.com/doc/Template_Customization_Objects.pdf) to automatically customize/populate a Template. The `customizations` field will be ignored if this field is supplied.",
+            "example": "565593d142877a3642785d988d9ceef5b8c7cff9"
+          },
+          "page_id": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "vvqlkgnp59l0a"
+            },
+            "description": "Unique for a single page, indicating a specific page to export.",
+            "example": "cq74k2whpqr00207kwn0"
+          },
+          "page_ids": {
+            "type": "array",
+            "x-stoplight": {
+              "id": "wx969l6gk2pjf"
+            },
+            "description": "Multiple page identifiers can be specified for exporting several pages.",
+            "items": {
+              "x-stoplight": {
+                "id": "lh4mz0aa7clla"
+              },
+              "type": "string"
+            },
+            "example": [
+              "cq74k2whpqr00207kwn0",
+              "cq7vhje3p8hg020aybx0"
+            ]
+          },
+          "dpi": {
+            "type": "integer",
+            "x-stoplight": {
+              "id": "np89sdhfkir94"
+            },
+            "description": "Dots per inch, a measure of the PDF's resolution.",
+            "default": 300
+          },
+          "bleed": {
+            "type": "object",
+            "x-stoplight": {
+              "id": "x5zrvwag8u2b7"
+            },
+            "description": "Space outside the original boundaries of a project/template to ensure content extends to the edge of the print material after trimming.",
+            "properties": {
+              "margin": {
+                "type": "object",
+                "x-stoplight": {
+                  "id": "4tenebzkz3xdq"
+                },
+                "description": "Space around the content inside the project's boundaries, ensuring content is evenly distributed from the edges.",
+                "properties": {
+                  "top": {
+                    "type": "number",
+                    "x-stoplight": {
+                      "id": "sajky2ucn6ll6"
+                    },
+                    "description": "Amount of extra space added to the top edge measured in the specified units of the export job.",
+                    "example": 1.5
+                  },
+                  "right": {
+                    "type": "number",
+                    "x-stoplight": {
+                      "id": "zqe19wtvewpco"
+                    },
+                    "description": "Amount of extra space added to the right edge measured in the specified units of the export job.",
+                    "example": 1
+                  },
+                  "bottom": {
+                    "type": "number",
+                    "x-stoplight": {
+                      "id": "5x0fjofkoib5u"
+                    },
+                    "description": "Amount of extra space added to the bottom edge measured in the specified units of the export job.",
+                    "example": 1
+                  },
+                  "left": {
+                    "type": "number",
+                    "x-stoplight": {
+                      "id": "if0xcrke1686g"
+                    },
+                    "description": "Amount of extra space added to the left edge measured in the specified units of the export job.",
+                    "example": 1.5
+                  }
+                }
+              },
+              "no_outer_margin": {
+                "type": "boolean",
+                "example": true,
+                "x-stoplight": {
+                  "id": "nfhgmhezoipnp"
+                },
+                "description": "By default, the PDF will include double the margin supplied with crop marks indicating the actual margin."
+              }
+            }
+          },
+          "notification_url": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "50fjxbjb8z63s"
+            },
+            "description": "URL to which a notification will be sent upon completion of the export process.",
+            "example": "https://domain.com/webhooks/export"
+          }
+        }
+      },
+      "export-video": {
+        "title": "Export Video",
+        "x-stoplight": {
+          "id": "k1po6o3hendjm"
+        },
+        "type": "object",
+        "x-tags": [
+          "Export"
+        ],
+        "required": [
+          "format"
+        ],
+        "properties": {
+          "format": {
+            "x-stoplight": {
+              "id": "vexxci9rm76uu"
+            },
+            "enum": [
+              "mp4",
+              "gif"
+            ],
+            "description": "Desired format of the export."
+          },
+          "filename": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "28q3n8jfna2bc"
+            },
+            "description": "Name of the exported video file.",
+            "example": "video_file"
+          },
+          "scene_id": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "oy0u67v769kzm"
+            },
+            "description": "Unique identifier for a single scene, indicating a specific scene to export.",
+            "example": "cq74hk6hpqr00207kwm0"
+          },
+          "scene_ids": {
+            "type": "array",
+            "x-stoplight": {
+              "id": "zmtt9o6pgy6bf"
+            },
+            "description": "Multiple scene identifiers can be specified for exporting several scenes.",
+            "example": [
+              "cq74hk6hpqr00207kwm0"
+            ],
+            "items": {
+              "x-stoplight": {
+                "id": "aj0jw1rd8arjr"
+              },
+              "type": "string"
+            }
+          },
+          "scene_slide_id": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "s00oj8w0fsfxw"
+            },
+            "description": "Unique identifier for a single scene slide, indicating a specific scene slide to export.",
+            "example": "6e20322b-0aa6-42fd-8c97-709a91328b46"
+          },
+          "scene_slide_ids": {
+            "type": "array",
+            "x-stoplight": {
+              "id": "v83ginmjsaefm"
+            },
+            "description": "Multiple scene slide identifiers can be specified for exporting several scene slides.",
+            "items": {
+              "x-stoplight": {
+                "id": "mxiqqy8qgp4bj"
+              },
+              "type": "string"
+            },
+            "example": [
+              "6e20322b-0aa6-42fd-8c97-709a91328b46"
+            ]
+          },
+          "fps": {
+            "type": "integer",
+            "x-stoplight": {
+              "id": "iwcn5dzjx08gm"
+            },
+            "description": "30 is the default and maximum value for mp4. 15 is the default and maximum value for gif.",
+            "default": 30
+          },
+          "quality": {
+            "x-stoplight": {
+              "id": "9useicd92wkvg"
+            },
+            "default": "high",
+            "enum": [
+              "highest",
+              "high",
+              "normal",
+              "low",
+              "lowest"
+            ],
+            "description": "Quality of the video being of the exported."
+          },
+          "no_audio": {
+            "type": "boolean",
+            "x-stoplight": {
+              "id": "a82ff1xceqz9x"
+            },
+            "description": "Determines whether the project will be exported without audio.",
+            "default": false
+          },
+          "notification_url": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "x8y4t53p7ce0l"
+            },
+            "description": "URL to which a notification will be sent upon completion of the export process.",
+            "example": "https://domain.com/webhooks/export"
+          }
+        }
+      },
+      "project-create-template": {
+        "title": "Create from Template",
+        "x-stoplight": {
+          "id": "6rqw5rw8edwx0"
+        },
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/project-create-template-template_id"
+          },
+          {
+            "$ref": "#/components/schemas/project-create-template-template_code"
+          }
+        ]
+      },
+      "project-create-template-template_id": {
+        "title": "Create from template_id",
+        "x-stoplight": {
+          "id": "fhzrypqw926bi"
+        },
+        "type": "object",
+        "required": [
+          "template_id"
+        ],
+        "properties": {
+          "project_title": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "2o6vh49ae8oy5"
+            },
+            "description": "Title of the project.",
+            "example": "Project Alpha"
+          },
+          "template_id": {
+            "type": "integer",
+            "x-stoplight": {
+              "id": "6cql5hwn2hat2"
+            },
+            "description": "Design Huddle Template ID assigned to a previously created template.",
+            "example": 1
+          },
+          "customizations_hash": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "67hc9m5vefl4b"
+            },
+            "description": "Returned `object_hash` of a previously created [Template Customization Object (TCO)](url) to automatically customize/populate a [Template](docs/templates/Templates.md). The `customizations` field will be ignored if this field is supplied.",
+            "example": "565593d142877a3642785d988d9ceef5b8c7cff9"
+          },
+          "customizations": {
+            "type": "object",
+            "x-stoplight": {
+              "id": "bw39jzqz07zvr"
+            },
+            "description": "[Template Customization Object (TCO)](url) to automatically customize/populate a [Template](docs/templates/Templates.md). To improve performance when re-using the same TCO on multiple Project creations, store it first and then provide the returned `object_hash` instead. This can also be accomplished by passing in this parameter on only the first Project creation and storing the returned *customizations_hash* field for use on further executions."
+          },
+          "tags": {
+            "type": "array",
+            "x-stoplight": {
+              "id": "l4gc4kqlo76ht"
+            },
+            "description": "Keywords or labels to help categorize and organize projects.",
+            "example": [
+              "tag_alpha",
+              "tag_beta"
+            ],
+            "items": {
+              "x-stoplight": {
+                "id": "2d8lntq2ainp5"
+              },
+              "type": "string"
+            }
+          },
+          "metadata": {
+            "type": "object",
+            "x-stoplight": {
+              "id": "ayne1oxlbhox2"
+            },
+            "description": "JSON object representing additional metadata assigned to this project.",
+            "example": {
+              "metadata": "value"
+            }
+          }
+        }
+      },
+      "project-create-template-template_code": {
+        "title": "Create from template_code",
+        "x-stoplight": {
+          "id": "1iasmgwq9l903"
+        },
+        "type": "object",
+        "required": [
+          "template_code"
+        ],
+        "properties": {
+          "project_title": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "6gt1qova1m3p0"
+            },
+            "description": "Title of the project.",
+            "example": "Project Alpha"
+          },
+          "template_code": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "8l3x42qv7avdj"
+            },
+            "description": "Custom supplied ID representing the template.",
+            "example": "template_alpha"
+          },
+          "customizations_hash": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "f51x7qlfvr8l3"
+            },
+            "description": "Returned `object_hash` of a previously created [Template Customization Object (TCO)](url) to automatically customize/populate a Template. The `customizations` field will be ignored if this field is supplied.",
+            "example": "565593d142877a3642785d988d9ceef5b8c7cff9"
+          },
+          "customizations": {
+            "type": "object",
+            "x-stoplight": {
+              "id": "vo2jd9718mjw0"
+            },
+            "description": "[Template Customization Object (TCO)](url) to automatically customize/populate a Template. To improve performance when re-using the same TCO on multiple Project creations, store it first and then provide the returned `object_hash` instead. This can also be accomplished by passing in this parameter on only the first Project creation and storing the returned *customizations_hash* field for use on further executions."
+          },
+          "tags": {
+            "type": "array",
+            "x-stoplight": {
+              "id": "cvf1jo4r4cebi"
+            },
+            "description": "Keywords or labels to help categorize and organize projects.",
+            "example": [
+              "tag_alpha",
+              "tag_beta"
+            ],
+            "items": {
+              "x-stoplight": {
+                "id": "ecxvnl194r3pn"
+              },
+              "type": "string"
+            }
+          },
+          "metadata": {
+            "type": "object",
+            "x-stoplight": {
+              "id": "a23fdm9fs908b"
+            },
+            "description": "JSON object representing additional metadata assigned to this project.",
+            "example": {
+              "metadata": "value"
+            }
+          }
+        }
+      },
+      "project-create-pdf": {
+        "title": "Create from PDF",
+        "x-stoplight": {
+          "id": "txehc0m7kk3uf"
+        },
+        "type": "object",
+        "required": [
+          "media_type",
+          "document_url"
+        ],
+        "properties": {
+          "project_title": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "7zwkn4nfijn8n"
+            },
+            "description": "Title of the project.",
+            "example": "Project Alpha"
+          },
+          "media_type": {
+            "x-stoplight": {
+              "id": "pdx93dicvp5du"
+            },
+            "type": "string",
+            "enum": [
+              "digital",
+              "print",
+              "video",
+              "presentation"
+            ],
+            "description": "Media type for the project being created."
+          },
+          "document_url": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "ks51og0xs7t4g"
+            },
+            "description": "URL to a PDF document from which the project will be created.",
+            "example": "https://domain.com/file.pdf"
+          },
+          "brand_id": {
+            "type": "integer",
+            "x-stoplight": {
+              "id": "fybgljw55vo5i"
+            },
+            "description": "Design Huddle Brand ID assigned to a previously created brand.",
+            "example": 1
+          },
+          "brand_code": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "1svacuzh2orln"
+            },
+            "description": "Custom supplied ID representing the brand.",
+            "example": "brand_alpha"
+          },
+          "tags": {
+            "type": "array",
+            "x-stoplight": {
+              "id": "xg7wkfnffwzie"
+            },
+            "description": "Keywords or labels to help categorize and organize projects.",
+            "example": [
+              "tag_alpha",
+              "tag_beta"
+            ],
+            "items": {
+              "x-stoplight": {
+                "id": "0ok9ejrdymuro"
+              },
+              "type": "string"
+            }
+          },
+          "metadata": {
+            "type": "object",
+            "x-stoplight": {
+              "id": "lqzz14h0jg1eg"
+            },
+            "description": "JSON object representing additional metadata assigned to this project.",
+            "example": {
+              "metadata": "value"
+            }
+          }
+        },
+        "description": ""
+      },
+      "project-create-scratch": {
+        "title": "Create from Scratch",
+        "x-stoplight": {
+          "id": "mi6yu35r85k2d"
+        },
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/project-create-scratch-blank"
+          },
+          {
+            "$ref": "#/components/schemas/project-create-scratch-background_image"
+          },
+          {
+            "$ref": "#/components/schemas/project-create-scratch-canvas_shape"
+          }
+        ]
+      },
+      "project-create-scratch-blank": {
+        "title": "Create from Scratch",
+        "x-stoplight": {
+          "id": "3rfprmkk8lswa"
+        },
+        "type": "object",
+        "required": [
+          "media_type",
+          "dimensions"
+        ],
+        "properties": {
+          "project_title": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "ephnjaidwir3n"
+            },
+            "description": "Title of the project.",
+            "example": "Project Alpha"
+          },
+          "media_type": {
+            "x-stoplight": {
+              "id": "3uyqe5o5r9xs5"
+            },
+            "description": "Media type for the project being created.",
+            "type": "string",
+            "enum": [
+              "digital",
+              "print",
+              "video",
+              "presentation"
+            ]
+          },
+          "dimensions": {
+            "type": "object",
+            "x-stoplight": {
+              "id": "p5e6m1xs7479e"
+            },
+            "required": [
+              "width",
+              "height",
+              "unit_type"
+            ],
+            "properties": {
+              "width": {
+                "type": "number",
+                "x-stoplight": {
+                  "id": "314g5o7cm3y7z"
+                },
+                "description": "Width of the project being created in the specified `unit_type`.",
+                "example": 8.5
+              },
+              "height": {
+                "type": "number",
+                "x-stoplight": {
+                  "id": "741v17i8avheg"
+                },
+                "description": "Vertical dimension of the project in the specified `unit_type`.",
+                "example": 11
+              },
+              "unit_type": {
+                "x-stoplight": {
+                  "id": "1do528ijkeh2s"
+                },
+                "type": "string",
+                "enum": [
+                  "px",
+                  "in",
+                  "mm"
+                ],
+                "description": "Measurement unit for the project's dimensions. Print projects use inches and millimeters, while digital, video, and presentation projects use pixels."
+              }
+            }
+          },
+          "background_color": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "rmh5otvt5mi1t"
+            },
+            "description": "Color that will be used as the background for the project.",
+            "example": "#000000"
+          },
+          "brand_id": {
+            "type": "integer",
+            "x-stoplight": {
+              "id": "otrky01rmvu2g"
+            },
+            "description": "Design Huddle Brand ID assigned to a previously created brand.",
+            "example": 1
+          },
+          "brand_code": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "dx9w4g0vi2dpx"
+            },
+            "description": "Custom supplied ID representing the brand.",
+            "example": "brand_alpha"
+          },
+          "tags": {
+            "type": "array",
+            "x-stoplight": {
+              "id": "gvhie6m004fwb"
+            },
+            "description": "Keywords or labels to help categorize and organize projects.",
+            "example": [
+              "tag_alpha",
+              "tag_beta"
+            ],
+            "items": {
+              "x-stoplight": {
+                "id": "gt5pugpfza3jn"
+              },
+              "type": "string"
+            }
+          },
+          "metadata": {
+            "type": "object",
+            "x-stoplight": {
+              "id": "zeq4fum2ojmv0"
+            },
+            "description": "JSON object representing additional metadata assigned to this project.",
+            "example": {
+              "metadata": "value"
+            }
+          }
+        }
+      },
+      "project-create-scratch-background_image": {
+        "title": "Create from Scratch with Background Image",
+        "x-stoplight": {
+          "id": "k6gd1eu7lf7ed"
+        },
+        "type": "object",
+        "required": [
+          "media_type",
+          "background_image_url",
+          "size_to_background_image"
+        ],
+        "properties": {
+          "project_title": {
+            "type": "string",
+            "description": "Title of the project.",
+            "example": "Project Alpha"
+          },
+          "media_type": {
+            "description": "Media type for the project being created.",
+            "type": "string",
+            "enum": [
+              "digital",
+              "print",
+              "video",
+              "presentation"
+            ]
+          },
+          "background_image_url": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "v5otvu2ri8mt5"
+            },
+            "description": "URL for an image to be used as the project's background.",
+            "example": "https://domain.com/image.jpg"
+          },
+          "size_to_background_image": {
+            "type": "boolean",
+            "x-stoplight": {
+              "id": "4jfhn9ssxgqi3"
+            },
+            "description": "Determines whether the project's dimensions should be adjusted to match the background image's size. This property is not required if `dimensions` are provided.",
+            "example": true
+          },
+          "dimensions": {
+            "type": "object",
+            "required": [
+              "width",
+              "height",
+              "unit_type"
+            ],
+            "properties": {
+              "width": {
+                "type": "number",
+                "x-stoplight": {
+                  "id": "varceztuym98h"
+                },
+                "description": "Width of the project being created in the specified `unit_type`.",
+                "example": 1980
+              },
+              "height": {
+                "type": "number",
+                "x-stoplight": {
+                  "id": "xh0yoqs6up8ui"
+                },
+                "description": "Height of the project being created in the specified `unit_type`.",
+                "example": 1000
+              },
+              "unit_type": {
+                "x-stoplight": {
+                  "id": "9a9tq6owjybnk"
+                },
+                "type": "string",
+                "enum": [
+                  "px",
+                  "in",
+                  "mm"
+                ],
+                "description": "Measurement unit for the project's dimensions. Print projects use inches and millimeters, while digital, video, and presentation projects use pixels."
+              }
+            }
+          },
+          "brand_id": {
+            "type": "integer",
+            "description": "Design Huddle Brand ID assigned to a previously created brand.",
+            "example": 1
+          },
+          "brand_code": {
+            "type": "string",
+            "description": "Custom supplied ID representing the brand.",
+            "example": "brand_alpha"
+          },
+          "tags": {
+            "type": "array",
+            "description": "Keywords or labels to help categorize and organize projects.",
+            "example": [
+              "tag_alpha",
+              "tag_beta"
+            ],
+            "items": {
+              "x-stoplight": {
+                "id": "v8iguoiy953dy"
+              },
+              "type": "string"
+            }
+          },
+          "metadata": {
+            "type": "object",
+            "description": "JSON object representing additional metadata assigned to this project.",
+            "example": {
+              "metadata": "value"
+            }
+          }
+        }
+      },
+      "project-create-scratch-canvas_shape": {
+        "title": "Create from Scratch with Canvas Shape",
+        "x-stoplight": {
+          "id": "tdl5s2axig96z"
+        },
+        "type": "object",
+        "required": [
+          "media_type",
+          "canvas_shape_url",
+          "dimensions"
+        ],
+        "properties": {
+          "project_title": {
+            "type": "string",
+            "description": "Title of the project.",
+            "example": "Project Alpha"
+          },
+          "media_type": {
+            "type": "string",
+            "enum": [
+              "digital",
+              "print",
+              "video",
+              "presentation"
+            ],
+            "description": "Media type for the project being created."
+          },
+          "canvas_shape_url": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "lgbyjyx9qdtoy"
+            },
+            "description": "URL for an image or shape that defines the canvas boundary for the project.",
+            "example": "https://domain.com/shape.png"
+          },
+          "dimensions": {
+            "type": "object",
+            "required": [
+              "width",
+              "unit_type"
+            ],
+            "properties": {
+              "width": {
+                "type": "number",
+                "x-stoplight": {
+                  "id": "zxfm22gaszi0c"
+                },
+                "description": "Width of the project being creaeted in the specified `unit_type`. Height is not necessary when creating from a `canvas_shape_url`.",
+                "example": 11
+              },
+              "unit_type": {
+                "x-stoplight": {
+                  "id": "iqv9jwcukgb16"
+                },
+                "type": "string",
+                "enum": [
+                  "px",
+                  "in",
+                  "mm"
+                ],
+                "description": "Measurement unit for the project's dimensions. Print projects use inches and millimeters, while digital, video, and presentation projects use pixels."
+              }
+            }
+          },
+          "background_color": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "p8ggifrhb1e77"
+            },
+            "description": "Color that will be used as the background for the project.",
+            "example": "#000000"
+          },
+          "brand_id": {
+            "type": "integer",
+            "description": "Design Huddle Brand ID assigned to a previously created brand.",
+            "example": 1
+          },
+          "brand_code": {
+            "type": "string",
+            "description": "Custom supplied ID representing the brand.",
+            "example": "brand_alpha"
+          },
+          "tags": {
+            "type": "array",
+            "description": "Keywords or labels to help categorize and organize projects.",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "tag_alpha",
+              "tag_beta"
+            ]
+          },
+          "metadata": {
+            "type": "object",
+            "description": "JSON object representing additional metadata assigned to this project.",
+            "example": {
+              "metadata": "value"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "User Access Token": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Use this token for accessing the API in the context of a specific user, allowing actions based on the user's roles and permissions.\n"
+      },
+      "Guest Access Token": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Use this token for granting API access to guests, providing limited access suitable for temporary engagements."
+      }
+    },
+    "requestBodies": {},
+    "parameters": {
+      "project_id": {
+        "name": "project_id",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Specify the Project ID to filter the result by.",
+        "example": "cpvxrk27fw400200y9a0"
+      },
+      "project_ids": {
+        "name": "project_ids",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "cpvxrk27fw400200y9a0",
+            "cq8k9gya7s70028528ng"
+          ]
+        },
+        "description": "Specify the Project IDs to filter the result by."
+      },
+      "brand_id": {
+        "name": "brand_id",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Specify the Brand ID to filter the result by.",
+        "example": 1
+      },
+      "brand_code": {
+        "name": "brand_code",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Specify the Brand Code to filter the result by.",
+        "example": "brand_alpha"
+      },
+      "media_type": {
+        "name": "media_type",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "digital",
+            "print",
+            "video",
+            "presentation"
+          ]
+        },
+        "description": "Specify the media type to filter the result by."
+      },
+      "media_types": {
+        "name": "media_types",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "digital",
+              "print",
+              "video",
+              "presentation"
+            ]
+          }
+        },
+        "description": "Specify the media type(s) to filter the result by."
+      },
+      "project_status": {
+        "name": "project_status",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "active",
+            "archived"
+          ],
+          "default": "active"
+        },
+        "description": "Specify the project status to filter the result by."
+      },
+      "project_statuses": {
+        "name": "project_statuses",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "default": [
+            "active"
+          ],
+          "items": {
+            "type": "string",
+            "enum": [
+              "active",
+              "archived"
+            ]
+          }
+        },
+        "description": "Specify the project statuses to filter the result by."
+      },
+      "tag": {
+        "name": "tag",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Specify the tag to filter the result by.",
+        "example": "tag_alpha"
+      },
+      "tags": {
+        "name": "tags",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "tag_alpha",
+            "tag_beta"
+          ]
+        },
+        "description": "Specify the tags to filter the result by."
+      },
+      "project_ownership": {
+        "name": "project_ownership",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "all_projects",
+            "my_projects",
+            "shared_projects"
+          ],
+          "default": "all_projects"
+        },
+        "description": "Specify the project ownership to filter the result by."
+      },
+      "source_template_id": {
+        "name": "source_template_id",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Specify the Source Template ID to filter the result by.",
+        "example": 1
+      },
+      "source_template_ids": {
+        "name": "source_template_ids",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "example": [
+            1,
+            3
+          ]
+        },
+        "description": "Specify the Source Template IDs to filter the result by."
+      },
+      "source_template_code": {
+        "name": "source_template_code",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Specify the Source Template Code to filter the result by.",
+        "example": "template_alpha"
+      },
+      "source_template_codes": {
+        "name": "source_template_codes",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "template_alpha",
+            "template_beta"
+          ]
+        },
+        "description": "Specify the Source Template Codes to filter the result by."
+      },
+      "width": {
+        "name": "width",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "number"
+        },
+        "description": "Specify the width to filter the result by.",
+        "example": 8.5
+      },
+      "height": {
+        "name": "height",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "number"
+        },
+        "description": "Specify the height to filter the result by.",
+        "example": 11
+      },
+      "unit_type": {
+        "name": "unit_type",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "px",
+            "in",
+            "mm"
+          ]
+        },
+        "description": "Specify the unit type to filter the result by."
+      },
+      "search": {
+        "name": "search",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A search term used to narrow the focus of the result.",
+        "example": "Example Search Term"
+      },
+      "sort": {
+        "name": "sort",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "default": "last_edited"
+        },
+        "description": "Specify which attribute to order the result by."
+      },
+      "order": {
+        "name": "order",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "default": "DESC",
+          "enum": [
+            "ASC",
+            "DESC"
+          ]
+        },
+        "description": "Specify whether the result should be retrieved in ascending or descending order."
+      },
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": 50,
+          "maximum": 1000
+        },
+        "description": "Specify the number of items per page to return."
+      },
+      "page": {
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": 1
+        },
+        "description": "Specify which page of the result to return."
+      },
+      "Content-Type": {
+        "name": "Content-Type",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "application/json"
+        },
+        "description": "Specify the format of the payload you are sending."
+      },
+      "userKey": {
+        "name": "userKey",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "{user_id}",
+            "code-{user_code}"
+          ]
+        },
+        "description": "Either a `user_id`(integer), a Design Huddle User ID assigned to a previously created user, or `user_code` (string), a custom supplied ID representing a user. When using the `user_code`, make sure to include the \"code-\" prefix."
+      },
+      "element_types": {
+        "name": "element_types",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "text",
+            "image",
+            "vector",
+            "video",
+            "audio",
+            "lottie",
+            "zone"
+          ]
+        },
+        "description": "Specify the element type to filter the result by."
+      },
+      "primary_template_category_item_id": {
+        "name": "primary_template_category_item_id",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "example": 1
+        },
+        "description": "Filter the template set used to find assigned category/items by their primary category assignment. Note: only subcategories will be returned."
+      },
+      "template_id": {
+        "name": "template_id",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "example": 1
+        },
+        "description": "Specify the Template ID to filter the result by."
+      },
+      "template_ids": {
+        "name": "template_ids",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "example": [
+            1
+          ]
+        },
+        "description": "Specify the Template IDs to filter the result by."
+      },
+      "template_code": {
+        "name": "template_code",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "example": "template_alpha"
+        },
+        "description": "Specify the Template Code to filter the result by."
+      },
+      "template_codes": {
+        "name": "template_codes",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "array"
+        },
+        "description": "Specify the Template Codes to filter the result by."
+      },
+      "category_{id}[]": {
+        "name": "category_{id}[]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "example": "&category_2[]=2&category_2[]=4&category_3[]=1"
+        },
+        "description": "Specify the subcategories/items to filter the result by. Provide the template_category_id in place of the {id} token and the template_category_item_id as the corresponding value. This is a multi-value query string parameter, and can accept multiple values to filter by. OR logic is used when multiple items are supplied within a category with AND logic applied across categories. In the example below, it finds matching templates where either item 2 or item 4 in category 2 has been assigned, and where item 1 in category 3 has been assigned)"
+      },
+      "primary_template_category_item_ids": {
+        "name": "primary_template_category_item_ids",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "example": [
+            1
+          ]
+        },
+        "description": "Specify the Primary Template Category Item IDs to filter the result by."
+      }
+    }
+  },
+  "security": [
+    {
+      "User Access Token": []
+    }
+  ]
+}
