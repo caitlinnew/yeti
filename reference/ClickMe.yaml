@@ -26,4 +26,4 @@ components:
     User:
       $ref: 'stoplight://resources/overrides/AZ0Y5f8nqLc'
       x-stoplight:
-        id: 1rzy3hjvdod15
+        id: 28amx3vy3eb4w
