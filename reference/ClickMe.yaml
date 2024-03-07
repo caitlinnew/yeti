@@ -21,6 +21,13 @@ paths:
             schema:
               $ref: 'stoplight://resources/overrides/AZ0Y5f8nqLc'
       description: ''
+    put:
+      summary: Your PUT endpoint
+      tags: []
+      responses: {}
+      operationId: put-wtf
+      x-stoplight:
+        id: 28amx3vy3eb4w
 components:
   schemas:
     User:
