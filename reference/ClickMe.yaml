@@ -28,6 +28,14 @@ paths:
       operationId: put-wtf
       x-stoplight:
         id: 28amx3vy3eb4w
+  /test:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-test
+      x-stoplight:
+        id: 28amx3vy3eb4w
 components:
   schemas:
     User:
