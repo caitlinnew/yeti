@@ -45,7 +45,7 @@ jobs:
           node-version: '14'
       - name: Push files to Stoplight
         run: |
-          npx @stoplight/cli@5 push --ci-token ${{env.PROJECT_TOKEN}} --directory ${{ github.workspace }} --branch ${{ env.BRANCH_NAME }}
+          npx @stoplight/cli@6 push --ci-token ${{env.PROJECT_TOKEN}} --directory ${{ github.workspace }} --branch ${{ env.BRANCH_NAME }}
       - name: Stoplight PR comment
         if: github.event_name == 'pull_request'
         uses: NejcZdovc/comment-pr@v1
