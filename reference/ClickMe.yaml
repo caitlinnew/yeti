@@ -36,23 +36,27 @@ paths:
       operationId: get-test
       x-stoplight:
         id: 28amx3vy3eb4w
+  /wtf2:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-wtf2
+      x-stoplight:
+        id: 30uibyg8ltcqo
 webhooks:
   PricePulseTrigger:
     post:
       description: 'A competitors price cache has changed, event'
       requestBody:
-        description: >-
-          Context of the cache key (product key) and the list of changes
-          detected
+        description: Context of the cache key (product key) and the list of changes detected
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/CompetitorRateEvent'
       responses:
         '200':
-          description: >-
-            Return a 200 status to indicate that the data was received
-            successfully
+          description: Return a 200 status to indicate that the data was received successfully
         '500':
           description: Return a 500 status
 components:
