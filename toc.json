@@ -1,0 +1,10 @@
+{
+  "collapseTableOfContents": false,
+  "items": [
+    {
+      "type": "item",
+      "title": "Locations API",
+      "uri": "/locations.json"
+    }
+  ]
+}
