@@ -8,13 +8,6 @@ servers:
   - url: 'http://localhost:3000'
 paths:
   '/users/{userId}':
-    parameters:
-      - schema:
-          type: integer
-        name: userId
-        in: path
-        required: true
-        description: Id of an existing user.
     get:
       summary: Get User Info by User ID
       tags: []
@@ -24,7 +17,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
               examples:
                 Get User Alice Smith:
                   value:
@@ -40,41 +33,48 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
         '306':
           description: (Unused)
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
         '404':
           description: User Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
         '405':
           description: Method Not Allowed
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
         1XX:
           description: Informational
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
       operationId: get-users-userId
       description: Retrieve the information of the user with the matching user ID.
       x-stoplight:
         id: 3gza7yuwxczni
+    parameters:
+      - schema:
+          type: integer
+        name: userId
+        in: path
+        required: true
+        description: Id of an existing user.
     patch:
       summary: Update User Information
       operationId: patch-users-userId
@@ -84,7 +84,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
               examples:
                 Updated User Rebecca Baker:
                   value:
@@ -100,25 +100,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
         '204':
           description: No Content
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
         '404':
           description: User Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
         '409':
           description: Email Already Taken
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
       description: Update the information of an existing user.
       requestBody:
         content:
@@ -159,7 +159,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
               examples:
                 New User Bob Fellow:
                   value:
@@ -175,25 +175,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
         '400':
           description: Missing Required Information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
         '409':
           description: Email Already Taken
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
         1XX:
           description: Informational
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
       requestBody:
         content:
           application/json:
@@ -235,49 +235,49 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
         '203':
           description: Non-Authoritative Information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
         '302':
           description: Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
         '303':
           description: See Other
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
         '510':
           description: Not Extended
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
         '598':
           description: Network read timeout error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
         1XX:
           description: Informational
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
         2XX:
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
       operationId: get-four
       x-stoplight:
         id: gwyqyscd5ucny
