@@ -4,7 +4,7 @@
     {
       "type": "item",
       "title": "Locations API",
-      "uri": "/locations.json"
+      "uri": "/20ref.yaml"
     }
   ]
 }
