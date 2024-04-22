@@ -265,7 +265,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml?deref=bundle'
         1XX:
           description: Informational
           content:
