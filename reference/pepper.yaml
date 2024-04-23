@@ -1,0 +1,29 @@
+title: pepper
+x-stoplight:
+  id: t9ekut865t0gn
+type: object
+properties:
+  eyes:
+    type: string
+    x-stoplight:
+      id: krdvbrv8bt5ol
+  tail:
+    type: string
+    x-stoplight:
+      id: mgtpesqz5bx33
+  superModelLegs:
+    type: string
+    x-stoplight:
+      id: 339474vxrnosh
+  upEar:
+    type: string
+    x-stoplight:
+      id: bgx7mcgcgn30w
+  halfUpEar:
+    type: string
+    x-stoplight:
+      id: 5qsw7ldxyskmk
+  nonsense:
+    type: string
+    x-stoplight:
+      id: yzpj8wey788z0
