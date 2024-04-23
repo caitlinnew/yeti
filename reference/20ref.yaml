@@ -17,7 +17,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
               examples:
                 Get User Alice Smith:
                   value:
@@ -33,37 +33,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
         '306':
           description: (Unused)
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
         '404':
           description: User Not Found
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
         '405':
           description: Method Not Allowed
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
         1XX:
           description: Informational
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
       operationId: get-users-userId
       description: Retrieve the information of the user with the matching user ID.
       x-stoplight:
@@ -84,7 +84,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
               examples:
                 Updated User Rebecca Baker:
                   value:
@@ -100,25 +100,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
         '204':
           description: No Content
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
         '404':
           description: User Not Found
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
         '409':
           description: Email Already Taken
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
       description: Update the information of an existing user.
       requestBody:
         content:
@@ -159,7 +159,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
               examples:
                 New User Bob Fellow:
                   value:
@@ -175,25 +175,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
         '400':
           description: Missing Required Information
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
         '409':
           description: Email Already Taken
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
         1XX:
           description: Informational
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
       requestBody:
         content:
           application/json:
@@ -235,49 +235,49 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
         '203':
           description: Non-Authoritative Information
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
         '302':
           description: Found
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
         '303':
           description: See Other
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml?deref=bundle'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
         '510':
           description: Not Extended
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
         '598':
           description: Network read timeout error
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml?deref=bundle'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
         1XX:
           description: Informational
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
         2XX:
           description: Success
           content:
             application/json:
               schema:
-                $ref: 'https://stoplight.io/api/v1/projects/caitlin/designlibrary/nodes/models/mug.yaml'
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
       operationId: get-four
       x-stoplight:
         id: gwyqyscd5ucny
