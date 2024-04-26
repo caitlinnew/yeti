@@ -5,6 +5,11 @@
       "type": "item",
       "title": "Locations API",
       "uri": "/reference/20ref.yaml"
+    },
+    {
+      "type": "item",
+      "title": "Warning Callout Bug",
+      "uri": "/docs/stuff.md"
     }
   ]
 }
