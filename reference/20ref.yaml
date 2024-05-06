@@ -296,9 +296,30 @@ paths:
       operationId: get-four
       x-stoplight:
         id: gwyqyscd5ucny
+      parameters:
+        - $ref: '#/components/parameters/test'
 components:
   schemas:
     User:
       $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
       x-stoplight:
         id: n0eudv09fwioz
+  parameters:
+    test:
+      name: test
+      in: query
+      required: false
+      schema:
+        type: string
+    test2:
+      name: test2
+      in: query
+      required: false
+      schema:
+        type: string
+    test3:
+      name: test3
+      in: query
+      required: false
+      schema:
+        type: string
