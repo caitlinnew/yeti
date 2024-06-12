@@ -5,7 +5,7 @@ info:
   title: idk stuff
   version: '1.0'
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'http://localhost:3000/{var1}'
     description: server one
     variables:
       var1:
