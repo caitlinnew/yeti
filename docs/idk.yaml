@@ -7,6 +7,9 @@ info:
 servers:
   - url: 'http://localhost:3000'
     description: server one
+    variables:
+      var1:
+        default: test
   - description: server two
   - url: ''
     description: server three
