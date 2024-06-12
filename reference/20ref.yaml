@@ -1,0 +1,325 @@
+openapi: 3.1.0
+x-stoplight:
+  id: me8l2h1u3ej92
+info:
+  title: 20refs
+  version: '1.0'
+  description: |-
+    > #### Danger Will Robinson!
+    >
+    > Here is a danger callout!****  
+    > here is more text to demonstration something happening to the callout boxes ability to wrap text in Firefox but not Chrome or Safari (who uses Safari)  
+    >  
+    > ```code code code code code the word code has lost all meaning isn't that weird i bet there's a german word for when that happens```
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  '/users/{userId}':
+    get:
+      summary: Get User Info by User ID
+      tags: []
+      responses:
+        '200':
+          description: User Found
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+              examples:
+                Get User Alice Smith:
+                  value:
+                    id: 142
+                    firstName: Alice
+                    lastName: Smith
+                    email: alice.smith@gmail.com
+                    dateOfBirth: '1997-10-31'
+                    emailVerified: true
+                    signUpDate: '2019-08-24'
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+        '306':
+          description: (Unused)
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+        '404':
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+        1XX:
+          description: Informational
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+      operationId: get-users-userId
+      description: |-
+        Retrieve the information of the user with the matching user ID.
+
+        > #### Danger Will Robinson!
+        >
+        > Here is a danger callout!****  
+        > here is more text to demonstration something happening to the callout boxes ability to wrap text in Firefox but not Chrome or Safari (who uses Safari)  
+        >  
+        > ```code code code code code the word code has lost all meaning isn't that weird i bet there's a german word for when that happens```
+      x-stoplight:
+        id: 3gza7yuwxczni
+    parameters:
+      - schema:
+          type: integer
+        name: userId
+        in: path
+        required: true
+        description: Id of an existing user.
+    patch:
+      summary: Update User Information
+      operationId: patch-users-userId
+      responses:
+        '200':
+          description: User Updated
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+              examples:
+                Updated User Rebecca Baker:
+                  value:
+                    id: 13
+                    firstName: Rebecca
+                    lastName: Baker
+                    email: rebecca@gmail.com
+                    dateOfBirth: '1985-10-02'
+                    emailVerified: false
+                    createDate: '2019-08-24'
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+        '404':
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+        '409':
+          description: Email Already Taken
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+      description: Update the information of an existing user.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                email:
+                  type: string
+                  description: 'If a new email is given, the user''s email verified property will be set to false.'
+                dateOfBirth:
+                  type: string
+            examples:
+              Update First Name:
+                value:
+                  firstName: Rebecca
+              Update Email:
+                value:
+                  email: rebecca@gmail.com
+              Update Last Name & Date of Birth:
+                value:
+                  lastName: Baker
+                  dateOfBirth: '1985-10-02'
+        description: Patch user properties to update.
+      x-stoplight:
+        id: dlce6kefir3ls
+  /user:
+    post:
+      summary: Create New User
+      operationId: post-user
+      responses:
+        '200':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+              examples:
+                New User Bob Fellow:
+                  value:
+                    id: 12
+                    firstName: Bob
+                    lastName: Fellow
+                    email: bob.fellow@gmail.com
+                    dateOfBirth: '1996-08-24'
+                    emailVerified: false
+                    createDate: '2020-11-18'
+        '302':
+          description: Found
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+        '400':
+          description: Missing Required Information
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+        '409':
+          description: Email Already Taken
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+        1XX:
+          description: Informational
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                email:
+                  type: string
+                dateOfBirth:
+                  type: string
+                  format: date
+              required:
+                - firstName
+                - lastName
+                - email
+                - dateOfBirth
+            examples:
+              Create User Bob Fellow:
+                value:
+                  firstName: Bob
+                  lastName: Fellow
+                  email: bob.fellow@gmail.com
+                  dateOfBirth: '1996-08-24'
+        description: Post the necessary fields for the API to create a new user.
+      description: Create a new user.
+      x-stoplight:
+        id: ouytbjljvjl9h
+  /four:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+        '203':
+          description: Non-Authoritative Information
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+        '302':
+          description: Found
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+        '303':
+          description: See Other
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+        '510':
+          description: Not Extended
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+        '598':
+          description: Network read timeout error
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+        1XX:
+          description: Informational
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+        2XX:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: 'stoplight://resources/overrides/GJPOBbTBaV8'
+      operationId: get-four
+      x-stoplight:
+        id: gwyqyscd5ucny
+      parameters:
+        - $ref: '#/components/parameters/test'
+components:
+  schemas:
+    User:
+      $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
+      x-stoplight:
+        id: n0eudv09fwioz
+  parameters:
+    test:
+      name: test
+      in: query
+      required: false
+      schema:
+        type: string
+    test2:
+      name: test2
+      in: query
+      required: false
+      schema:
+        type: string
+    test3:
+      name: test3
+      in: query
+      required: false
+      schema:
+        type: string
