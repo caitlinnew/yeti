@@ -1,6 +1,13 @@
 title: test
 x-stoplight:
   id: r3bsrf80dsazn
-enum:
-  - d
-  - e
+type: object
+properties:
+  test:
+    type: string
+    x-stoplight:
+      id: z80k73c6l11ym
+  test1:
+    type: string
+    x-stoplight:
+      id: nfl8mqga0vc8y

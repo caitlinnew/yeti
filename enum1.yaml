@@ -1,4 +1,13 @@
-title: enum1
+title: thing
 x-stoplight:
   id: 8om7uyaebzfhv
-enum: []
+type: object
+properties:
+  thing1:
+    type: string
+    x-stoplight:
+      id: lagp2f1ntzy6j
+  thing2:
+    type: string
+    x-stoplight:
+      id: 6ri1gmaru5ar4
