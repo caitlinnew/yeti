@@ -3,13 +3,81 @@
   "items": [
     {
       "type": "item",
+      "title": "Morestuff",
+      "uri": "/docs/morestuff.md"
+    },
+    {
+      "type": "item",
+      "title": "Get in touch",
+      "uri": "/docs/Overview.md"
+    },
+    {
+      "type": "item",
+      "title": "Stuff",
+      "uri": "/docs/stuff.md"
+    },
+    {
+      "type": "item",
+      "title": "Svg",
+      "uri": "/docs/SVG.md"
+    },
+    {
+      "type": "divider",
+      "title": "APIS"
+    },
+    {
+      "type": "item",
       "title": "Locations API",
+      "uri": "/locations.json"
+    },
+    {
+      "type": "item",
+      "title": "20refs",
+      "uri": "/reference/20ref.yaml"
+    },
+    {
+      "type": "item",
+      "title": "yam",
       "uri": "/reference/yam.yaml"
     },
     {
       "type": "item",
-      "title": "Warning Callout Bug",
-      "uri": "/docs/stuff.md"
+      "title": "idk stuff",
+      "uri": "/docs/idk.yaml"
+    },
+    {
+      "type": "item",
+      "title": "MyAPI",
+      "uri": "/broken.oas.yml"
+    },
+    {
+      "type": "divider",
+      "title": "Schemas"
+    },
+    {
+      "type": "item",
+      "title": "thing",
+      "uri": "/enum1.yaml"
+    },
+    {
+      "type": "item",
+      "title": "test",
+      "uri": "/test.yaml"
+    },
+    {
+      "type": "item",
+      "title": "testjson",
+      "uri": "/testjson.json"
+    },
+    {
+      "type": "item",
+      "title": "yammo",
+      "uri": "/yammo.yaml"
+    },
+    {
+      "type": "item",
+      "title": "pepper",
+      "uri": "/reference/pepper.yaml"
     }
   ]
 }

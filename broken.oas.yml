@@ -1,0 +1,23 @@
+openapi: 3.0.1
+x-stoplight:
+  id: o6siebjffkvnb
+info:
+  title: No Auth Selected
+  version: 2024.7.6
+servers:
+  - description: test
+    url: 'https://myserver/app'
+security:
+  - SpsBearer: []
+paths:
+  /files:
+    get:
+      responses:
+        '200':
+          description: Success
+      x-stoplight:
+        id: wjgm9q1fx4n5d
+components:
+  securitySchemes:
+    SpsBearer:
+      $ref: 'https://api.swaggerhub.com/domains/spscommerce/Security/1.0#/components/securitySchemes/SpsBearer'
