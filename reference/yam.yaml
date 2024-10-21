@@ -4,6 +4,7 @@ x-stoplight:
 info:
   title: yam
   version: '1.0'
+  summary: lkjllkmkljm
 servers:
   - url: 'http://localhost:3000'
 paths:
