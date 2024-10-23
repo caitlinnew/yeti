@@ -28,6 +28,8 @@ paths:
       tags:
         - Freight Search
       responses:
+        '101':
+          description: Switching Protocols
         '200':
           $ref: '#/components/responses/200_freightOffersResponse'
         '400':
@@ -64,6 +66,16 @@ paths:
         - authorization: []
       x-internal: false
       description: Get a Freight Quote by its ID.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stuff:
+                  type: string
+                  x-stoplight:
+                    id: 5341rk41vn0sf
     parameters:
       - $ref: '#/components/parameters/freightQuoteId'
   /vehicle-space-offers:
