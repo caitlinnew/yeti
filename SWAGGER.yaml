@@ -1,0 +1,1125 @@
+swagger: '2.0'
+x-stoplight:
+  id: hke9dsmztzbz1
+info:
+  title: DAT
+  version: '1.0'
+  description: "Cette API a pour but d'exposer les données sur les DAT.\r\n\r\nElle présente les opérations suivantes :\r\n- la liste des DAT d'un contrat\r\n- le détail d'un DAT d'un contrat"
+host: 'localhost:3000'
+schemes:
+  - http
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  '/adherents/{UOM_code}/contracts/{contract_id}/DAT_subscriptions':
+    get:
+      summary: Liste des DATs souscrits d'un contrat
+      tags:
+        - DAT liste
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              DAT_subscriptions:
+                x-stoplight:
+                  id: wh6dsn0c0zso0
+                type: array
+                items:
+                  type: object
+                  x-stoplight:
+                    id: jua001n7oao3l
+                  properties:
+                    DAT_subscription:
+                      $ref: '#/definitions/DATSubscription'
+                    DAT_subscription_overview:
+                      $ref: '#/definitions/DATSubscriptionOverview'
+                    DAT_product:
+                      $ref: '#/definitions/DATProduct'
+              errors:
+                x-stoplight:
+                  id: 3g7ma6x1k7o4p
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+          examples: {}
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                x-stoplight:
+                  id: 99be1l7gnk7mq
+                items:
+                  $ref: '#/definitions/Error'
+        '500':
+          description: Internal server error
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                x-stoplight:
+                  id: 3y37wr8f1racb
+                items:
+                  $ref: '#/definitions/Error'
+      operationId: get-adherent-uom_code-contrat-contract_id-DAT-list
+      description: Renvoie la liste des DAT sur un contrat.
+      x-stoplight:
+        id: 0ks064iacgw8c
+      parameters:
+        - in: query
+          name: returned_objects
+          type: string
+          description: 'Détail des objets restitués : "product" permet de restituer les caractéristiques de souscription d''un DAT, la vue d''ensemble du DAT souscrit et les caractéristiques du produit DAT. Si absent, seules les caractéristiques de souscription d''un DAT, la vue d''ensemble du DAT souscrit sont restituées'
+    parameters:
+      - type: string
+        name: UOM_code
+        in: path
+        description: Code adhérent (selon nomenclature CAM0303)
+        minLength: 5
+        maxLength: 5
+        required: true
+      - type: string
+        name: contract_id
+        in: path
+        required: true
+        description: Identifiant contrat
+        minLength: 11
+        maxLength: 11
+  '/adherents/{UOM_code}/contracts/{contract_id}/DAT_subscriptions/{DAT_subscription_id}':
+    parameters:
+      - type: string
+        name: UOM_code
+        in: path
+        required: true
+        minLength: 5
+        maxLength: 5
+        description: Code adhérent (selon nomenclature CAM0303)
+      - type: string
+        name: contract_id
+        in: path
+        required: true
+        minLength: 11
+        maxLength: 11
+        description: Identifiant contrat
+      - type: string
+        name: DAT_subscription_id
+        in: path
+        required: true
+        description: Identifiant de la souscription de DAT
+    get:
+      summary: Détail d'un DAT souscrit
+      tags: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              DAT_subscription:
+                $ref: '#/definitions/DATSubscription'
+              DAT_subscription_overview:
+                $ref: '#/definitions/DATSubscriptionOverview'
+              DAT_product:
+                $ref: '#/definitions/DATProduct'
+              DAT_subscription_details:
+                $ref: '#/definitions/DATSubscriptionDetails'
+              errors:
+                type: array
+                x-stoplight:
+                  id: v7obchgrkzi86
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                x-stoplight:
+                  id: 6a4j0xtf55ona
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                x-stoplight:
+                  id: a6cj0582hnzor
+                items:
+                  $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                x-stoplight:
+                  id: efl0ocntqzsf1
+                items:
+                  $ref: '#/definitions/Error'
+      operationId: get-adherents-UOM_code-contracts-contract_id-dats-dat_id-dat
+      x-stoplight:
+        id: vgff46k4ke55o
+      description: Renvoie les caractéristiques d'un DAT
+      parameters:
+        - type: string
+          in: query
+          name: returned_objects
+          description: 'Détail des objets restitués : "product" permet de restituer les caractéristiques de souscription d''un DAT, la vue d''ensemble du DAT souscrit, les caractéristiques du produit DAT ; "details" permet de restituer les caractéristiques de souscription d''un DAT, la vue d''ensemble du DAT souscrit et les données relatives à l''historique de souscription du DAT ; "full" permet de restituer les caractéristiques de souscription d''un DAT, la vue d''ensemble du DAT souscrit, les caractéristiques du produit DAT et les données relatives à l''historique de souscription du DAT ; Si absents, seules les caractéristiques de souscription d''un DAT, la vue d''ensemble du DAT souscrit sont restituées'
+  '/adherents/{UOM_code}/health':
+    parameters:
+      - type: string
+        name: UOM_code
+        in: path
+        required: true
+        description: Code adhérent (selon nomenclature CAM0303)
+        minLength: 5
+        maxLength: 5
+    get:
+      summary: Sonde HEALTH
+      tags:
+        - Sonde Health
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                x-stoplight:
+                  id: ql5wzptwtvgbs
+                items:
+                  $ref: '#/definitions/Error'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                x-stoplight:
+                  id: t4lyhlk8x3c02
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                x-stoplight:
+                  id: i9cejgph4cn31
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                x-stoplight:
+                  id: g8z1uud84kp5q
+                items:
+                  $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                x-stoplight:
+                  id: jkoo9wdf78avz
+                items:
+                  $ref: '#/definitions/Error'
+      operationId: get-adherents-UOM_code-health
+      x-stoplight:
+        id: vvh2x7od3cc39
+      description: Sonde Health
+definitions:
+  Error:
+    title: Error
+    x-stoplight:
+      id: ms1baqp005skm
+    type: object
+    properties:
+      code:
+        type: string
+        x-stoplight:
+          id: 4jr6qm6y7273f
+        description: code anomalie
+      label:
+        type: string
+        x-stoplight:
+          id: 9bvr5zmt2mhxx
+        description: libéllé d'anomalie
+      level:
+        type: string
+        x-stoplight:
+          id: tkxmeiuchf40i
+        description: "sévérité anomalie : vaut \r\n'E' en cas d'erreur bloquante, \r\n'I' en cas de message informatif"
+      program:
+        type: string
+        x-stoplight:
+          id: ggclw7wlzbdmt
+        description: code programme à l'origine du message
+  Amount:
+    title: Amount
+    x-stoplight:
+      id: oiqer9iabukj1
+    type: object
+    properties:
+      currrency:
+        type: string
+        x-stoplight:
+          id: uqubzh0gcboi6
+        description: Devise
+      value:
+        type: number
+        x-stoplight:
+          id: k1hkhj341snuh
+        description: Montant
+  DATSubscription:
+    title: DATSubscription
+    x-stoplight:
+      id: jbz65lavrsr4y
+    type: object
+    required:
+      - id
+      - UOM_code
+      - contract_id
+      - product_code
+      - subscription_date
+      - subscription_cash_account
+      - operation_amount
+    properties:
+      id:
+        type: string
+        description: "Identifiant unique de la souscription (NUDEB).\r\n\r\nSur 12 caractères."
+        x-stoplight:
+          id: t8i56p7to65pj
+      UOM_code:
+        type: string
+        x-stoplight:
+          id: 6ofo9s0m9g7f4
+        description: "Code adhérent sur 5 caractères\r\n"
+      contract_id:
+        type: string
+        x-stoplight:
+          id: j219rs0gfjs2c
+        description: "identifiant contrat sur 11 caractères\r\n"
+      product_code:
+        type: string
+        x-stoplight:
+          id: 31axgr7lvrrdb
+        description: "code produit du DAT\r\n\r\nSur 6 caractères."
+      subscription_date:
+        type: string
+        x-stoplight:
+          id: we27wst5z61zh
+        description: "date de souscription du DAT\r\n\r\n"
+        format: date
+      duration_value:
+        type: number
+        x-stoplight:
+          id: q52smfpwjo8qs
+        description: durée du DAT souscrit
+      customer_reference:
+        type: string
+        x-stoplight:
+          id: n4ty2xl7vryym
+        description: "Si opération  guichet GC et GK :\r\nZone d'échange libre permettant à l'Adhérent\r\nde récupérer des informations qui lui sont \r\npropres (ex: identification du Client).\r\n\r\n\r\nSi opération dépôt DC concernant un Produit \r\nréservé aux comptes séquestres:\r\nZone d'échange libre permettant à l'Adhérent \r\nde récupérer des informations telles que le \r\nnom de l'Apporteur d'affaires.\r\n\r\nSur 20 caractères."
+      nominal _rate:
+        type: number
+        x-stoplight:
+          id: pe13c576o0c8h
+        description: taux nominal
+      actuarial_rate:
+        type: number
+        x-stoplight:
+          id: ploxbz0qlwsid
+        description: taux actuariel initial
+      edition_langage_code:
+        x-stoplight:
+          id: ththbr39q5x0q
+        description: "Code langue d'édition\r\n\r\n' ' : FRANCAIS\r\n'1' : FRANCAIS\r\n'2' : ANGLAIS\r\n'3' : ESPAGNOL\r\n'4' : ALLEMAND\r\n'5' : DANOIS\r\n'6' : GREC\r\n'7' : ITALIEN\r\n'8' : NEERLANDAIS\r\n'9' : PORTUGAIS"
+        enum:
+          - ' '
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          - 8
+          - 9
+      interest_payment_cash_account:
+        type: string
+        x-stoplight:
+          id: 1n10tt2odyq9f
+        description: "numero du DAV de versement des intérêts \r\n\r\n(peut-être different du compte espèces \r\nassocié au contrat)\r\n\r\nSur 11 caractères."
+      specific_cash_account:
+        type: string
+        x-stoplight:
+          id: y72mrd3r46leq
+        description: "Numero du compte spécifique DAV\r\n\r\nNuméro de compte D.A.V sur 11 caractères, rattaché au\r\ncompte titres, support de l'opération.\r\nSur autorisation, peut être un numéro de D.A.V.\r\ndifférent de celui rattaché au compte support de\r\nl'opération."
+      subscription_cash_account:
+        type: string
+        x-stoplight:
+          id: 7nff5qqs4pve0
+        description: "Numero du DAV de la souscription du DAT\r\n\r\nNuméro de compte D.A.V sur 11 caractères, \r\nrattaché au compte titres, support de l'opération. \r\nSur autorisation, peut être un numéro de D.A.V.\r\ndifférent de celui rattaché au compte support de\r\nl'opération."
+      operation_amount:
+        type: object
+        x-stoplight:
+          id: 5zj0azw1k0hhh
+        description: montant de l'opération de souscription
+        properties:
+          amount:
+            $ref: '#/definitions/Amount'
+      sequestration_account_data:
+        type: object
+        x-stoplight:
+          id: 5zj0azw1k0hhh
+        description: "Cet objet contient les données spécifiques\r\nà un DAT séquestre"
+        properties:
+          retrocession_type_code:
+            x-stoplight:
+              id: zkvgq7o7pln6d
+            description: "Code type de rétrocession.\r\n\r\nPermet de connaitre le type de rétrocession.\r\n\r\n'1' : NOTAIRE\r\n'2' : AGENT IMMOBILIER\r\n'3' : AVOCAT"
+            enum:
+              - 1
+              - 2
+              - 3
+          notary_retrocession_rate:
+            type: number
+            x-stoplight:
+              id: l15mn93vz4b1o
+            description: Taux de retrocession au notaire.
+          retrocession_cash_account:
+            type: string
+            x-stoplight:
+              id: dmko0zxhbd39x
+            description: "Numero de dav de retrocession.\r\n\r\nNuméro de compte Depôt A Vue de\r\nl'apporteur d'affaire servant au\r\nversement de la rétrocession.\r\n\r\nSur 11 caractères."
+      scheduling_data:
+        type: object
+        x-stoplight:
+          id: j8erxgonkjjhj
+        description: "Cet objet contient les données relatives à \r\nl'échéancier du DAT (si il y en a un)"
+        properties:
+          first_scheduled_date:
+            type: string
+            x-stoplight:
+              id: pmvzmrpmwcaw1
+            format: date
+            description: Date du premier versement ou retrait défini lors de la souscription
+          first_scheduled_amount:
+            x-stoplight:
+              id: ppdotk6j27p7w
+            type: object
+            description: montant de versement ou retrait programmé défini à la souscription
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+  DATProduct:
+    title: DATProduct
+    x-stoplight:
+      id: 57y500ty721qd
+    type: object
+    description: Données de la fiche produit
+    required:
+      - issuer
+      - code
+      - label
+      - family_id
+      - interest_payment_frequency
+      - rate_type
+      - rate_nature
+      - duration
+      - penalty_mode
+    properties:
+      issuer:
+        type: string
+        x-stoplight:
+          id: u89xu5a4hqinn
+        description: "Adherent emetteur du DAT\r\n\r\nSur 3 caractères."
+      code:
+        type: string
+        x-stoplight:
+          id: 31axgr7lvrrdb
+        description: "code produit du DAT\r\n\r\nSur 6 caractères."
+      label:
+        type: string
+        x-stoplight:
+          id: s0v921vxe7964
+        description: "libellé long du produit\r\n\r\nSur 32 caractères."
+      family_id:
+        type: string
+        x-stoplight:
+          id: 04gqwnrn3130r
+        description: "identifiant de la famille du produit\r\n\r\nSur 4 caractères"
+      interest_payment_frequency:
+        x-stoplight:
+          id: 1xu1xa3xrq5rj
+        description: "code périodicité des intérêts\r\n\r\n'M' : MENSUELLE\r\n'T' : TRIMESTRIELLE\r\n'S' : SEMESTRIELLE\r\n'A' : ANNUELLE\r\n'P' : PRE-COMPTES\r\n'F' : POST-COMPTES\r\n'R' : ROMPU\r\n'C' : CAPITALISES"
+        enum:
+          - M
+          - T
+          - S
+          - A
+          - P
+          - F
+          - R
+          - C
+      rate_type:
+        x-stoplight:
+          id: hlnr40gt3gsvi
+        description: "code type de taux \r\n\r\n'F' : fixe\r\n'P' : progressif\r\n'I' : indéxé\r\n'R' : révisable"
+        enum:
+          - F
+          - P
+          - I
+          - R
+      rate_nature:
+        x-stoplight:
+          id: i47mfdgzsy20r
+        description: "code nature de taux \r\n\r\n'A' : actuariel\r\n'N' : nominal\r\n' ' : mixte"
+        enum:
+          - ' '
+          - A
+          - 'N'
+      duration:
+        type: object
+        x-stoplight:
+          id: sauvyoxerndy6
+        required:
+          - unit
+          - value_minimum_months
+          - value_maximum_months
+        properties:
+          unit:
+            x-stoplight:
+              id: zcj3iouik3rv8
+            description: "unite de la duree de vie du produit\r\n\r\n'J' : JOUR\r\n'M' : MOIS"
+            enum:
+              - J
+              - M
+          value_minimum_months:
+            type: number
+            x-stoplight:
+              id: 2r0f0pdt7bb0e
+            description: "durée de vie du produit \r\n(voir le champ product_duration_unit pour \r\navoir l'unité de cette quantité)"
+          value_minimum_days:
+            type: number
+            x-stoplight:
+              id: tcywy5jfbmeso
+            description: "durée de vie du produit \r\n(voir le champ product_duration_unit pour \r\navoir l'unité de cette quantité)"
+          value_maximum_months:
+            type: number
+            x-stoplight:
+              id: n0uob8e3ma1v1
+            description: "durée de vie du produit \r\n(voir le champ product_duration_unit pour \r\navoir l'unité de cette quantité)"
+          value_maximum_days:
+            type: number
+            x-stoplight:
+              id: 8yeam64kjra3u
+            description: "durée de vie du produit \r\n(voir le champ product_duration_unit pour \r\navoir l'unité de cette quantité)"
+      reimbursement_notice_duration_in_days:
+        type: integer
+        x-stoplight:
+          id: 6t3tkv4ccy3ol
+        description: "nombre de jours de préavis (lors d'un \r\nremboursement anticipé autorisé)\r\n"
+      rate_change_frequency:
+        x-stoplight:
+          id: pbs9rryfyutk2
+        description: "periodicite de variation de taux\r\n\r\nCette donnée indique la périodicité de la variation\r\ndes taux d'un produit.\r\nElle peut prendre les valeurs suivantes :\r\n\r\n'M' : MENSUELLE\r\n'T' : TRIMESTRIELLE\r\n'S' : SEMESTRIELLE\r\n'A' : ANNUELLE"
+        enum:
+          - M
+          - T
+          - S
+          - A
+      penalty_mode:
+        x-stoplight:
+          id: npdkibqacqdkt
+        description: "Indicateur si la pénalité se fait en date \r\nde souscription ou de remboursement.\r\n\r\n'S' : SOUSCRIPTION\r\n'R' : REMBOURSEMENT"
+        enum:
+          - S
+          - R
+      bonus_payments_number:
+        type: integer
+        x-stoplight:
+          id: rnf0ik6kr9dkf
+        description: "Nombre de primes pour le code produit du DAT.\r\n\r\nIndique le nombre de primes qu'un DAT doit\r\nnormalement recevoir pour le code produit traité"
+      scheduled_parameters:
+        type: object
+        x-stoplight:
+          id: lg3pvapnyhecf
+        description: données échancier relatives au produit
+        properties:
+          scheduling_service_reference:
+            type: string
+            x-stoplight:
+              id: vtlogmhfvbdup
+            description: Réference de l'échéancier sur 8 caractères
+          scheduling_status:
+            x-stoplight:
+              id: 3940l8f6oxij4
+            description: "Indique l'état de l'échéancier\r\n\r\n'A' : Actif\r\n'S' : Suspendu\r\n'F' : Fermé\r\n\r\n"
+            enum:
+              - A
+              - S
+              - F
+          scheduling_operation_type:
+            x-stoplight:
+              id: slno6g4y06jzh
+            description: "Sens de l'échéancier\r\n\r\nCet indicateur permet de savoir si \r\nl'échéancier doit déclencher \r\nune souscription ou un rachat.\r\n\r\n'S' : Souscription\r\n'R' : Retrait"
+            enum:
+              - S
+              - R
+          scheduling_payment_frequency:
+            x-stoplight:
+              id: zh27f8rk9gsa9
+            description: "Périodicité des versements programmés.\r\n\r\n'M' : MENSUELLE\r\n'T' : TRIMESTRIELLE\r\n'S' : SEMESTRIELLE\r\n'A' : ANNUELLE"
+            enum:
+              - M
+              - T
+              - S
+              - A
+          scheduled_reimbursements_frequency:
+            x-stoplight:
+              id: 324m2xukp2vhr
+            description: "Périodicité des retraits programmés.\r\n\r\n'M' : MENSUELLE\r\n'T' : TRIMESTRIELLE\r\n'S' : SEMESTRIELLE\r\n'A' : ANNUELLE"
+            enum:
+              - M
+              - T
+              - S
+              - A
+          scheduled_reimbursement_mode:
+            x-stoplight:
+              id: jtfjiyccbrz4q
+            description: "Indicateur du mode de retrait de l'echeancier\r\n\r\n'0' : RETRAIT EN CAPITAL RETIRE (CAPITAL SEUL)\r\n'1' : RETRAIT EN MONTANT NET (CAPITAL + INTERETS NETS)"
+            enum:
+              - 0
+              - 1
+          amount_modification_possibility_indicator:
+            x-stoplight:
+              id: pu8yvki4e9tb6
+            description: "Indicateur de possibilité de modification \r\ndu montant de l'opération de l'échéancier.\r\n\r\n'O' : Oui\r\n'N' : Non"
+            enum:
+              - O
+              - 'N'
+          date_modification_possibility_indicator:
+            x-stoplight:
+              id: llb6x3n3f75fu
+            description: "Indicateur de possibilité de modification du\r\njour de l'opération de l'échéancier.\r\n\r\n'O' : Oui\r\n'N' : Non"
+            enum:
+              - O
+              - 'N'
+          recess_possibility_indicator:
+            x-stoplight:
+              id: uly0obtyvc36w
+            description: "Indicateur possibilité de suspension de \r\nl'échéancier.\r\n\r\n'O' : Oui\r\n'N' : Non\r\n"
+            enum:
+              - O
+              - 'N'
+      renewal_parameters:
+        type: object
+        x-stoplight:
+          id: m3y4k9gxuljdf
+        properties:
+          operation_type:
+            x-stoplight:
+              id: tsuhih9u0cjcw
+            description: "\"Code type d'opération complémentaire au renouvellement (versement, retrait, ou rien) Indique si le renouvellement est accompagné d'un retrait, d'un versement ou non.\r\n'V' : VERSEMENT\r\n'R' : retrait\r\n' ' : RENOUVELLEMENT SANS OPERATION COMPLEMENTAIRE\""
+            enum:
+              - V
+              - R
+              - '''  '''
+          renewal_mode:
+            x-stoplight:
+              id: ko1hqwy84l07y
+            enum:
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+            description: "\"code type de renouvellement\r\nIndique le type de renouvellement à effectuer à l'échéance du DAT\r\n'0' : PAS DE RENOUVELLEMENT\r\n'1' : RENOUVELLEMENT DU CAPITAL\r\n'2' : RENOUVELLEMENT DU CAPITAL PLUS LES INTERETS\r\n'3' : TYPE DE RENOUVELLEMENT CHOISI A LA SOUS. (VALEUR LIEE A LA TABLE PRODUIT)\r\n'4' : RENOUVELLEMENT DU CAPITAL PLUS LES INTERETS DANS LEUR INTEGRALITE (AVEC DECIMALES)\""
+      management_amounts_data:
+        type: object
+        x-stoplight:
+          id: m2jozkrjybz1z
+        description: données relatives à la gestion des montants d'un produit DAT
+        properties:
+          subscription_cutoff_amount:
+            x-stoplight:
+              id: hu401r5gykg7c
+            description: montant de coupure de souscription
+            type: object
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+          reimbursement_cutoff_amount_:
+            x-stoplight:
+              id: f45l4s95e49pv
+            description: montant de coupure de remboursement
+            type: object
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+          minimum_subscription_amount:
+            x-stoplight:
+              id: kw7stxmjvabeo
+            description: montant minimum de soucription
+            type: object
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+          maximum_subscription_amount:
+            x-stoplight:
+              id: 8j1uig90drzyk
+            description: montant maximum de soucription
+            type: object
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+          minimum_reimbursement_amount:
+            x-stoplight:
+              id: pztk9s2di3ub0
+            description: montant minimum de remboursemenet
+            type: object
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+      formula_calculation:
+        type: integer
+        x-stoplight:
+          id: mqlzyu14fqxki
+        description: "Code de formule de calcul.\r\nce champ permet d'identifier la formule utilisée pour les calculs d'interêt sur les DAT indexés. \r\nCe type d'indexation détermine le taux sur lequel le produit est indexé\r\n"
+      starting_date:
+        type: string
+        x-stoplight:
+          id: f2mvl1hsia547
+        description: "date de début de validité du produit\r\n"
+        format: date
+      expiry_date:
+        type: string
+        x-stoplight:
+          id: d36fnoe7nlafp
+        description: "date de fin de validité du produit\r\n"
+        format: date
+      total_reimbursement_code:
+        x-stoplight:
+          id: 44b6d78l8ei23
+        description: "Ce code indique si le remboursement total du capital d'un produit est autorisé en fonction de l'utilisateur :\r\n'1' AUTORISE CT\r\n'2' AUTORISE CT ET CR\r\n'3' AUTORISE A TOUS"
+        enum:
+          - 1
+          - 2
+          - 3
+      partial_reimbursement_code:
+        x-stoplight:
+          id: 7we42y8wn7s7x
+        description: "Ce code indique si le remboursement partiel du capital d'un produit est possible ou pas :\r\n'O' OUI\r\n'N' NON\r\n"
+        enum:
+          - O
+          - 'N'
+  DATSubscriptionOverview:
+    title: DATSubscriptionOverview
+    x-stoplight:
+      id: 15l2ufgmnra3i
+    type: object
+    required:
+      - id
+      - UOM_code
+      - contract_id
+      - status
+      - expiration_date
+      - taxation_type_code
+    properties:
+      id:
+        type: string
+        x-stoplight:
+          id: 4mk2k8bwy8qek
+        description: "Identifiant unique de la souscription (NUDEB).\r\n\r\nSur 12 caractères."
+      UOM_code:
+        type: string
+        x-stoplight:
+          id: 6ofo9s0m9g7f4
+        description: "Code adhérent sur 5 caractères\r\n"
+      contract_id:
+        type: string
+        x-stoplight:
+          id: j219rs0gfjs2c
+        description: "identifiant contrat sur 11 caractères\r\n"
+      status:
+        x-stoplight:
+          id: texmq6wqemcck
+        description: "Statut du DAT\r\n\r\nValeurs possibles :\r\n'DAT OUVERT' = 1\r\n'DAT REMBOURSE' = 2\r\n'ECHU NON REMBOURSE' = 3\r\n'DAT EN COURS DE REGULARISATION' = 4\r\n'DAT ANNULE' = 5\r\n'DAT TRANFERE' = 6\r\n'DAT EN COURS DE SOUSCRIPTION' = 7\r\n\r\n"
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+      expiration_date:
+        type: string
+        x-stoplight:
+          id: nv8q0ruayc0xr
+        description: date d'échéance du DAT
+        format: date
+      taxation_type_code:
+        x-stoplight:
+          id: 7f7usou0vr381
+        description: "code type de fiscalité\r\n\r\n'N' : NETTE\r\n'B' : BRUTE\r\n'A' : ANONYME\r\n'C' : FISCALITE DU CLIENT"
+        enum:
+          - B
+          - 'N'
+          - A
+          - C
+      gross_return_actuarial_rate:
+        type: number
+        x-stoplight:
+          id: 41fr3h31qj8xg
+        description: "TRAAB (taux de rendement annuel actuariel brut) \r\nde la souscription"
+      capital_amounts_data:
+        type: object
+        x-stoplight:
+          id: mmcmu4o0m6mbf
+        description: "Objet contenant différents montants relatifs\r\nau montant de capital du DAT"
+        required:
+          - outstanding
+        properties:
+          outstanding:
+            type: object
+            x-stoplight:
+              id: 773a06c0uayu0
+            description: "Encours du DAT \r\n\r\n(c'est l'encours du DAT au moment \r\nde l'appel de l'API)"
+            required:
+              - amount
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+          nominal_subscription_amount:
+            type: object
+            description: "nominal souscrit \r\nc'est la somme des versements de capital + intérêts pre-comptés\r\n(ne prends pas en compte les capitalisations d'intérêts)"
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+          sum_of_payments:
+            type: object
+            description: "somme des versements \r\n(sans compter les intérêts, donc ne prend pas \r\nen compte les capitalisations d'intérêts,  \r\nni les versements d'intérêts pré-comptés)"
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+          sum_of_reimbursements_of_capital:
+            type: object
+            description: "montant du capital déjà remboursé \r\n(cumul des remboursements de capital, \r\nne prends pas en compte les intérêts)"
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+  DATSubscriptionDetails:
+    title: DATSubscriptionDetails
+    x-stoplight:
+      id: g7o5vql52jaav
+    type: object
+    required:
+      - id
+      - entry_origin_code
+      - entry_date
+      - entry_hour
+      - last_update_date
+      - actuarial_rate_in_force
+    properties:
+      id:
+        type: string
+        x-stoplight:
+          id: hm6fpea7eip42
+        description: "Identifiant unique de la souscription (NUDEB).\r\n\r\nSur 12 caractères."
+      entry_origin_code:
+        x-stoplight:
+          id: 6k9epjrfzdmwa
+        description: "Code sur 3 caractères indiquant \r\nl'origine de la saisie de l'opération.\r\n\r\n'REN' : RENOUVELLEMENT\r\n'VDT' : VIDEOTITRES\r\n\r\n"
+        enum:
+          - REN
+          - VDT
+      entry_date:
+        type: string
+        x-stoplight:
+          id: di3cbnw5qarir
+        format: date
+        description: date de saisie du DAT
+      entry_hour:
+        type: string
+        x-stoplight:
+          id: j1m8x1l465hrg
+        format: time
+        description: Heure de saise du DAT
+      entry_user:
+        type: string
+        x-stoplight:
+          id: tftk2c3d2ueg4
+        description: "Identifiant de l'utilisateur de saisie du DAT\r\nsur 15 cararactères."
+      last_update_date:
+        type: string
+        x-stoplight:
+          id: 1wa57go709fyu
+        format: date
+        description: date de dernière mise à jour du DAT
+      expiry_notice_creation_indicator:
+        x-stoplight:
+          id: 83a0qykbmftm0
+        description: "Donnée permettant d'indiquer qu'il y a eu \r\ndéclenchement de l'envoi de l'avis d'échéance.\r\n\r\n'O' : OUI\r\n'N' : NON"
+        enum:
+          - O
+          - 'N'
+      basic_rate:
+        type: number
+        x-stoplight:
+          id: wn3p62c6ebgod
+        description: "taux de base\r\n \r\n Le taux de base est le taux minimal que les\r\n Adhérents peuvent appliquer aux produits D.A.T.\r\n, qu'elles fixent librement, tout en tenant compte\r\n d'un taux de référence publié sur le marché."
+      issuer_margin_rate:
+        type: number
+        x-stoplight:
+          id: t2391i7dbpby1
+        description: "taux de marge de l'adhérent\r\n\r\nLa marge est la rémunération que prend \r\nl'adhérent sur le taux de base appliqué \r\naux opérations client."
+      actuarial_rate_in_force:
+        type: number
+        x-stoplight:
+          id: 8okq5u214749n
+        description: taux palier en cours
+      last_interest_payment_date:
+        type: string
+        x-stoplight:
+          id: bunrmuohafdah
+        format: date
+        description: date de dernier paiement d'intérêts
+      next_interest_payment_date:
+        type: string
+        x-stoplight:
+          id: 36559eadgd5e8
+        format: date
+        description: date de prochain paiement d'intérêts
+      last_capitalization_date:
+        type: string
+        x-stoplight:
+          id: t1b8b56bm9f5u
+        format: date
+        description: date de dernière capitalisation
+      next_capitalization_date:
+        type: string
+        x-stoplight:
+          id: btnjl2gg7gf3b
+        format: date
+        description: date de prochaine capitalisation
+      interest_amounts_data:
+        type: object
+        x-stoplight:
+          id: 2ay0nq2mhfooq
+        description: "Objet contenant différents montants relatifs\r\naux montants d'intérêts générés par le DAT"
+        properties:
+          sum_of_gross_interest_already_paid:
+            type: object
+            description: "cumul des intérêts bruts déjà versés au client \r\n(comprends les distributions d'intérêts et \r\nles intérêts fournis lors des remboursements \r\nde capital, ne comprends pas les capitalisations \r\nd'intérêts, ni les versements d'intérêts \r\npré-comptés)"
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+          sum_of_PFL_tax_on_already_paid_interest:
+            type: object
+            description: "cumul des prélèvement forfaitaires libératoires \r\nsur les intérêts bruts déjà versés au client \r\n(comprends les distributions d'intérêts et \r\nles intérêts fournis lors des remboursements \r\nde capital, ne comprends pas les capitalisations \r\nd'intérêts, ni les versements d'intérêts pré-comptés)"
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+          sum_of_social_contributions_on_already_paid_interest:
+            type: object
+            description: "cumul des montants de cotisation sociale \r\nsur les intérêts bruts déjà versés au client \r\n(comprends les distributions d'intérêts et les \r\nintérêts fournis lors des remboursements de \r\ncapital, ne comprends pas les capitalisations \r\nd'intérêts, ni les versements d'intérêts \r\npré-comptés)"
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+          sum_of_ISF_tax_on_already_paid_interest:
+            type: object
+            description: "cumul des montants d'ISF sur les intérêts bruts \r\ndéjà versés au client \r\n(comprends les distributions d'intérêts et les \r\nintérêts fournis lors des remboursements de \r\ncapital, ne comprends pas les capitalisations \r\nd'intérêts, ni les versements d'intérêts \r\npré-comptés)"
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+          sum_of_net_interest_already_paid:
+            type: object
+            description: " cumul des intérêts nets versés au client \r\n (comprends les distributions d'intérêts et \r\n les intérêts fournis lors des remboursements \r\n de capital, ne comprends pas les \r\n capitalisations d'intérêts, ni les versements \r\n d'intérêts pré-comptés)"
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+          sum_of_capitalized_net_interest:
+            type: object
+            description: "cumul des intérêts nets capitalisés \r\n(comprend les capitalisations d'intérêts nets \r\net les intérêts pré-comptés nets)"
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+          sum_of_gross_interest_on_capitalization:
+            type: object
+            description: " cumul des intérêts capitalisés bruts \r\n (comprend les capitalisations d'intérêts bruts \r\n et les intérêts pré-comptés bruts)"
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+          sum_of_PFL_on_capitalization:
+            type: object
+            description: "cumul des prélèvements forfaitaires libératoires \r\nsur les capitalisations (comprend les \r\ncapitalisations d'intérêts et les intérêts \r\npré-comptés)"
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+          sum_of_social_contribution_on_capitalization:
+            type: object
+            description: "cumul des cotisations sociales sur les \r\ncapitalisations \r\n(comprend les capitalisations d'intérêts et \r\nles intérêts pré-comptés)"
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+          withholding_tax_amount:
+            type: object
+            x-stoplight:
+              id: lyiglxg995pua
+            description: montant de la retenue à la source
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+          next_gross_interest_payment_amount:
+            type: object
+            x-stoplight:
+              id: qqhil3h5yu9w5
+            description: "montant des intérêts bruts qui seront versés \r\nlors du prochain évenement de paiement\r\nd'intérêts (distribution d'intérêts, \r\ncapitalisation, échéance, etc.)"
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+      bonus_payment_data:
+        type: object
+        x-stoplight:
+          id: ijbjfh3f8n52q
+        description: "Cet objet contient les données relatives\r\naux versements de primes sur le DAT"
+        properties:
+          gross_return_actuarial_rate_including_bonus_payments:
+            type: number
+            x-stoplight:
+              id: zug986isz99qz
+            description: "TRAAB (Taux de Retour Actuariel Brut) en \r\nincluant les primes"
+          next_bonus_payment_date:
+            type: string
+            x-stoplight:
+              id: 48agijk6uq9z8
+            format: date
+            description: date de prochain paiement de prime
+          last_bonus_acquisition_notice_date:
+            type: string
+            x-stoplight:
+              id: alr74itsmwulj
+            format: date
+            description: date de dernier avis d'acquisition de prime
+      scheduling_service_data:
+        type: object
+        x-stoplight:
+          id: dlqmwdvpgz1on
+        description: données necessaires à l'échéancier
+        properties:
+          service_number:
+            type: number
+            x-stoplight:
+              id: 069ebe9qicf8u
+            description: Numéro de service de l'échéancier
+          service_state:
+            x-stoplight:
+              id: e44l4k2s0w63c
+            description: "Etat du service\r\n\r\n'A' : Actif\r\n'C' : Clos\r\n'S' : Supprimé"
+            enum:
+              - A
+              - C
+              - S
+          service_closure_date:
+            type: string
+            x-stoplight:
+              id: p7rd5rj9o8r29
+            format: date
+            description: Date de clôture du service
+          scheduling_ending_date:
+            type: string
+            x-stoplight:
+              id: a9tihauu4otjw
+            description: date fin de l'échéancier
+            format: date
+          scheduling_recess_begining_date:
+            type: string
+            x-stoplight:
+              id: ul2skfwjf3xsr
+            format: date
+            description: date de début de suspension de l'échéancier
+          next_scheduled_payment_effective_date:
+            type: string
+            x-stoplight:
+              id: e4pbnv89pbw6n
+            format: date
+            description: Date d'effet du prochain versement programmé.
+          next_scheduled_payment_amount:
+            type: object
+            x-stoplight:
+              id: pg0uh79krkebr
+            description: montant du prochain versement programmé
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+          next_scheduled_reimbursement_effective_date:
+            type: string
+            x-stoplight:
+              id: qhaqi2ykzltpj
+            description: date d'effet du prochain retrait programmé
+            format: date
+          next_scheduled_reimbursement_amount:
+            type: object
+            x-stoplight:
+              id: yy64riukgt9ei
+            description: montant du prochain retrait programmé
+            properties:
+              amount:
+                $ref: '#/definitions/Amount'
+          number_of_past_recesses:
+            type: integer
+            x-stoplight:
+              id: shuz837wa5ife
+            description: Nombre de suspensions passees au sein de l'échéancier
+          number_of_remaining_recesses:
+            type: integer
+            x-stoplight:
+              id: wra0bv2yvuq1u
+            description: Nombre de suspensions à venir au sein de l'échéancier
+          number_of_recessed_operations_in_current_suspension:
+            type: integer
+            x-stoplight:
+              id: 22k1qnv1snyja
+            description: "Nombre d'échéances suspendues dans la \r\nsuspension en cours"
+      renewal_data:
+        type: object
+        x-stoplight:
+          id: ilej2tt604icr
+        properties:
+          renewal_number:
+            type: integer
+            x-stoplight:
+              id: 5wr8rpxiajaip
+            description: '"Nombre de renouvellements déjà effectués sur\r\nce DAT"'
+          first_subscription_date:
+            type: string
+            x-stoplight:
+              id: umh3p27jsyafa
+            format: date
+            description: date de première émission du DAT
