@@ -1,0 +1,238 @@
+swagger: '2.0'
+x-stoplight:
+  id: gkixsxtai4w08
+info:
+  title: testing
+  version: '1.0'
+host: 'localhost:3000'
+schemes:
+  - http
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  '/users/{userId}':
+    parameters:
+      - type: integer
+        name: userId
+        in: path
+        required: true
+        description: Id of an existing user.
+    get:
+      summary: Get User Info by User ID
+      tags: []
+      responses:
+        '200':
+          description: User Found
+          schema:
+            $ref: '#/definitions/User'
+          examples:
+            Get User Alice Smith:
+              id: 142
+              firstName: Alice
+              lastName: Smith
+              email: alice.smith@gmail.com
+              dateOfBirth: '1997-10-31'
+              emailVerified: true
+              signUpDate: '2019-08-24'
+        '404':
+          description: User Not Found
+          schema:
+            type: 'null'
+          examples: {}
+      operationId: get-users-userId
+      description: Retrieve the information of the user with the matching user ID.
+      x-stoplight:
+        id: za78ur5jeapsb
+    patch:
+      summary: Update User Information
+      operationId: patch-users-userId
+      responses:
+        '200':
+          description: User Updated
+          schema:
+            $ref: '#/definitions/User'
+          examples:
+            Update User Rebecca Baker:
+              id: 13
+              firstName: Rebecca
+              lastName: Baker
+              email: rebecca@gmail.com
+              dateOfBirth: '1985-10-02'
+              emailVerified: false
+              createDate: '2019-08-24'
+        '404':
+          description: User Not Found
+          schema:
+            type: 'null'
+        '409':
+          description: Email Already Taken
+          schema:
+            type: 'null'
+      description: Update the information of an existing user.
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+              lastName:
+                type: string
+              email:
+                type: string
+                description: 'If a new email is given, the user''s email verified property will be set to false.'
+              dateOfBirth:
+                type: string
+          description: Patch user properties to update.
+          x-examples:
+            Update First Name:
+              firstName: Rebecca
+            Update Email:
+              email: rebecca@gmail.com
+            Update Last Name & Date of Birth:
+              lastName: Baker
+              dateOfBirth: '1985-10-02'
+      x-stoplight:
+        id: 10epcaq2unz3y
+  /user:
+    post:
+      summary: Create New User
+      operationId: post-user
+      responses:
+        '200':
+          description: User Created
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          $ref: '#/responses/error-response-400'
+        '409':
+          description: Email Already Taken
+          schema:
+            type: 'null'
+      description: Create a new user.
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+              lastName:
+                type: string
+              email:
+                type: string
+              dateOfBirth:
+                type: string
+                format: date
+            required:
+              - firstName
+              - lastName
+              - email
+              - dateOfBirth
+          description: Post the necessary fields for the API to create a new user.
+          x-examples:
+            Create User Bob Fellow:
+              firstName: Bob
+              lastName: Fellow
+              email: bob.fellow@gmail.com
+              dateOfBirth: '1996-08-24'
+      x-stoplight:
+        id: qn8lkmv3wln9f
+definitions:
+  User:
+    title: User
+    type: object
+    properties:
+      id:
+        type: integer
+        description: Unique identifier for the given user.
+        x-stoplight:
+          id: lr2wqhul00j09
+      firstName:
+        type: string
+        x-stoplight:
+          id: m3lkdsn7fb0e5
+      lastName:
+        type: string
+        x-stoplight:
+          id: qbcrncv5uz07i
+      email:
+        type: string
+        format: email
+        x-stoplight:
+          id: 3lhf7lhpj9ria
+      dateOfBirth:
+        type: string
+        format: date
+        example: '1997-10-31'
+        x-stoplight:
+          id: oupdatw9c7e2j
+      emailVerified:
+        type: boolean
+        description: Set to true if the user's email has been verified.
+        x-stoplight:
+          id: 77n560u1uwvpc
+      createDate:
+        type: string
+        format: date
+        description: The date that the user was created.
+        x-stoplight:
+          id: nlt0otgciv5m4
+    required:
+      - id
+      - firstName
+      - lastName
+      - email
+      - emailVerified
+    x-stoplight:
+      id: tj0a3nx500z03
+  Errors:
+    type: object
+    description: Amadeus error.
+    properties:
+      status:
+        type: integer
+      code:
+        type: integer
+      title:
+        type: string
+      source:
+        title: source
+        type: object
+        properties:
+          parameter:
+            type: string
+            description: String indicating which query parameter caused the error.
+    x-stoplight:
+      id: pfw6saikexzld
+responses:
+  error-response:
+    description: Standard error.
+    schema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/definitions/Errors'
+  error-response-400:
+    description: Example response
+    content:
+      application/json:
+        schema:
+          properties:
+            id:
+              type: string
+    schema:
+      type: object
+      properties:
+        errors:
+          type: array
+          x-stoplight:
+            id: ftsouf8a6joxt
+          items:
+            $ref: '#/definitions/Errors'
