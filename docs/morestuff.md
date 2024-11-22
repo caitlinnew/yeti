@@ -1,7 +1,6 @@
 
 blah blah blah blah blah stupid github workflow sdfsd
 
-![](images/pepper.jpg)
 
 ![test](../assets/images/adidas-runtastic_logo_horizontal_cmyk_black.svg)
 
