@@ -14,7 +14,7 @@
   },
   "servers": [
     {
-      "url": "/"
+      "url": ""
     }
   ],
   "paths": {
@@ -63,7 +63,12 @@
         ],
         "x-stoplight": {
           "id": "ivojipk6bzt0v"
-        }
+        },
+        "security": [
+          {
+            "apiKey_1": []
+          }
+        ]
       },
       "put": {
         "tags": [
@@ -8821,6 +8826,18 @@
           "id": "yuvd8echpfwlg"
         }
       }
+    },
+    "securitySchemes": {
+      "apiKey_1": {
+        "name": "apiKey",
+        "type": "apiKey",
+        "in": "query"
+      }
     }
-  }
+  },
+  "security": [
+    {
+      "apiKey_1": []
+    }
+  ]
 }
