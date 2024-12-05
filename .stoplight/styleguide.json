@@ -1285,7 +1285,7 @@
       },
       "name": "oas2-api-schemes",
       "description": "OpenAPI 2 host `schemes` reflect the transfer protocol of the API. Host schemes must be present and an array with one or more of these values: `http`, `https`, `ws`, or `wss`.\r\n\r\n**Valid Example**\r\n\r\nThis example shows that host schemes are `http` and `https`.\r\n\r\n```json\r\n{\r\n   \"schemes\":[\r\n      \"http\",\r\n      \"https\"\r\n   ]\r\n}\r\n \r\n```",
-      "message": "OpenAPI host \"schemes\" must be present and non-empty array",
+      "message": "OpenAPI host \"schemes\" must be present and non-empty array\n\n\n",
       "formats": [
         "oas2"
       ]
@@ -1302,7 +1302,7 @@
       },
       "name": "oas2-discriminator",
       "description": "Discriminator property must be defined and required",
-      "message": "Discriminator property must be defined and required",
+      "message": "Discriminator property must be defined and required ",
       "formats": [
         "oas2"
       ]
