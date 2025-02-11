@@ -1,0 +1,134 @@
+openapi: 3.1.0
+x-stoplight:
+  id: yh2lcvrlh3qhn
+info:
+  title: xids
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  '/users/{userId}':
+    parameters:
+      - schema:
+          type: integer
+        name: userId
+        in: path
+        required: true
+        description: Id of an existing user.
+    patch:
+      summary: Update User Information
+      operationId: patch-users-userId
+      responses:
+        '200':
+          description: User Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User Not Found
+        '409':
+          description: Email Already Taken
+      description: Update the information of an existing user.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: object
+                  properties:
+                    test1:
+                      type: string
+                      x-stoplight:
+                        id: o2pk6zx1wmoxk
+                lastName:
+                  type: string
+                email:
+                  type: string
+                  description: 'If a new email is given, the user''s email verified property will be set to false.'
+                dateOfBirth:
+                  type: string
+                test:
+                  type: object
+                  x-stoplight:
+                    id: znouqab4k6fry
+                  properties:
+                    test2:
+                      type: string
+                      x-stoplight:
+                        id: imjizlfzdyfyv
+            examples:
+              Update First Name:
+                value:
+                  firstName: Rebecca
+              Update Email:
+                value:
+                  email: rebecca@gmail.com
+              Update Last Name & Date of Birth:
+                value:
+                  lastName: Baker
+                  dateOfBirth: '1985-10-02'
+        description: Patch user properties to update.
+      x-stoplight:
+        id: vl4j5uga403tx
+  /user: {}
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      description: ''
+      examples:
+        - id: 142
+          firstName: Alice
+          lastName: Smith
+          email: alice.smith@gmail.com
+          dateOfBirth: '1997-10-31'
+          emailVerified: true
+          signUpDate: '2019-08-24'
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the given user.
+          x-stoplight:
+            id: 8yscfltdpby8s
+        firstName:
+          type: string
+          x-stoplight:
+            id: g8rrwki5ywgue
+        lastName:
+          type: string
+          x-stoplight:
+            id: a74oft2qqsb4u
+        email:
+          type: string
+          format: email
+          x-stoplight:
+            id: bseh42de3uy6p
+        dateOfBirth:
+          type: string
+          format: date
+          example: '1997-10-31'
+          x-stoplight:
+            id: kiglub0vc7i2s
+        emailVerified:
+          type: boolean
+          description: Set to true if the user's email has been verified.
+          x-stoplight:
+            id: tbeyfmvliswto
+        createDate:
+          type: string
+          format: date
+          description: The date that the user was created.
+          x-stoplight:
+            id: nm80ynpx0vt5r
+      required:
+        - id
+        - firstName
+        - lastName
+        - email
+        - emailVerified
+      x-stoplight:
+        id: li5g23djsjz3b

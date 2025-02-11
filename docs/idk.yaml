@@ -80,6 +80,10 @@ paths:
         description: ''
       parameters:
         - $ref: '#/components/parameters/header'
+        - schema:
+            type: string
+          in: query
+          name: asdf
     patch:
       summary: Update User Information
       operationId: patch-users-userId
@@ -494,3 +498,16 @@ components:
         type: string
         default: test
       description: header description
+  responses:
+    response:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+      headers:
+        header-0:
+          schema:
+            type: string

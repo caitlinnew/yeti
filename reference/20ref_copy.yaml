@@ -1,6 +1,6 @@
 openapi: 3.1.0
 x-stoplight:
-  id: me8l2h1u3ej92
+  id: hm5m9y97w8vv5
 info:
   title: 20refs
   version: '1.0'
@@ -98,14 +98,21 @@ paths:
         description: Post the necessary fields for the API to create a new user.
       description: Create a new user.
       x-stoplight:
-        id: ouytbjljvjl9h
+        id: 1o06du4t9lpor
+    get:
+      summary: test
+      tags: []
+      responses: {}
+      operationId: get-user
+      x-stoplight:
+        id: afhulzhk2u42b
   /four: {}
 components:
   schemas:
     User:
       $ref: 'stoplight://resources/overrides/1QkT7j1bAWc'
       x-stoplight:
-        id: n0eudv09fwioz
+        id: ohcmh48b2tlls
   parameters:
     test:
       name: test
