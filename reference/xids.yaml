@@ -16,7 +16,7 @@ paths:
         required: true
         description: Id of an existing user.
     patch:
-      summary: Update User Information
+      summary: ClickMe
       operationId: patch-users-userId
       responses:
         '200':

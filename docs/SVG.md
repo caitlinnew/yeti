@@ -1,6 +1,7 @@
 ---
 stoplight-id: 31270c34b55b5
 ---
+[link to an endpoint](../reference/20ref.yaml/paths/~1user/post)
 
 blah blah blah
 

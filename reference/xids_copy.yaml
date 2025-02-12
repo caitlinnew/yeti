@@ -1,6 +1,6 @@
 openapi: 3.1.0
 x-stoplight:
-  id: pdz49407ihhec
+  id: 163bw44l3add9
 info:
   title: xids
   version: '1.0'
@@ -16,7 +16,7 @@ paths:
         required: true
         description: Id of an existing user.
     patch:
-      summary: Update User Information
+      summary: ClickMe
       operationId: patch-users-userId
       responses:
         '200':
@@ -72,7 +72,7 @@ paths:
                   dateOfBirth: '1985-10-02'
         description: Patch user properties to update.
       x-stoplight:
-        id: hqzh3y476p6jc
+        id: 3mvuis7k66vha
   /user: {}
 components:
   schemas:
@@ -131,4 +131,4 @@ components:
         - email
         - emailVerified
       x-stoplight:
-        id: 9h4jpwni4134x
+        id: ack4vzeaxu9mx
