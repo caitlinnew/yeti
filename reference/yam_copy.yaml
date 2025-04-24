@@ -38,15 +38,6 @@ paths:
                     x-stoplight:
                       id: a0drx71x25c3f
               examples:
-                Get User Alice Smith:
-                  value:
-                    id: 142
-                    firstName: Alice
-                    lastName: Smith
-                    email: alice.smith@gmail.com
-                    dateOfBirth: '1997-10-31'
-                    emailVerified: true
-                    signUpDate: '2019-08-24'
                 Example 1:
                   value:
                     stuff: string
@@ -78,15 +69,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
               examples:
-                Updated User Rebecca Baker:
-                  value:
-                    id: 13
-                    firstName: Rebecca
-                    lastName: Baker
-                    email: rebecca@gmail.com
-                    dateOfBirth: '1985-10-02'
-                    emailVerified: false
-                    createDate: '2019-08-24'
                 Example 1:
                   value:
                     id: 142
