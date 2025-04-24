@@ -8,12 +8,7 @@
     },
     {
       "type": "item",
-      "title": "Get in touch",
-      "uri": "/docs/Overview.md"
-    },
-    {
-      "type": "item",
-      "title": "Stuff",
+      "title": "header",
       "uri": "/docs/stuff.md"
     },
     {
@@ -27,13 +22,18 @@
     },
     {
       "type": "item",
-      "title": "Locations API",
-      "uri": "/locations.json"
+      "title": "testing",
+      "uri": "/sample-api-1 (3).yaml"
     },
     {
       "type": "item",
-      "title": "20refs",
-      "uri": "/reference/20ref.yaml"
+      "title": "No Auth Selected",
+      "uri": "/broken.oas.yml"
+    },
+    {
+      "type": "item",
+      "title": "Locations API",
+      "uri": "/locations.json"
     },
     {
       "type": "item",
@@ -42,17 +42,37 @@
     },
     {
       "type": "item",
+      "title": "20refs",
+      "uri": "/reference/20ref.yaml"
+    },
+    {
+      "type": "item",
       "title": "idk stuff",
       "uri": "/docs/idk.yaml"
     },
     {
       "type": "item",
-      "title": "MyAPI",
-      "uri": "/broken.oas.yml"
+      "title": "xids",
+      "uri": "/reference/xids.yaml"
+    },
+    {
+      "type": "item",
+      "title": "xids",
+      "uri": "/reference/xids_copy.yaml"
+    },
+    {
+      "type": "item",
+      "title": "yam",
+      "uri": "/reference/yam_copy.yaml"
     },
     {
       "type": "divider",
       "title": "Schemas"
+    },
+    {
+      "type": "item",
+      "title": "yammo",
+      "uri": "/yammo.yaml"
     },
     {
       "type": "item",
@@ -68,11 +88,6 @@
       "type": "item",
       "title": "testjson",
       "uri": "/testjson.json"
-    },
-    {
-      "type": "item",
-      "title": "yammo",
-      "uri": "/yammo.yaml"
     },
     {
       "type": "item",
