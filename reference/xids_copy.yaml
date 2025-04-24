@@ -17,6 +17,8 @@ paths:
         description: Id of an existing user.
     patch:
       summary: ClickMe
+      x-stoplight:
+        id: 3mvuis7k66vha
       operationId: patch-users-userId
       responses:
         '200':
@@ -42,7 +44,7 @@ paths:
                     test1:
                       type: string
                       x-stoplight:
-                        id: o2pk6zx1wmoxk
+                        id: kvah9tq58k1ev
                 lastName:
                   type: string
                 email:
@@ -53,12 +55,12 @@ paths:
                 test:
                   type: object
                   x-stoplight:
-                    id: znouqab4k6fry
+                    id: dy21d1lgoidac
                   properties:
                     test2:
                       type: string
                       x-stoplight:
-                        id: imjizlfzdyfyv
+                        id: ied5lwyy4hrqe
             examples:
               Update First Name:
                 value:
@@ -71,13 +73,13 @@ paths:
                   lastName: Baker
                   dateOfBirth: '1985-10-02'
         description: Patch user properties to update.
-      x-stoplight:
-        id: 3mvuis7k66vha
   /user: {}
 components:
   schemas:
     User:
       title: User
+      x-stoplight:
+        id: ack4vzeaxu9mx
       type: object
       description: ''
       examples:
@@ -93,42 +95,40 @@ components:
           type: integer
           description: Unique identifier for the given user.
           x-stoplight:
-            id: 8yscfltdpby8s
+            id: awyfrk9x8xmqf
         firstName:
           type: string
           x-stoplight:
-            id: g8rrwki5ywgue
+            id: 6m2c23ki08s9a
         lastName:
           type: string
           x-stoplight:
-            id: a74oft2qqsb4u
+            id: m3xd5q3btkb0x
         email:
           type: string
           format: email
           x-stoplight:
-            id: bseh42de3uy6p
+            id: uhlt65bk463ra
         dateOfBirth:
           type: string
           format: date
           example: '1997-10-31'
           x-stoplight:
-            id: kiglub0vc7i2s
+            id: 6l2haseh93smi
         emailVerified:
           type: boolean
           description: Set to true if the user's email has been verified.
           x-stoplight:
-            id: tbeyfmvliswto
+            id: f1v704ym4vo40
         createDate:
           type: string
           format: date
           description: The date that the user was created.
           x-stoplight:
-            id: nm80ynpx0vt5r
+            id: hutop5lgq6t2h
       required:
         - id
         - firstName
         - lastName
         - email
         - emailVerified
-      x-stoplight:
-        id: ack4vzeaxu9mx

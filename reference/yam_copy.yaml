@@ -1,6 +1,6 @@
 openapi: 3.1.0
 x-stoplight:
-  id: pc0ys573krm4n
+  id: oj6ruiw34gc36
 info:
   title: yam
   version: '1.0'
@@ -18,6 +18,8 @@ paths:
         description: Id of an existing user.
     get:
       summary: Get User Info by User ID
+      x-stoplight:
+        id: 7snu77lxkcox7
       tags: []
       responses:
         '200':
@@ -30,11 +32,11 @@ paths:
                   stuff:
                     type: string
                     x-stoplight:
-                      id: vlwwaba2cfpeg
+                      id: x5obwclvpmi34
                   nonsense:
                     type: string
                     x-stoplight:
-                      id: 9njbqrymoc2vl
+                      id: a0drx71x25c3f
               examples:
                 Get User Alice Smith:
                   value:
@@ -45,12 +47,14 @@ paths:
                     dateOfBirth: '1997-10-31'
                     emailVerified: true
                     signUpDate: '2019-08-24'
+                Example 1:
+                  value:
+                    stuff: string
+                    nonsense: string
         '404':
           description: User Not Found
       operationId: get-users-userId
       description: Retrieve the information of the user with the matching user ID.
-      x-stoplight:
-        id: j6u6h25ugqcct
       requestBody:
         content:
           application/json:
@@ -58,10 +62,10 @@ paths:
               oneOf:
                 - $ref: ../test.yaml
                   x-stoplight:
-                    id: 5hy2qmlj9uxui
+                    id: bhwj4h6nshj4h
                 - $ref: ../enum1.yaml
                   x-stoplight:
-                    id: k8jtq2b1cin6v
+                    id: t3lnktlkcgitk
               type: object
     patch:
       summary: Update User Information
@@ -83,6 +87,15 @@ paths:
                     dateOfBirth: '1985-10-02'
                     emailVerified: false
                     createDate: '2019-08-24'
+                Example 1:
+                  value:
+                    id: 142
+                    firstName: Alice
+                    lastName: Smith
+                    email: alice.smith@gmail.com
+                    dateOfBirth: '1997-10-31'
+                    emailVerified: true
+                    signUpDate: '2019-08-24'
         '404':
           description: User Not Found
         '409':
@@ -116,7 +129,7 @@ paths:
                   dateOfBirth: '1985-10-02'
         description: Patch user properties to update.
       x-stoplight:
-        id: 7oed11lc3m19a
+        id: ndpmqdq5t7aid
   /user:
     post:
       summary: Create New User
@@ -172,11 +185,13 @@ paths:
         description: Post the necessary fields for the API to create a new user.
       description: Create a new user.
       x-stoplight:
-        id: knaojvjpae576
+        id: 84wtcs3di6oim
 components:
   schemas:
     User:
       title: User
+      x-stoplight:
+        id: xej6mmynr0bbb
       type: object
       description: ''
       examples:
@@ -192,42 +207,40 @@ components:
           type: integer
           description: Unique identifier for the given user.
           x-stoplight:
-            id: 3bl073wh6sjad
+            id: btq19hs9ncort
         firstName:
           type: string
           x-stoplight:
-            id: 4d9zco5dyiysn
+            id: 88q0egolcdj8q
         lastName:
           type: string
           x-stoplight:
-            id: vq4se9q4oame8
+            id: yo9iybhe2abeo
         email:
           type: string
           format: email
           x-stoplight:
-            id: 8hqqutt4okbw5
+            id: 3zubsct2770mo
         dateOfBirth:
           type: string
           format: date
           example: '1997-10-31'
           x-stoplight:
-            id: s085mgnb8eaca
+            id: hvb03zu9mvom4
         emailVerified:
           type: boolean
           description: Set to true if the user's email has been verified.
           x-stoplight:
-            id: 2aavonovu22dy
+            id: 90s7epyjc28ul
         createDate:
           type: string
           format: date
           description: The date that the user was created.
           x-stoplight:
-            id: qoyudktw13quh
+            id: r9rk019b41qci
       required:
         - id
         - firstName
         - lastName
         - email
         - emailVerified
-      x-stoplight:
-        id: 3jcgn09iha8vi
