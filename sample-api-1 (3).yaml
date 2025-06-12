@@ -4,6 +4,7 @@ x-stoplight:
 info:
   title: testing
   version: '1.0'
+  description: here is publishing test stuff
 host: 'localhost:3000'
 schemes:
   - http
