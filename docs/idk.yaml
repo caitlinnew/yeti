@@ -4,6 +4,7 @@ x-stoplight:
 info:
   title: idk stuff
   version: '1.0'
+  summary: ''
 servers:
   - url: 'http://localhost:3000/{var1}'
     description: server one
