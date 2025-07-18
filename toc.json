@@ -3,6 +3,11 @@
   "items": [
     {
       "type": "item",
+      "title": "test",
+      "uri": "/docs/testing.md"
+    },
+    {
+      "type": "item",
       "title": "Morestuff",
       "uri": "/docs/morestuff.md"
     },
