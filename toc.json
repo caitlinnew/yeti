@@ -76,6 +76,11 @@
       "uri": "/reference/headertest.yaml"
     },
     {
+      "type": "item",
+      "title": "headertestbutJSON",
+      "uri": "/reference/headertestbutJSON.json"
+    },
+    {
       "type": "divider",
       "title": "Schemas"
     },
