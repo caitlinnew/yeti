@@ -4,6 +4,7 @@ x-stoplight:
 info:
   title: headertest
   version: '1.0'
+  summary: Header Test
 servers:
   - url: 'http://localhost:3000'
 paths:
