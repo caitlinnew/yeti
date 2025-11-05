@@ -85,6 +85,9 @@ paths:
             type: string
           in: query
           name: asdf
+        - schema:
+            type: string
+          in: header
     patch:
       summary: Update User Information
       operationId: patch-users-userId
