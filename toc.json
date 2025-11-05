@@ -81,6 +81,11 @@
       "uri": "/reference/headertestbutJSON.json"
     },
     {
+      "type": "item",
+      "title": "headertest30",
+      "uri": "/reference/headertest30.json"
+    },
+    {
       "type": "divider",
       "title": "Schemas"
     },
